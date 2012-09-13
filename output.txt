@@ -1,0 +1,163 @@
+agents:
+(Server(0),IdleState())
+(Server(1),IdleState())
+(MainServer(),State())
+messages:
+DeferredMessage(MainServer(),7,Task(53))
+DeferredMessage(MainServer(),15,Task(87))
+DeferredMessage(MainServer(),18,Task(46))
+DeferredMessage(MainServer(),28,Task(14))
+DeferredMessage(MainServer(),31,Task(43))
+time of next event: Some(7)
+======================
+agents:
+(Server(0),IdleState())
+(Server(1),IdleState())
+(MainServer(),State())
+messages:
+DeferredMessage(MainServer(),15,Task(87))
+DeferredMessage(Server(1),16,Task(53))
+DeferredMessage(MainServer(),18,Task(46))
+DeferredMessage(MainServer(),28,Task(14))
+DeferredMessage(MainServer(),31,Task(43))
+time of next event: Some(15)
+======================
+agents:
+(Server(0),IdleState())
+(Server(1),IdleState())
+(MainServer(),State())
+messages:
+DeferredMessage(Server(1),16,Task(53))
+DeferredMessage(MainServer(),18,Task(46))
+DeferredMessage(Server(0),22,Task(87))
+DeferredMessage(MainServer(),28,Task(14))
+DeferredMessage(MainServer(),31,Task(43))
+time of next event: Some(16)
+======================
+agents:
+(Server(0),IdleState())
+(Server(1),BusyState(Queue(Task(53))))
+(MainServer(),State())
+messages:
+DeferredMessage(MainServer(),18,Task(46))
+DeferredMessage(Server(0),22,Task(87))
+DeferredMessage(MainServer(),28,Task(14))
+DeferredMessage(MainServer(),31,Task(43))
+DeferredMessage(Server(1),69,TaskCompleted())
+time of next event: Some(18)
+======================
+agents:
+(Server(0),IdleState())
+(Server(1),BusyState(Queue(Task(53))))
+(MainServer(),State())
+messages:
+DeferredMessage(Server(1),20,Task(46))
+DeferredMessage(Server(0),22,Task(87))
+DeferredMessage(MainServer(),28,Task(14))
+DeferredMessage(MainServer(),31,Task(43))
+DeferredMessage(Server(1),69,TaskCompleted())
+time of next event: Some(20)
+======================
+agents:
+(Server(0),IdleState())
+(Server(1),BusyState(Queue(Task(53), Task(46))))
+(MainServer(),State())
+messages:
+DeferredMessage(Server(0),22,Task(87))
+DeferredMessage(MainServer(),28,Task(14))
+DeferredMessage(MainServer(),31,Task(43))
+DeferredMessage(Server(1),69,TaskCompleted())
+time of next event: Some(22)
+======================
+agents:
+(Server(0),BusyState(Queue(Task(87))))
+(Server(1),BusyState(Queue(Task(53), Task(46))))
+(MainServer(),State())
+messages:
+DeferredMessage(MainServer(),28,Task(14))
+DeferredMessage(MainServer(),31,Task(43))
+DeferredMessage(Server(1),69,TaskCompleted())
+DeferredMessage(Server(0),109,TaskCompleted())
+time of next event: Some(28)
+======================
+agents:
+(Server(0),BusyState(Queue(Task(87))))
+(Server(1),BusyState(Queue(Task(53), Task(46))))
+(MainServer(),State())
+messages:
+DeferredMessage(Server(1),28,Task(14))
+DeferredMessage(MainServer(),31,Task(43))
+DeferredMessage(Server(1),69,TaskCompleted())
+DeferredMessage(Server(0),109,TaskCompleted())
+time of next event: Some(28)
+======================
+agents:
+(Server(0),BusyState(Queue(Task(87))))
+(Server(1),BusyState(Queue(Task(53), Task(46), Task(14))))
+(MainServer(),State())
+messages:
+DeferredMessage(MainServer(),31,Task(43))
+DeferredMessage(Server(1),69,TaskCompleted())
+DeferredMessage(Server(0),109,TaskCompleted())
+time of next event: Some(31)
+======================
+agents:
+(Server(0),BusyState(Queue(Task(87))))
+(Server(1),BusyState(Queue(Task(53), Task(46), Task(14))))
+(MainServer(),State())
+messages:
+DeferredMessage(Server(1),39,Task(43))
+DeferredMessage(Server(1),69,TaskCompleted())
+DeferredMessage(Server(0),109,TaskCompleted())
+time of next event: Some(39)
+======================
+agents:
+(Server(0),BusyState(Queue(Task(87))))
+(Server(1),BusyState(Queue(Task(53), Task(46), Task(14), Task(43))))
+(MainServer(),State())
+messages:
+DeferredMessage(Server(1),69,TaskCompleted())
+DeferredMessage(Server(0),109,TaskCompleted())
+time of next event: Some(69)
+======================
+agents:
+(Server(0),BusyState(Queue(Task(87))))
+(Server(1),BusyState(Queue(Task(46), Task(14), Task(43))))
+(MainServer(),State())
+messages:
+DeferredMessage(Server(0),109,TaskCompleted())
+DeferredMessage(Server(1),115,TaskCompleted())
+time of next event: Some(109)
+======================
+agents:
+(Server(0),IdleState())
+(Server(1),BusyState(Queue(Task(46), Task(14), Task(43))))
+(MainServer(),State())
+messages:
+DeferredMessage(Server(1),115,TaskCompleted())
+time of next event: Some(115)
+======================
+agents:
+(Server(0),IdleState())
+(Server(1),BusyState(Queue(Task(14), Task(43))))
+(MainServer(),State())
+messages:
+DeferredMessage(Server(1),129,TaskCompleted())
+time of next event: Some(129)
+======================
+agents:
+(Server(0),IdleState())
+(Server(1),BusyState(Queue(Task(43))))
+(MainServer(),State())
+messages:
+DeferredMessage(Server(1),172,TaskCompleted())
+time of next event: Some(172)
+======================
+agents:
+(Server(0),IdleState())
+(Server(1),IdleState())
+(MainServer(),State())
+messages:
+time of next event: None
+======================
+tasks execution times sum = 243
