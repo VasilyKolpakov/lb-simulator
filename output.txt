@@ -1,163 +1,165 @@
+current time: 0
 agents:
 (Server(0),IdleState())
 (Server(1),IdleState())
 (MainServer(),State())
 messages:
-DeferredMessage(MainServer(),7,Task(53))
-DeferredMessage(MainServer(),15,Task(87))
-DeferredMessage(MainServer(),18,Task(46))
-DeferredMessage(MainServer(),28,Task(14))
-DeferredMessage(MainServer(),31,Task(43))
-time of next event: Some(7)
+DeferredMessage(MainServer(),2,Task(60))
+DeferredMessage(MainServer(),2,Task(48))
+DeferredMessage(MainServer(),6,Task(29))
+DeferredMessage(MainServer(),11,Task(15))
+DeferredMessage(MainServer(),24,Task(47))
 ======================
+current time: 2
 agents:
 (Server(0),IdleState())
 (Server(1),IdleState())
 (MainServer(),State())
 messages:
-DeferredMessage(MainServer(),15,Task(87))
-DeferredMessage(Server(1),16,Task(53))
-DeferredMessage(MainServer(),18,Task(46))
-DeferredMessage(MainServer(),28,Task(14))
-DeferredMessage(MainServer(),31,Task(43))
-time of next event: Some(15)
+DeferredMessage(MainServer(),2,Task(48))
+DeferredMessage(MainServer(),6,Task(29))
+DeferredMessage(Server(0),9,Task(60))
+DeferredMessage(MainServer(),11,Task(15))
+DeferredMessage(MainServer(),24,Task(47))
 ======================
+current time: 2
 agents:
 (Server(0),IdleState())
 (Server(1),IdleState())
 (MainServer(),State())
 messages:
-DeferredMessage(Server(1),16,Task(53))
-DeferredMessage(MainServer(),18,Task(46))
-DeferredMessage(Server(0),22,Task(87))
-DeferredMessage(MainServer(),28,Task(14))
-DeferredMessage(MainServer(),31,Task(43))
-time of next event: Some(16)
+DeferredMessage(Server(0),4,Task(48))
+DeferredMessage(MainServer(),6,Task(29))
+DeferredMessage(Server(0),9,Task(60))
+DeferredMessage(MainServer(),11,Task(15))
+DeferredMessage(MainServer(),24,Task(47))
 ======================
+current time: 4
 agents:
-(Server(0),IdleState())
-(Server(1),BusyState(Queue(Task(53))))
+(Server(0),BusyState(Queue(Task(48))))
+(Server(1),IdleState())
 (MainServer(),State())
 messages:
-DeferredMessage(MainServer(),18,Task(46))
-DeferredMessage(Server(0),22,Task(87))
-DeferredMessage(MainServer(),28,Task(14))
-DeferredMessage(MainServer(),31,Task(43))
-DeferredMessage(Server(1),69,TaskCompleted())
-time of next event: Some(18)
+DeferredMessage(MainServer(),6,Task(29))
+DeferredMessage(Server(0),9,Task(60))
+DeferredMessage(MainServer(),11,Task(15))
+DeferredMessage(MainServer(),24,Task(47))
+DeferredMessage(Server(0),52,TaskCompleted())
 ======================
+current time: 6
 agents:
-(Server(0),IdleState())
-(Server(1),BusyState(Queue(Task(53))))
+(Server(0),BusyState(Queue(Task(48))))
+(Server(1),IdleState())
 (MainServer(),State())
 messages:
-DeferredMessage(Server(1),20,Task(46))
-DeferredMessage(Server(0),22,Task(87))
-DeferredMessage(MainServer(),28,Task(14))
-DeferredMessage(MainServer(),31,Task(43))
-DeferredMessage(Server(1),69,TaskCompleted())
-time of next event: Some(20)
+DeferredMessage(Server(0),9,Task(60))
+DeferredMessage(Server(1),10,Task(29))
+DeferredMessage(MainServer(),11,Task(15))
+DeferredMessage(MainServer(),24,Task(47))
+DeferredMessage(Server(0),52,TaskCompleted())
 ======================
+current time: 9
 agents:
-(Server(0),IdleState())
-(Server(1),BusyState(Queue(Task(53), Task(46))))
+(Server(0),BusyState(Queue(Task(48), Task(60))))
+(Server(1),IdleState())
 (MainServer(),State())
 messages:
-DeferredMessage(Server(0),22,Task(87))
-DeferredMessage(MainServer(),28,Task(14))
-DeferredMessage(MainServer(),31,Task(43))
-DeferredMessage(Server(1),69,TaskCompleted())
-time of next event: Some(22)
+DeferredMessage(Server(1),10,Task(29))
+DeferredMessage(MainServer(),11,Task(15))
+DeferredMessage(MainServer(),24,Task(47))
+DeferredMessage(Server(0),52,TaskCompleted())
 ======================
+current time: 10
 agents:
-(Server(0),BusyState(Queue(Task(87))))
-(Server(1),BusyState(Queue(Task(53), Task(46))))
+(Server(0),BusyState(Queue(Task(48), Task(60))))
+(Server(1),BusyState(Queue(Task(29))))
 (MainServer(),State())
 messages:
-DeferredMessage(MainServer(),28,Task(14))
-DeferredMessage(MainServer(),31,Task(43))
-DeferredMessage(Server(1),69,TaskCompleted())
-DeferredMessage(Server(0),109,TaskCompleted())
-time of next event: Some(28)
+DeferredMessage(MainServer(),11,Task(15))
+DeferredMessage(MainServer(),24,Task(47))
+DeferredMessage(Server(1),39,TaskCompleted())
+DeferredMessage(Server(0),52,TaskCompleted())
 ======================
+current time: 11
 agents:
-(Server(0),BusyState(Queue(Task(87))))
-(Server(1),BusyState(Queue(Task(53), Task(46))))
+(Server(0),BusyState(Queue(Task(48), Task(60))))
+(Server(1),BusyState(Queue(Task(29))))
 (MainServer(),State())
 messages:
-DeferredMessage(Server(1),28,Task(14))
-DeferredMessage(MainServer(),31,Task(43))
-DeferredMessage(Server(1),69,TaskCompleted())
-DeferredMessage(Server(0),109,TaskCompleted())
-time of next event: Some(28)
+DeferredMessage(Server(1),16,Task(15))
+DeferredMessage(MainServer(),24,Task(47))
+DeferredMessage(Server(1),39,TaskCompleted())
+DeferredMessage(Server(0),52,TaskCompleted())
 ======================
+current time: 16
 agents:
-(Server(0),BusyState(Queue(Task(87))))
-(Server(1),BusyState(Queue(Task(53), Task(46), Task(14))))
+(Server(0),BusyState(Queue(Task(48), Task(60))))
+(Server(1),BusyState(Queue(Task(29), Task(15))))
 (MainServer(),State())
 messages:
-DeferredMessage(MainServer(),31,Task(43))
-DeferredMessage(Server(1),69,TaskCompleted())
-DeferredMessage(Server(0),109,TaskCompleted())
-time of next event: Some(31)
+DeferredMessage(MainServer(),24,Task(47))
+DeferredMessage(Server(1),39,TaskCompleted())
+DeferredMessage(Server(0),52,TaskCompleted())
 ======================
+current time: 24
 agents:
-(Server(0),BusyState(Queue(Task(87))))
-(Server(1),BusyState(Queue(Task(53), Task(46), Task(14))))
+(Server(0),BusyState(Queue(Task(48), Task(60))))
+(Server(1),BusyState(Queue(Task(29), Task(15))))
 (MainServer(),State())
 messages:
-DeferredMessage(Server(1),39,Task(43))
-DeferredMessage(Server(1),69,TaskCompleted())
-DeferredMessage(Server(0),109,TaskCompleted())
-time of next event: Some(39)
+DeferredMessage(Server(1),24,Task(47))
+DeferredMessage(Server(1),39,TaskCompleted())
+DeferredMessage(Server(0),52,TaskCompleted())
 ======================
+current time: 24
 agents:
-(Server(0),BusyState(Queue(Task(87))))
-(Server(1),BusyState(Queue(Task(53), Task(46), Task(14), Task(43))))
+(Server(0),BusyState(Queue(Task(48), Task(60))))
+(Server(1),BusyState(Queue(Task(29), Task(15), Task(47))))
 (MainServer(),State())
 messages:
-DeferredMessage(Server(1),69,TaskCompleted())
-DeferredMessage(Server(0),109,TaskCompleted())
-time of next event: Some(69)
+DeferredMessage(Server(1),39,TaskCompleted())
+DeferredMessage(Server(0),52,TaskCompleted())
 ======================
+current time: 39
 agents:
-(Server(0),BusyState(Queue(Task(87))))
-(Server(1),BusyState(Queue(Task(46), Task(14), Task(43))))
+(Server(0),BusyState(Queue(Task(48), Task(60))))
+(Server(1),BusyState(Queue(Task(15), Task(47))))
 (MainServer(),State())
 messages:
-DeferredMessage(Server(0),109,TaskCompleted())
-DeferredMessage(Server(1),115,TaskCompleted())
-time of next event: Some(109)
+DeferredMessage(Server(0),52,TaskCompleted())
+DeferredMessage(Server(1),54,TaskCompleted())
 ======================
+current time: 52
 agents:
-(Server(0),IdleState())
-(Server(1),BusyState(Queue(Task(46), Task(14), Task(43))))
+(Server(0),BusyState(Queue(Task(60))))
+(Server(1),BusyState(Queue(Task(15), Task(47))))
 (MainServer(),State())
 messages:
-DeferredMessage(Server(1),115,TaskCompleted())
-time of next event: Some(115)
+DeferredMessage(Server(1),54,TaskCompleted())
+DeferredMessage(Server(0),112,TaskCompleted())
 ======================
+current time: 54
 agents:
-(Server(0),IdleState())
-(Server(1),BusyState(Queue(Task(14), Task(43))))
+(Server(0),BusyState(Queue(Task(60))))
+(Server(1),BusyState(Queue(Task(47))))
 (MainServer(),State())
 messages:
-DeferredMessage(Server(1),129,TaskCompleted())
-time of next event: Some(129)
+DeferredMessage(Server(1),101,TaskCompleted())
+DeferredMessage(Server(0),112,TaskCompleted())
 ======================
+current time: 101
 agents:
-(Server(0),IdleState())
-(Server(1),BusyState(Queue(Task(43))))
+(Server(0),BusyState(Queue(Task(60))))
+(Server(1),IdleState())
 (MainServer(),State())
 messages:
-DeferredMessage(Server(1),172,TaskCompleted())
-time of next event: Some(172)
+DeferredMessage(Server(0),112,TaskCompleted())
 ======================
+current time: 112
 agents:
 (Server(0),IdleState())
 (Server(1),IdleState())
 (MainServer(),State())
 messages:
-time of next event: None
 ======================
-tasks execution times sum = 243
+tasks execution times sum = 199

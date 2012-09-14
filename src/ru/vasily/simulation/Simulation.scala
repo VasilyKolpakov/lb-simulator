@@ -50,7 +50,7 @@ object ImmutablePriorityQueue {
 }
 
 class ModelState(agentIdToAgentStateMap: immutable.Map[AnyRef, AgentState],
-                 messageQueue: ImmutablePriorityQueue[DeferredMessage], currentTime: Long = 0) {
+                 messageQueue: ImmutablePriorityQueue[DeferredMessage], val currentTime: Long = 0) {
 
   def nextState() = {
     if (messageQueue.isEmpty) {
@@ -70,9 +70,6 @@ class ModelState(agentIdToAgentStateMap: immutable.Map[AnyRef, AgentState],
     }
   }
 
-  def nextEventTime: Option[Long] =
-    if (messageQueue.isEmpty) None else Some(messageQueue.head.timestamp)
-
   def agents = agentIdToAgentStateMap.toSeq
 
   def messages = messageQueue.toSeq
@@ -81,9 +78,9 @@ class ModelState(agentIdToAgentStateMap: immutable.Map[AnyRef, AgentState],
 }
 
 object ModelState {
-  def apply(agentIdToAgentStateMap: immutable.Map[AnyRef, AgentState],
+  def apply(agents: Seq[Pair[AnyRef, AgentState]],
             initialMessages: Seq[DeferredMessage]) =
-    new ModelState(agentIdToAgentStateMap, ImmutablePriorityQueue(initialMessages: _*))
+    new ModelState(Map(agents: _*), ImmutablePriorityQueue(initialMessages: _*))
 
   def main(args: Array[String]) {
     var queue = ImmutablePriorityQueue(

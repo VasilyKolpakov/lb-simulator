@@ -7,7 +7,7 @@ object SimpleClusterModel {
   val numberOfServers = 2
   val maximumNetworkDelay = 10
   val maximumTaskExecutionTime = 100
-  val random = new Random()
+  val random = new Random(0)
 
   case class Task(timeOfExecution: Long)
 
@@ -97,7 +97,7 @@ object SimpleClusterModel {
       yield (serverId, serverId.IdleState())
     val mainServerId = MainServer()
     val mainServer = (mainServerId, mainServerId.State())
-    val cluster: Map[AnyRef, AgentState] = Map((slaveServers :+ mainServer): _*)
+    val cluster = slaveServers :+ mainServer
     val tasks = for (i <- 1 to 5) yield {
       Task(random.nextInt(maximumTaskExecutionTime))
     }
@@ -117,6 +117,7 @@ object SimpleClusterModel {
       }
     }
     for (modelState <- modelStates) {
+      println("current time: " + modelState.currentTime)
       println("agents:")
       for (agent <- modelState.agents) {
         println(agent)
@@ -125,7 +126,6 @@ object SimpleClusterModel {
       for (message <- modelState.messages) {
         println(message)
       }
-      println("time of next event: " + modelState.nextEventTime)
       println("======================")
     }
     val tasksExecutionTimesSum: Long = tasks.map {
