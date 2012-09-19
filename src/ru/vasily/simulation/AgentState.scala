@@ -8,5 +8,5 @@ package ru.vasily.simulation
 *
 * */
 trait AgentState {
-  def changeState(message: DeferredMessage): StateTransition[AgentState]
+  def changeState(currentTime: Long, message: AnyRef): StateTransition[AgentState]
 }

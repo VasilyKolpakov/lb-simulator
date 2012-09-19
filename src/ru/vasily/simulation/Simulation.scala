@@ -4,6 +4,8 @@ import collection.immutable
 import collection.immutable.Stream._
 import collection.immutable.SortedSet
 import annotation.tailrec
+import sun.swing.plaf.synth.Paint9Painter.PaintType
+import runtime.RichLong
 
 object StreamUtils {
   implicit def enrichStream[T](stream: Stream[T]) = new RichStream[T](stream)
@@ -23,50 +25,28 @@ class RichStream[T](stream: Stream[T]) {
   }
 }
 
-class ReversedOrdering[T <: Ordered[T]] extends Ordering[T] {
-  def compare(x: T, y: T) = {
-    -x.compare(y)
-  }
-}
 
-class ImmutablePriorityQueue[T] private(sortedSet: SortedSet[T]) {
-  def head = sortedSet.head
-
-  def dequeue = (head, new ImmutablePriorityQueue(sortedSet.tail))
-
-  def ++(elements: Seq[T]) = new ImmutablePriorityQueue(sortedSet ++ elements)
-
-  def isEmpty = sortedSet.isEmpty
-
-  def toSeq = sortedSet.toSeq
-
-  override def toString = sortedSet.toString()
-}
-
-object ImmutablePriorityQueue {
-  def apply[T <: Ordered[T]](elements: T*): ImmutablePriorityQueue[T] = {
-    new ImmutablePriorityQueue[T](SortedSet[T](elements: _*)(new ReversedOrdering[T]))
-  }
-}
-
-class ModelState(agentIdToAgentStateMap: immutable.Map[AnyRef, AgentState],
-                 messageQueue: ImmutablePriorityQueue[DeferredMessage], val currentTime: Long = 0) {
+class ModelState(agentIdToAgentStateMap: immutable.Map[AgentId, AgentState],
+                 messageQueue: ImmutableMessageQueue[Message], val timeOfLastEvent: Long = 0) {
 
   def nextState() = {
     if (messageQueue.isEmpty) {
       None
     } else {
-      val (message, remainingMessages) = messageQueue.dequeue
-      val nextTime: Long = message.timestamp
-      if (nextTime < currentTime) {
-        throw new RuntimeException("time consistency violated for message: " + message)
+      val ((nextEventTime, message), remainingMessages) = messageQueue.dequeue
+      if (nextEventTime < timeOfLastEvent) {
+        throw new RuntimeException("time consistency violated for message: " + message
+          + " current time: " + timeOfLastEvent + " message timestamp: " + nextEventTime)
       }
       val agentId = message.receiverId
       val agentState = agentIdToAgentStateMap(agentId)
-      val StateTransition(newAgentState, newMessages) = agentState.changeState(message)
+      val StateTransition(newAgentState, newMessages) = agentState.changeState(timeOfLastEvent, message.contents)
       val nextAgentStates = agentIdToAgentStateMap.updated(agentId, newAgentState)
-      val nextMessages = remainingMessages ++ newMessages
-      Some(new ModelState(nextAgentStates, nextMessages, nextTime))
+      val prioritizedMessages = newMessages map {
+        ModelState.delayedMessageToQueueElement(_, nextEventTime)
+      }
+      val nextMessages = remainingMessages ++ prioritizedMessages
+      Some(new ModelState(nextAgentStates, nextMessages, nextEventTime))
     }
   }
 
@@ -74,25 +54,23 @@ class ModelState(agentIdToAgentStateMap: immutable.Map[AnyRef, AgentState],
 
   def messages = messageQueue.toSeq
 
+  def timeOfNextEvent = if (messageQueue.isEmpty) {
+    None
+  } else {
+    Some(messageQueue.dequeue._1._1)
+  }
+
   override def toString = agentIdToAgentStateMap.toString() + "  " + messageQueue.toString
 }
 
 object ModelState {
-  def apply(agents: Seq[Pair[AnyRef, AgentState]],
-            initialMessages: Seq[DeferredMessage]) =
-    new ModelState(Map(agents: _*), ImmutablePriorityQueue(initialMessages: _*))
-
-  def main(args: Array[String]) {
-    var queue = ImmutablePriorityQueue(
-      DeferredMessage("a", 10, "a"),
-      DeferredMessage("a", 30, "b"),
-      DeferredMessage("a", 20, "c")
-    )
-    println(queue.toSeq)
-    while (!queue.isEmpty) {
-      val (head, tail) = queue.dequeue
-      println(head)
-      queue = tail
+  def apply(agents: Seq[Pair[AgentId, AgentState]], initialMessages: Seq[DelayedMessage]) = {
+    val queueElements = initialMessages map {
+      delayedMessageToQueueElement(_, currentTime = 0)
     }
+    new ModelState(Map(agents: _*), ImmutableMessageQueue(queueElements: _*))
   }
+
+  private def delayedMessageToQueueElement(dm: DelayedMessage, currentTime: Long) = (dm.delay + currentTime, dm.message)
 }
+

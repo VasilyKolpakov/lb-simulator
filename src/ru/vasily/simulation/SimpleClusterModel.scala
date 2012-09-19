@@ -13,34 +13,28 @@ object SimpleClusterModel {
 
   case class TaskCompleted()
 
-  case class MainServer() {
+  case class MainServer() extends AgentId {
 
     case class State() extends AgentState {
 
-      def changeState(message: DeferredMessage) = {
-        val DeferredMessage(_, currentTime, contents) = message
-        contents match {
-          case task: Task => sendTaskToRandomServer(currentTime, task)
-          case wrongMessage => {
-            throw new RuntimeException("wrong message: " + wrongMessage)
-          }
-        }
+      def changeState(currentTime: Long, message: AnyRef) = message match {
+        case task: Task => sendTaskToRandomServer(currentTime, task)
       }
 
       def sendTaskToRandomServer(currentTime: Long, task: Task) = {
         val randomServerId = Server(random.nextInt(numberOfServers))
-        val networkDelay = currentTime + random.nextInt(maximumNetworkDelay)
-        val message: DeferredMessage = DeferredMessage(randomServerId, networkDelay, task)
+        val networkDelay = random.nextInt(maximumNetworkDelay)
+        val message: DelayedMessage = DelayedMessage(task, randomServerId, networkDelay)
         StateTransition(this, message)
       }
     }
 
   }
 
-  case class Server(indexNumber: Int) {
+  case class Server(indexNumber: Int) extends AgentId {
 
-    def completeTaskRefresher(completionTime: Long) =
-      DeferredMessage(this, completionTime, TaskCompleted())
+    def taskCompletedMessage(task: Task) =
+      DelayedMessage(TaskCompleted(), this, task.timeOfExecution)
 
     object BusyState {
       def apply(tasks: Task*): BusyState = BusyState(Queue(tasks: _*))
@@ -48,42 +42,30 @@ object SimpleClusterModel {
 
     case class BusyState(taskQueue: Queue[Task]) extends AgentState {
 
-      def changeState(message: DeferredMessage) = message match {
-        case DeferredMessage(_, currentTime, contents) => {
-          contents match {
-            case task: Task => StateTransition(BusyState(taskQueue.enqueue(task)))
+      def changeState(currentTime: Long, message: AnyRef) = message match {
+        case task: Task => StateTransition(BusyState(taskQueue.enqueue(task)))
 
-            case TaskCompleted() => {
-              completeCurrentTask(currentTime)
-            }
-          }
-        }
-        case wrongMessage => {
-          throw new RuntimeException("wrong message: " + wrongMessage)
-        }
+        case TaskCompleted() => completeCurrentTask()
       }
 
 
-      def completeCurrentTask(currentTime: Long) = {
+      def completeCurrentTask() = {
         val (completedTask, queueTail) = taskQueue.dequeue
         if (queueTail.isEmpty) {
           StateTransition(IdleState())
         } else {
           StateTransition(BusyState(queueTail),
-            completeTaskRefresher(currentTime + queueTail.head.timeOfExecution))
+            taskCompletedMessage(queueTail.head))
         }
       }
     }
 
     case class IdleState() extends AgentState {
-      def changeState(message: DeferredMessage) = message match {
-        case DeferredMessage(_, currentTime, task: Task) => {
+      def changeState(currentTime: Long, message: AnyRef) = message match {
+        case task: Task => {
           val newState = BusyState(task)
-          val newMessage = completeTaskRefresher(currentTime + task.timeOfExecution)
+          val newMessage = taskCompletedMessage(task)
           StateTransition(newState, newMessage)
-        }
-        case wrongMessage => {
-          throw new RuntimeException("wrong message: " + wrongMessage)
         }
       }
     }
@@ -102,7 +84,7 @@ object SimpleClusterModel {
       Task(random.nextInt(maximumTaskExecutionTime))
     }
     val taskMessages = for (task <- tasks) yield {
-      DeferredMessage(mainServerId, random.nextInt(maximumTaskExecutionTime / 3), task)
+      DelayedMessage(Message(task, mainServerId), random.nextInt(maximumTaskExecutionTime / 3))
     }
     val initialModelState = ModelState(cluster, taskMessages)
     val modelStates = new Iterator[ModelState] {
@@ -117,7 +99,8 @@ object SimpleClusterModel {
       }
     }
     for (modelState <- modelStates) {
-      println("current time: " + modelState.currentTime)
+      println("time of last event: " + modelState.timeOfLastEvent)
+      println("time of next event: " + modelState.timeOfNextEvent.getOrElse("-"))
       println("agents:")
       for (agent <- modelState.agents) {
         println(agent)
