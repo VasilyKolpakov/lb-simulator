@@ -57,7 +57,7 @@ class ModelState(agentIdToAgentStateMap: immutable.Map[AgentId, AgentState],
   def timeOfNextEvent = if (messageQueue.isEmpty) {
     None
   } else {
-    Some(messageQueue.dequeue._1._1)
+    Some(messageQueue.head._1)
   }
 
   override def toString = agentIdToAgentStateMap.toString() + "  " + messageQueue.toString

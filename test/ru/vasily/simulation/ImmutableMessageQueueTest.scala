@@ -25,7 +25,7 @@ class ImmutableMessageQueueTest extends FlatSpec with ShouldMatchers {
     secondElement should equal("2")
   }
 
-  it should "dequeue messge having the earliest timestamp" in {
+  it should "dequeue message having the earliest timestamp" in {
     val queue = ImmutableMessageQueue((1, "1"), (0, "2"))
     val ((_, firstElement), tail) = queue.dequeue
     firstElement should equal("2")
@@ -37,4 +37,8 @@ class ImmutableMessageQueueTest extends FlatSpec with ShouldMatchers {
     queue.toSeq should equal(seq)
   }
 
+  it should "return head" in {
+    val queue = ImmutableMessageQueue((0, "1"), (1, "2"))
+    queue.head should equal(0, "1")
+  }
 }

@@ -16,9 +16,13 @@ class ImmutableMessageQueue[M] private(sortedMap: SortedMap[OrderedTimestamp, M]
     }
   }
 
-  def dequeue: ((Long, M), ImmutableMessageQueue[M]) = {
+  def head = {
     val (OrderedTimestamp(timestamp, _), message) = sortedMap.head
-    ((timestamp, message), new ImmutableMessageQueue(sortedMap.tail))
+    (timestamp, message)
+  }
+
+  def dequeue: ((Long, M), ImmutableMessageQueue[M]) = {
+    (head, new ImmutableMessageQueue(sortedMap.tail))
   }
 
   def ++(timestampedMessages: Seq[(Long, M)]): ImmutableMessageQueue[M] = {
@@ -36,8 +40,8 @@ class ImmutableMessageQueue[M] private(sortedMap: SortedMap[OrderedTimestamp, M]
   def toSeq: Seq[(Long, M)] =
 
     sortedMap.toSeq map {
-    case (OrderedTimestamp(timestamp, _), message) => (timestamp, message)
-  }
+      case (OrderedTimestamp(timestamp, _), message) => (timestamp, message)
+    }
 }
 
 
