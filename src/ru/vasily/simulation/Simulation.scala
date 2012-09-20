@@ -40,7 +40,7 @@ class ModelState(agentIdToAgentStateMap: immutable.Map[AgentId, AgentState],
       }
       val agentId = message.receiverId
       val agentState = agentIdToAgentStateMap(agentId)
-      val StateTransition(newAgentState, newMessages) = agentState.changeState(timeOfLastEvent, message.contents)
+      val StateTransition(newAgentState, newMessages) = agentState.changeState(nextEventTime, message.contents)
       val nextAgentStates = agentIdToAgentStateMap.updated(agentId, newAgentState)
       val prioritizedMessages = newMessages map {
         ModelState.delayedMessageToQueueElement(_, nextEventTime)

@@ -87,17 +87,7 @@ object SimpleClusterModel {
       DelayedMessage(Message(task, mainServerId), random.nextInt(maximumTaskExecutionTime / 3))
     }
     val initialModelState = ModelState(cluster, taskMessages)
-    val modelStates = new Iterator[ModelState] {
-      var nextStateOption: Option[ModelState] = Some(initialModelState)
-
-      def hasNext = !nextStateOption.isEmpty
-
-      def next() = {
-        val currentState = nextStateOption.get
-        nextStateOption = currentState.nextState()
-        currentState
-      }
-    }
+    val modelStates = new ModelStateIterator(initialModelState)
     for (modelState <- modelStates) {
       println("time of last event: " + modelState.timeOfLastEvent)
       println("time of next event: " + modelState.timeOfNextEvent.getOrElse("-"))
