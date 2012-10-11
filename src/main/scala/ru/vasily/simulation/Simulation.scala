@@ -71,6 +71,18 @@ object ModelState {
     new ModelState(Map(agents: _*), ImmutableMessageQueue(queueElements: _*))
   }
 
+  def prettyToString(modelState: ModelState) = {
+    val lines =
+      Seq("time of last event: " + modelState.timeOfLastEvent,
+        "time of next event: " + modelState.timeOfNextEvent.getOrElse("-"),
+        "agents:") ++
+        (for (agent <- modelState.agents) yield agent.toString) ++
+        Seq("messages:") ++
+        (for (message <- modelState.messages) yield message.toString) ++
+        Seq("======================")
+    lines.mkString("\n")
+  }
+
   private def delayedMessageToQueueElement(dm: DelayedMessage, currentTime: Long) = (dm.delay + currentTime, dm.message)
 }
 

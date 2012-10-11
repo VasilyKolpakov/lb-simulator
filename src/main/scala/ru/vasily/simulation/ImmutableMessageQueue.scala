@@ -22,7 +22,7 @@ class ImmutableMessageQueue[M] private(sortedMap: SortedMap[OrderedTimestamp, M]
   }
 
   def dequeue: ((Long, M), ImmutableMessageQueue[M]) = {
-    (head, new ImmutableMessageQueue(sortedMap.tail))
+    (head, new ImmutableMessageQueue(sortedMap - sortedMap.firstKey))
   }
 
   def ++(timestampedMessages: Seq[(Long, M)]): ImmutableMessageQueue[M] = {
