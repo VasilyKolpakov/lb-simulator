@@ -8,19 +8,19 @@ import simulation._
 
 object Main {
   val injectors = Map(
-    "dynamic wrr" -> new Injector[ClusterModel] {
+    "DynamicWRR" -> new Injector[ClusterModel] {
       def create(env: Environment) = new DynamicRoundRobin(env("servers"),env("maxWeight"))
     },
-    "master-slave" -> new Injector[ClusterModel] {
+    "MasterSlave" -> new Injector[ClusterModel] {
       def create(env: Environment) = new MasterWorkerClusterModel(env("servers"))
     },
-    "random" -> new Injector[ClusterModel] {
+    "Random" -> new Injector[ClusterModel] {
       def create(env: Environment) = new RandomClusterModel(env("servers"))
     },
-    "round-robin" -> new Injector[ClusterModel] {
+    "RoundRobin" -> new Injector[ClusterModel] {
       def create(env: Environment) = new RoundRobinClusterModel(env("servers"))
     },
-    "randomTaskGen" -> new Injector[TasksGenerator] {
+    "RandomTaskGen" -> new Injector[TasksGenerator] {
       def create(env: Environment) = new UniformRandomTaskGenerator(
         env("tasks"), env("maxArrivalTime"), env("minExecTime"), env("maxExecTime"), env("seed")
       )
