@@ -23,10 +23,7 @@ class ModelStateTest extends FlatSpec with ShouldMatchers {
     val clock = (Clock(), ClockState(0))
     val initialTic: DelayedMessage = DelayedMessage(Tic(), Clock(), 0)
     val initialState = ModelState(Seq(clock), Seq(initialTic))
-    val iterator = new ModelStateIterator(initialState)
-    for (i <- 1 to 10) {
-      iterator.next()
-    }
+    initialState.nextStates.take(10).last
   }
 
 
