@@ -7,29 +7,10 @@ import annotation.tailrec
 import sun.swing.plaf.synth.Paint9Painter.PaintType
 import runtime.RichLong
 
-object StreamUtils {
-  implicit def enrichStream[T](stream: Stream[T]) = new RichStream[T](stream)
-}
-
-class RichStream[T](stream: Stream[T]) {
-  def takeTill(endCondition: T => Boolean) = {
-    def recursiveTakeTill(innerStream: Stream[T]): Stream[T] = {
-      val head = innerStream.head
-      if (endCondition(head)) {
-        Stream.empty
-      } else {
-        Stream.cons(head, recursiveTakeTill(innerStream.tail))
-      }
-    }
-    recursiveTakeTill(stream)
-  }
-}
-
-
 class ModelState(agentIdToAgentStateMap: immutable.Map[AgentId, AgentState],
                  messageQueue: ImmutableMessageQueue[Message], val timeOfLastEvent: Long = 0) {
 
-  def nextState() = {
+  def nextState = {
     if (messageQueue.isEmpty) {
       None
     } else {
@@ -50,7 +31,7 @@ class ModelState(agentIdToAgentStateMap: immutable.Map[AgentId, AgentState],
     }
   }
 
-  def agents = agentIdToAgentStateMap.toSeq
+  def agents = agentIdToAgentStateMap
 
   def messages = messageQueue.toSeq
 
@@ -58,6 +39,11 @@ class ModelState(agentIdToAgentStateMap: immutable.Map[AgentId, AgentState],
     None
   } else {
     Some(messageQueue.head._1)
+  }
+
+  def nextStates: Stream[ModelState] = nextState match {
+    case Some(state) => Stream.cons(state, state.nextStates)
+    case None => Stream.empty
   }
 
   override def toString = agentIdToAgentStateMap.toString() + "  " + messageQueue.toString
