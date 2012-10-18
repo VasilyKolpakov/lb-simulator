@@ -21,7 +21,7 @@ class ScopeDrivenDITest extends FlatSpec with ShouldMatchers {
     val complexComponentFactory = InjectorStub("number")
     val scope = DIScope(
       "number" -> Primitive(1),
-      "complexComponent" -> ComplexObject(complexComponentFactory)
+      "complexComponent" -> ComplexComponent(complexComponentFactory)
     )
     val expectedObject = Map(
       "number" -> 1,
@@ -36,7 +36,7 @@ class ScopeDrivenDITest extends FlatSpec with ShouldMatchers {
     val innerScope = DIScope("number" -> Primitive(2))
     val scope = DIScope(
       "number" -> Primitive(1),
-      "complexComponent" -> ComplexObject(complexComponentFactory, innerScope)
+      "complexComponent" -> ComplexComponent(complexComponentFactory, innerScope)
     )
     val expectedObject = Map(
       "number" -> 1,
@@ -52,8 +52,8 @@ class ScopeDrivenDITest extends FlatSpec with ShouldMatchers {
     val innerScope = DIScope("number" -> Primitive(2))
     val scope = DIScope(
       "number" -> Primitive(1),
-      "complexComponent1" -> ComplexObject(complexComponent1Factory),
-      "complexComponent2" -> ComplexObject(complexComponent2Factory, innerScope)
+      "complexComponent1" -> ComplexComponent(complexComponent1Factory),
+      "complexComponent2" -> ComplexComponent(complexComponent2Factory, innerScope)
     )
     val expectedObject = Map(
       "number" -> 1,

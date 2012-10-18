@@ -29,14 +29,18 @@ class ScopeDrivenDIImpl private[di](scope: DIScope, name: String, parent: ScopeD
   def getInstance(key: String): Option[Any] = {
     val thisScopeInstanceOption =
       for (component <- scope.getComponent(key))
-      yield component match {
-        case Primitive(value) => value
-        case ComplexObject(injector, innerScope) => child(innerScope, key).accept(injector)
-      }
+      yield instantiate(component, key)
     thisScopeInstanceOption
       .orElse(parent.getInstance(key))
   }
 
+  def instantiate(component: SDComponent, key: String = ""): Any = component match {
+    case Primitive(value) => value
+    case MapComponent(map) => map.map {
+      case (mapKey, comp) => (mapKey, instantiate(comp, key + "/" + mapKey))
+    }
+    case ComplexComponent(injector, innerScope) => child(innerScope, key).accept(injector)
+  }
 
   protected[di] def scopePath = parent.scopePath + name + "/"
 
