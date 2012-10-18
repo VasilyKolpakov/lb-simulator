@@ -1,0 +1,58 @@
+{
+  "clusterModel RoundRobinClusterModel(5)" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 1.0401960784313726,
+      "min-max slowdown metric" : 1.4705882352941178,
+      "makespan" : 109
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 0.5263157894736842,
+      "standard deviation" : 0.024181752941462752,
+      "Jain index" : 0.9702398800599704,
+      "balancing efficiency" : 0.792105263157895
+    }
+  } ],
+  "clusterModel_wrr DynamicRoundRobin(5,3)" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 1.1152224450386217,
+      "min-max slowdown metric" : 2.0625,
+      "makespan" : 116
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 0.5263157894736843,
+      "standard deviation" : 0.025055675222989,
+      "Jain index" : 0.9616284351578471,
+      "balancing efficiency" : 0.7657894736842107
+    }
+  } ],
+  "clusterModel_rand RandomClusterModel(5)" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 1.2447014973330763,
+      "min-max slowdown metric" : 2.5,
+      "makespan" : 116
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 0.5263157894736843,
+      "standard deviation" : 0.02374996088613088,
+      "Jain index" : 0.9669425087108013,
+      "balancing efficiency" : 0.7842105263157894
+    }
+  } ],
+  "clusterModel2 RoundRobinClusterModel(10)" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 1.0,
+      "min-max slowdown metric" : 1.0,
+      "makespan" : 114
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 0.5263157894736842,
+      "standard deviation" : 0.025007693491488476,
+      "Jain index" : 0.9620298995561782,
+      "balancing efficiency" : 0.7552631578947367
+    }
+  } ]
+}

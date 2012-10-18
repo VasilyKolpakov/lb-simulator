@@ -2,7 +2,7 @@ package ru.vasily.simulation
 
 import annotation.tailrec
 
-class DynamicRoundRobin(numberOfServers: Int, maxWeight: Int) extends ClusterModel {
+case class DynamicRoundRobin(numberOfServers: Int, maxWeight: Int) extends ClusterModel {
   val serverIds = (0 until numberOfServers) map {
     SimpleServer(_)
   }

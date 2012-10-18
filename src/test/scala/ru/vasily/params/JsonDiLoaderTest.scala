@@ -2,7 +2,7 @@ package ru.vasily.params
 
 import org.scalatest.FlatSpec
 import org.scalatest.matchers.ShouldMatchers
-import ru.vasily.di.{ScopeDrivenDIImpl, ScopeDrivenDI, InjectorStub}
+import ru.vasily.di.{DIScope, ScopeDrivenDIImpl, ScopeDrivenDI, InjectorStub}
 import java.io.StringReader
 
 class JsonDiLoaderTest extends FlatSpec with ShouldMatchers {
@@ -18,14 +18,17 @@ class JsonDiLoaderTest extends FlatSpec with ShouldMatchers {
         |  }
         |}
       """.stripMargin
-    val injectors = Map("comp" -> InjectorStub("number"))
-    val diScope = JsonDiLoader.createDIScope(json, injectors)
+    val injectors = Map(
+      "root" -> InjectorStub("number", "complexComponent"),
+      "comp" -> InjectorStub("number")
+    )
+    val diComponent = JsonDiLoader.createSDComponent(json, injectors, "root")
 
     val expectedObject = Map(
       "number" -> 1,
       "complexComponent" -> Map("number" -> 2)
     )
-    diScope.accept(InjectorStub("number", "complexComponent")) should equal(expectedObject)
+    diComponent.instance should equal(expectedObject)
   }
   it should "allow fields without quotes in json" in {
     val json =
@@ -34,10 +37,10 @@ class JsonDiLoaderTest extends FlatSpec with ShouldMatchers {
         |  number : 1
         |}
       """.stripMargin
-    val diScope = JsonDiLoader.createDIScope(json, Map.empty)
+    val diComponent = JsonDiLoader.createSDComponent(json, Map("root" -> InjectorStub("number")), "root")
 
     val expectedObject = Map("number" -> 1)
-    diScope.accept(InjectorStub("number")) should equal(expectedObject)
+    diComponent.instance should equal(expectedObject)
   }
 
 }

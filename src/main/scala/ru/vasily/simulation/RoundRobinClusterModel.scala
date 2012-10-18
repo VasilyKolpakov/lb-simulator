@@ -1,6 +1,6 @@
 package ru.vasily.simulation
 
-class RoundRobinClusterModel(numberOfServers: Int) extends ClusterModel {
+case class RoundRobinClusterModel(numberOfServers: Int) extends ClusterModel {
   val serverIds = (0 until numberOfServers) map {
     SimpleServer(_)
   }

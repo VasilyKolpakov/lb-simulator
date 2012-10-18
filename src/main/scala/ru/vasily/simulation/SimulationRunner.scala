@@ -1,6 +1,8 @@
 package ru.vasily.simulation
 
-class SimulationRunner(clusterModel: ClusterModel, taskGenerator: TasksGenerator) {
+import ru.vasily.Runner
+
+class SimulationRunner(clusterModel: ClusterModel, taskGenerator: TasksGenerator, showHistory: Boolean = true) extends Runner {
   def getResult: AnyRef = {
     val initialMessagesReceiver = clusterModel.initialMessagesReceiver
     val agents = clusterModel.agents
@@ -12,9 +14,9 @@ class SimulationRunner(clusterModel: ClusterModel, taskGenerator: TasksGenerator
 
     val initialModelState = ModelState(agents, taskMessages)
 
-//    for (state <- initialModelState.nextStates) {
-//      println(ModelState.prettyToString(state))
-//    }
+    //    for (state <- initialModelState.nextStates) {
+    //      println(ModelState.prettyToString(state))
+    //    }
 
     val lastModelState = initialModelState.nextStates.last
     val MonitoringService.State(history) = lastModelState.agents.get(MonitoringService).getOrElse {
@@ -24,7 +26,8 @@ class SimulationRunner(clusterModel: ClusterModel, taskGenerator: TasksGenerator
     val totalSimulationTime = lastModelState.timeOfLastEvent
     val uniMetrics = new UniformityMetrics(history, totalSimulationTime)
     val performanceMetrics = Map("performance metrics" -> Map(
-      "slowdown metric" -> slowdownMetric(history),
+      "average slowdown metric" -> averageSlowdownMetric(history),
+      "min-max slowdown metric" -> minMaxSlowdownMetric(history),
       "makespan" -> totalSimulationTime
     ))
     val uniformityMetrics = Map("uniformity metrics" -> Map(
@@ -34,17 +37,29 @@ class SimulationRunner(clusterModel: ClusterModel, taskGenerator: TasksGenerator
       "balancing efficiency" -> uniMetrics.balancingEfficiency
     ))
     // TODO investigate compiler hang
-    List[AnyRef](performanceMetrics, uniformityMetrics, Map("history" -> history))
+    val historyList = if (showHistory) {
+      Map("history" -> history)
+    } else {
+      Nil
+    }
+    List[AnyRef](performanceMetrics, uniformityMetrics) ++ historyList
   }
 
-  def slowdownMetric(history: Map[AgentId, Seq[TaskRecord]]): Double = {
-    val taskSlowdowns =
-      for ((_, taskRecords) <- history;
-           taskRecord <- taskRecords;
-           task = taskRecord.task)
-      yield task.executionTime.toDouble / (taskRecord.completionTime - task.arrivalTime)
+  def averageSlowdownMetric(history: Map[AgentId, Seq[TaskRecord]]): Double = {
+    val taskSlowdowns = slowdowns(history)
     taskSlowdowns.sum / taskSlowdowns.size
   }
+
+  def minMaxSlowdownMetric(history: Map[AgentId, Seq[TaskRecord]]): Double = {
+    val taskSlowdowns = slowdowns(history)
+    taskSlowdowns.max / taskSlowdowns.min
+  }
+
+  def slowdowns(history: Map[AgentId, Seq[TaskRecord]]) = for ((_, taskRecords) <- history;
+                                                               taskRecord <- taskRecords;
+                                                               task = taskRecord.task)
+  yield (taskRecord.completionTime - task.arrivalTime).toDouble / task.executionTime
+
 
   class UniformityMetrics(history: Map[AgentId, Seq[TaskRecord]], makespan: Long) {
 

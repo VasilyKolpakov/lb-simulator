@@ -1,6 +1,6 @@
 package ru.vasily
 
-import di.{Environment, Injector}
+import di.{DIScope, ComplexComponent, Environment, Injector}
 import params.JsonDiLoader
 import RichFile.enrichFile
 import java.io.File
@@ -8,8 +8,18 @@ import simulation._
 
 object Main {
   val injectors = Map(
+    "MultiRunner" -> new Injector[SimulationMultiRunner] {
+      def create(env: Environment) = new SimulationMultiRunner(
+        env("clusterModels"), env("taskGenerator")
+      )
+    },
+    "Runner" -> new Injector[SimulationRunner] {
+      def create(env: Environment) = new SimulationRunner(
+        env("clusterModel"), env("taskGenerator")
+      )
+    },
     "DynamicWRR" -> new Injector[ClusterModel] {
-      def create(env: Environment) = new DynamicRoundRobin(env("servers"),env("maxWeight"))
+      def create(env: Environment) = new DynamicRoundRobin(env("servers"), env("maxWeight"))
     },
     "MasterSlave" -> new Injector[ClusterModel] {
       def create(env: Environment) = new MasterWorkerClusterModel(env("servers"))
@@ -27,18 +37,16 @@ object Main {
     }
 
   )
-  val simulationRunnerInj = new Injector[SimulationRunner] {
-    def create(env: Environment) = new SimulationRunner(
-      env("clusterModel"), env("taskGenerator")
-    )
-  }
 
   def main(args: Array[String]) {
     for (fileName <- args) {
       val inputFile = new File(fileName)
       val outputFile = new File(fileName + ".out")
-      val runner = JsonDiLoader.createDIScope(inputFile.text, injectors)
-        .accept(simulationRunnerInj)
+      val sdComponent = JsonDiLoader.createSDComponent(
+        inputFile.text,
+        injectors,
+        defaultRootType = "Runner")
+      val runner = sdComponent.instance.asInstanceOf[Runner]
       outputFile.text = Serializer.marshal(runner.getResult)
     }
   }

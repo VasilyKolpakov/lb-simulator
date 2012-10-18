@@ -2,7 +2,7 @@ package ru.vasily.simulation
 
 import util.Random
 
-class RandomClusterModel(numberOfServers: Int) extends ClusterModel {
+case class RandomClusterModel(numberOfServers: Int) extends ClusterModel {
 
   object MainServer extends AgentId {
     val random = new Random(0)
