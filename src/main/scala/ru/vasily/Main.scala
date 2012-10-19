@@ -47,7 +47,7 @@ object Main {
         injectors,
         defaultRootType = "Runner")
       val runner = sdComponent.instance.asInstanceOf[Runner]
-      outputFile.text = Serializer.marshal(runner.getResult)
+      outputFile.text = runner.getResult
     }
   }
 }

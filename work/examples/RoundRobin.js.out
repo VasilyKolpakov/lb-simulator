@@ -11,130 +11,132 @@
     "Jain index" : 0.9702398800599704,
     "balancing efficiency" : 0.792105263157895
   }
-}, [ "history", {
-  "SimpleServer(3)" : [ {
-    "task" : {
-      "executionTime" : 16,
-      "arrivalTime" : 89
-    },
-    "completionTime" : 105
-  }, {
-    "task" : {
-      "executionTime" : 14,
-      "arrivalTime" : 59
-    },
-    "completionTime" : 73
-  }, {
-    "task" : {
-      "executionTime" : 15,
-      "arrivalTime" : 34
-    },
-    "completionTime" : 49
-  }, {
-    "task" : {
-      "executionTime" : 10,
-      "arrivalTime" : 6
-    },
-    "completionTime" : 16
-  } ],
-  "SimpleServer(1)" : [ {
-    "task" : {
-      "executionTime" : 19,
-      "arrivalTime" : 73
-    },
-    "completionTime" : 92
-  }, {
-    "task" : {
-      "executionTime" : 15,
-      "arrivalTime" : 54
-    },
-    "completionTime" : 69
-  }, {
-    "task" : {
-      "executionTime" : 16,
-      "arrivalTime" : 32
-    },
-    "completionTime" : 48
-  }, {
-    "task" : {
-      "executionTime" : 14,
-      "arrivalTime" : 4
-    },
-    "completionTime" : 18
-  } ],
-  "SimpleServer(2)" : [ {
-    "task" : {
-      "executionTime" : 15,
-      "arrivalTime" : 88
-    },
-    "completionTime" : 103
-  }, {
-    "task" : {
-      "executionTime" : 13,
-      "arrivalTime" : 55
-    },
-    "completionTime" : 68
-  }, {
-    "task" : {
-      "executionTime" : 12,
-      "arrivalTime" : 34
-    },
-    "completionTime" : 46
-  }, {
-    "task" : {
-      "executionTime" : 14,
-      "arrivalTime" : 6
-    },
-    "completionTime" : 20
-  } ],
-  "SimpleServer(4)" : [ {
-    "task" : {
-      "executionTime" : 10,
-      "arrivalTime" : 99
-    },
-    "completionTime" : 109
-  }, {
-    "task" : {
-      "executionTime" : 12,
-      "arrivalTime" : 62
-    },
-    "completionTime" : 78
-  }, {
-    "task" : {
-      "executionTime" : 18,
-      "arrivalTime" : 48
-    },
-    "completionTime" : 66
-  }, {
-    "task" : {
-      "executionTime" : 17,
-      "arrivalTime" : 13
-    },
-    "completionTime" : 30
-  } ],
-  "SimpleServer(0)" : [ {
-    "task" : {
-      "executionTime" : 17,
-      "arrivalTime" : 63
-    },
-    "completionTime" : 88
-  }, {
-    "task" : {
-      "executionTime" : 18,
-      "arrivalTime" : 53
-    },
-    "completionTime" : 71
-  }, {
-    "task" : {
-      "executionTime" : 19,
-      "arrivalTime" : 20
-    },
-    "completionTime" : 39
-  }, {
-    "task" : {
-      "executionTime" : 17,
-      "arrivalTime" : 2
-    },
-    "completionTime" : 19
-  } ]
-} ] ]
+}, {
+  "history" : {
+    "SimpleServer(3)" : [ {
+      "task" : {
+        "executionTime" : 16,
+        "arrivalTime" : 89
+      },
+      "completionTime" : 105
+    }, {
+      "task" : {
+        "executionTime" : 14,
+        "arrivalTime" : 59
+      },
+      "completionTime" : 73
+    }, {
+      "task" : {
+        "executionTime" : 15,
+        "arrivalTime" : 34
+      },
+      "completionTime" : 49
+    }, {
+      "task" : {
+        "executionTime" : 10,
+        "arrivalTime" : 6
+      },
+      "completionTime" : 16
+    } ],
+    "SimpleServer(1)" : [ {
+      "task" : {
+        "executionTime" : 19,
+        "arrivalTime" : 73
+      },
+      "completionTime" : 92
+    }, {
+      "task" : {
+        "executionTime" : 15,
+        "arrivalTime" : 54
+      },
+      "completionTime" : 69
+    }, {
+      "task" : {
+        "executionTime" : 16,
+        "arrivalTime" : 32
+      },
+      "completionTime" : 48
+    }, {
+      "task" : {
+        "executionTime" : 14,
+        "arrivalTime" : 4
+      },
+      "completionTime" : 18
+    } ],
+    "SimpleServer(2)" : [ {
+      "task" : {
+        "executionTime" : 15,
+        "arrivalTime" : 88
+      },
+      "completionTime" : 103
+    }, {
+      "task" : {
+        "executionTime" : 13,
+        "arrivalTime" : 55
+      },
+      "completionTime" : 68
+    }, {
+      "task" : {
+        "executionTime" : 12,
+        "arrivalTime" : 34
+      },
+      "completionTime" : 46
+    }, {
+      "task" : {
+        "executionTime" : 14,
+        "arrivalTime" : 6
+      },
+      "completionTime" : 20
+    } ],
+    "SimpleServer(4)" : [ {
+      "task" : {
+        "executionTime" : 10,
+        "arrivalTime" : 99
+      },
+      "completionTime" : 109
+    }, {
+      "task" : {
+        "executionTime" : 12,
+        "arrivalTime" : 62
+      },
+      "completionTime" : 78
+    }, {
+      "task" : {
+        "executionTime" : 18,
+        "arrivalTime" : 48
+      },
+      "completionTime" : 66
+    }, {
+      "task" : {
+        "executionTime" : 17,
+        "arrivalTime" : 13
+      },
+      "completionTime" : 30
+    } ],
+    "SimpleServer(0)" : [ {
+      "task" : {
+        "executionTime" : 17,
+        "arrivalTime" : 63
+      },
+      "completionTime" : 88
+    }, {
+      "task" : {
+        "executionTime" : 18,
+        "arrivalTime" : 53
+      },
+      "completionTime" : 71
+    }, {
+      "task" : {
+        "executionTime" : 19,
+        "arrivalTime" : 20
+      },
+      "completionTime" : 39
+    }, {
+      "task" : {
+        "executionTime" : 17,
+        "arrivalTime" : 2
+      },
+      "completionTime" : 19
+    } ]
+  }
+} ]

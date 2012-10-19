@@ -1,9 +1,9 @@
 package ru.vasily.simulation
 
-import ru.vasily.Runner
+import ru.vasily.{Serializer, Runner}
 
 class SimulationRunner(clusterModel: ClusterModel, taskGenerator: TasksGenerator, showHistory: Boolean = true) extends Runner {
-  def getResult: AnyRef = {
+  def getResult: String = {
     val initialMessagesReceiver = clusterModel.initialMessagesReceiver
     val agents = clusterModel.agents
     val tasks = taskGenerator.generateTasks
@@ -37,12 +37,14 @@ class SimulationRunner(clusterModel: ClusterModel, taskGenerator: TasksGenerator
       "balancing efficiency" -> uniMetrics.balancingEfficiency
     ))
     // TODO investigate compiler hang
-    val historyList = if (showHistory) {
-      Map("history" -> history)
-    } else {
-      Nil
-    }
-    List[AnyRef](performanceMetrics, uniformityMetrics) ++ historyList
+    val historyList =
+      if (showHistory) {
+        List(Map("history" -> history))
+      } else {
+        Nil
+      }
+    val result = List[AnyRef](performanceMetrics, uniformityMetrics) ++ historyList
+    Serializer.marshal(result)
   }
 
   def averageSlowdownMetric(history: Map[AgentId, Seq[TaskRecord]]): Double = {
