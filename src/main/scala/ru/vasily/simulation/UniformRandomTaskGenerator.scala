@@ -8,13 +8,14 @@ class UniformRandomTaskGenerator(numberOfTasks: Int,
                                  maxExecutionTime: Int,
                                  seed: Int)
   extends TasksGenerator {
-  val random = new Random(seed)
 
-  def generateTasks =
+  def generateTasks = {
+    val random = new Random(seed)
     for (i <- 1 to numberOfTasks) yield {
       Task(
         random.nextInt(maxExecutionTime - minExecutionTime) + minExecutionTime,
         random.nextInt(latestArrivalTime)
       )
     }
+  }
 }
