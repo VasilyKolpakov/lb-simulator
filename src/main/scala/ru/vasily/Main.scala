@@ -5,15 +5,21 @@ import params.JsonDiLoader
 import RichFile.enrichFile
 import java.io.File
 import simulation._
+import utils.TestConfigPrinter
 
 object Main {
   val injectors = Map(
-    "MultiRunner" -> new Injector[SimulationMultiRunner] {
+    "TestConfigPrinter" -> new Injector[Runner] {
+      def create(env: Environment) = new TestConfigPrinter(
+        env("testName"), env("servers"), env("taskGenerator")
+      )
+    },
+    "MultiRunner" -> new Injector[Runner] {
       def create(env: Environment) = new SimulationMultiRunner(
         env("clusterModels"), env("taskGenerator")
       )
     },
-    "Runner" -> new Injector[SimulationRunner] {
+    "Runner" -> new Injector[Runner] {
       def create(env: Environment) = new SimulationRunner(
         env("clusterModel"), env("taskGenerator")
       )
