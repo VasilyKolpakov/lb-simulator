@@ -2,8 +2,6 @@ package ru.vasily.di
 
 trait DIScope {
   def getComponent(key: String): Option[SDComponent]
-
-  def accept[T](injector: Injector[T]) = ScopeDrivenDI(this).accept(injector)
 }
 
 object DIScope {
