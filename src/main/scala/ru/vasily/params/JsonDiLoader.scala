@@ -11,7 +11,8 @@ object JsonDiLoader {
   private val mapper = new ObjectMapper()
   mapper.getFactory.enable(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES)
 
-  def createSDComponent(json: String, injectors: Map[String, Injector[Any]], defaultRootType: String): SDComponent = {
+  def createSDComponent(json: String, injectors: Seq[Injector[_]], defaultRootType: String): SDComponent = {
+    val injectorsMap = injectors.map(inj => (inj.typeName, inj)).toMap
     def toSDComponent(parsedJson: Any, defaultTypeKey: Option[String] = None): SDComponent = parsedJson match {
       case number: BigDecimal => {
         Primitive(number.intValue())
@@ -28,7 +29,7 @@ object JsonDiLoader {
     }
 
     def toComplexComponent(map: Map[String, Any], typeKey: String) = {
-      val injector = injectors.get(typeKey)
+      val injector = injectorsMap.get(typeKey)
         .getOrElse(throw new RuntimeException("unsupported type " + typeKey))
       ComplexComponent(injector, toDIScope(map - TYPE_RESERVED_WORD))
     }

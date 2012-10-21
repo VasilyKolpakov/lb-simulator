@@ -1,7 +1,9 @@
 package ru.vasily.di
 
 sealed trait SDComponent {
-  def instance = ScopeDrivenDI(DIScope.empty).instantiate(this)
+  def instance = ScopeDrivenDI(DIScope.empty).instantiate(this)._1
+
+  def config = ScopeDrivenDI(DIScope.empty).instantiate(this)._2
 }
 
 case class ComplexComponent[T](injector: Injector[T], scope: DIScope = DIScope.empty) extends SDComponent

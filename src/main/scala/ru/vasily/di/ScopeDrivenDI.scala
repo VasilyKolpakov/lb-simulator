@@ -1,20 +1,18 @@
 package ru.vasily.di
 
 trait ScopeDrivenDI {
-  def accept[T](injector: Injector[T]): T = {
+  protected def accept[T](injector: Injector[T]): (T, Map[String, Any]) = {
     val env = new Environment {
-      def apply[A](key: String) = {
-        val value = get(key).getOrElse(throw new RuntimeException("no value for key = " + key + " in " + scopePath))
-        value.asInstanceOf[A]
+      def getValueWithConfig[A](key: String, clazz: Class[A]) = {
+        val valueAndConfig = getInstance(key).getOrElse(throw new RuntimeException("no value for key = " + key + " in " + scopePath))
+        valueAndConfig.asInstanceOf[(A, Any)]
       }
-
-      def get(key: String) = getInstance(key)
     }
 
     injector.create(env)
   }
 
-  def getInstance(key: String): Option[Any]
+  def getInstance(key: String): Option[(Any, Any)]
 
   protected[di] def scopePath: String
 }
@@ -26,7 +24,7 @@ object EmptyScopeDrivenDI extends ScopeDrivenDI {
 }
 
 class ScopeDrivenDIImpl private[di](scope: DIScope, name: String, parent: ScopeDrivenDI) extends ScopeDrivenDI {
-  def getInstance(key: String): Option[Any] = {
+  def getInstance(key: String): Option[(Any, Any)] = {
     val thisScopeInstanceOption =
       for (component <- scope.getComponent(key))
       yield instantiate(component, key)
@@ -34,12 +32,20 @@ class ScopeDrivenDIImpl private[di](scope: DIScope, name: String, parent: ScopeD
       .orElse(parent.getInstance(key))
   }
 
-  def instantiate(component: SDComponent, key: String = ""): Any = component match {
-    case Primitive(value) => value
-    case MapComponent(map) => map.map {
-      case (mapKey, comp) => (mapKey, instantiate(comp, key + "/" + mapKey))
+  def instantiate(component: SDComponent, key: String = ""): (Any, Any) = component match {
+    case Primitive(value) => (value, value)
+    case MapComponent(map) => {
+      val instancesWithConfigs = map.map {
+        case (mapKey, comp) => (mapKey, instantiate(comp, key + "/" + mapKey))
+      }
+      val mapConfig = instancesWithConfigs.mapValues(_._2)
+      val mapInstance = instancesWithConfigs.mapValues(_._1)
+      (mapConfig, mapInstance)
     }
-    case ComplexComponent(injector, innerScope) => child(innerScope, key).accept(injector)
+    case ComplexComponent(injector, innerScope) => {
+      val (instance, config) = child(innerScope, key).accept(injector)
+      (instance, config.updated("type", injector.typeName))
+    }
   }
 
   protected[di] def scopePath = parent.scopePath + name + "/"
@@ -49,5 +55,5 @@ class ScopeDrivenDIImpl private[di](scope: DIScope, name: String, parent: ScopeD
 }
 
 object ScopeDrivenDI {
-  def apply(initialScope: DIScope) = new ScopeDrivenDIImpl(initialScope, "", EmptyScopeDrivenDI)
+  private[di] def apply(initialScope: DIScope) = new ScopeDrivenDIImpl(initialScope, "", EmptyScopeDrivenDI)
 }

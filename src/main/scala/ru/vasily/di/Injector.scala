@@ -1,7 +1,7 @@
 package ru.vasily.di
 
 trait Injector[+T] {
-// TODO def componentName: String
+  def create(env: Environment): (T, Map[String, Any])
 
-  def create(env: Environment): T
+  def typeName: String
 }
