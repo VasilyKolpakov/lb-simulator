@@ -9,7 +9,7 @@ class ClassInjector[T](val typeName: String, clazz: Class[T], dependenciesKeys: 
       .asInstanceOf[Constructor[T]]
     val typesList = constructor.getParameterTypes.toList
     if (dependenciesKeys.size != typesList.size) {
-      throw new ClassInjectorException(
+      throw new ClassInjectorException(typeName,
         "wrong nuber of dependencies: %d not %d".format(dependenciesKeys.size, typesList.size)
       )
     }
@@ -35,14 +35,15 @@ class ClassInjector[T](val typeName: String, clazz: Class[T], dependenciesKeys: 
       }
     } catch {
       case e: ClassInjectorException => throw e
-      case x => throw new ClassInjectorException("error during instantiating " + typeName, x)
+      case x => throw new ClassInjectorException(typeName, "", x)
     }
   }
 
-  class ClassInjectorException(message: String = "", cause: Throwable = null)
-    extends RuntimeException("error during instantiating " + typeName + ": " + message, cause)
-
 }
+
+class ClassInjectorException(typeName: String, message: String = "", cause: Throwable = null)
+  extends RuntimeException("error during instantiating " + typeName + ": " + message, cause)
+
 
 object ClassInjector {
   def apply[T](typeName: String, clazz: Class[T], dependenciesKeys: String*) =
