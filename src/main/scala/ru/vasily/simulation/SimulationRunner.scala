@@ -37,9 +37,16 @@ class SimulationRunner(clusterModel: ClusterModel, taskGenerator: TasksGenerator
       "balancing efficiency" -> uniMetrics.balancingEfficiency
     ))
     // TODO investigate compiler hang
+    val prettyHistory = history.mapValues {
+      taskRecords =>
+        taskRecords.map {
+          case TaskRecord(Task(executionTime, arrivalTime), completionTime) =>
+            Map("executionTime" -> executionTime, "arrivalTime " -> arrivalTime, "completionTime" -> completionTime)
+        }
+    }
     val historyList =
       if (showHistory) {
-        List(Map("history" -> history))
+        List(Map("history" -> prettyHistory))
       } else {
         Nil
       }
