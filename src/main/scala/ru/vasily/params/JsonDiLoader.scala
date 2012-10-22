@@ -10,6 +10,7 @@ object JsonDiLoader {
   private val TYPE_RESERVED_WORD: String = "type"
   private val mapper = new ObjectMapper()
   mapper.getFactory.enable(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES)
+  mapper.getFactory.enable(JsonParser.Feature.ALLOW_COMMENTS)
 
   def createSDComponent(json: String, injectors: Seq[Injector[_]], defaultRootType: String): SDComponent = {
     val injectorsMap = injectors.map(inj => (inj.typeName, inj)).toMap
@@ -26,6 +27,7 @@ object JsonDiLoader {
           case None => toMapComponent(map)
         }
       }
+      case seq: Seq[Any] => SeqComponent(seq.map(obj => toSDComponent(obj)))
     }
 
     def toComplexComponent(map: Map[String, Any], typeKey: String) = {
@@ -61,6 +63,9 @@ object JsonDiLoader {
       BigDecimal(json.asText())
     } else if (json.isTextual) {
       json.textValue()
+    } else if (json.isArray) {
+      val nodes = json.asScala
+      nodes.map(toScalaCollections(_))
     } else {
       val keyNodePairs = for (field <- json.fields().asScala)
       yield (field.getKey, toScalaCollections(field.getValue))
