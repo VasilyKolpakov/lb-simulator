@@ -10,4 +10,6 @@ case class ComplexComponent[T](injector: Injector[T], scope: DIScope = DIScope.e
 
 case class MapComponent(map: Map[String, SDComponent]) extends SDComponent
 
+case class SeqComponent(seq: Seq[SDComponent]) extends SDComponent
+
 case class Primitive(value: Any) extends SDComponent

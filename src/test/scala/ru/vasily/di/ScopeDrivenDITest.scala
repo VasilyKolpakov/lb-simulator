@@ -81,4 +81,23 @@ class ScopeDrivenDITest extends FlatSpec with ShouldMatchers {
     ComplexComponent(topComponentInjector, scope).config should equal(expectedConfig)
   }
 
+  it should "handle list compoents" in {
+    val injector = InjectorStub(Seq("list"))
+    val scope = DIScope(
+      "list" -> SeqComponent(Seq(
+        Primitive(1),
+        Primitive(2)
+      ))
+    )
+    val expectedInstance = Map(
+      "list" -> Seq(1, 2)
+    )
+    val expectedConfig = Map(
+      "type" -> "Stub",
+      "list" -> Seq(1, 2)
+    )
+    ComplexComponent(injector, scope).instance should equal(expectedInstance)
+    ComplexComponent(injector, scope).config should equal(expectedConfig)
+  }
+
 }

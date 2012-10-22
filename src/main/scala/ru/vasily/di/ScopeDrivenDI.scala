@@ -42,6 +42,12 @@ class ScopeDrivenDIImpl private[di](scope: DIScope, name: String, parent: ScopeD
       val mapInstance = instancesWithConfigs.mapValues(_._1)
       (mapConfig, mapInstance)
     }
+    case SeqComponent(seq) => {
+      val instancesWithConfig = seq.zipWithIndex.map {
+        case (comp, i) => instantiate(comp, key + "[%d]".format(i))
+      }
+      instancesWithConfig.unzip
+    }
     case ComplexComponent(injector, innerScope) => {
       val (instance, config) = child(innerScope, key).accept(injector)
       (instance, config.updated("type", injector.typeName))
