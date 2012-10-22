@@ -3,10 +3,12 @@ package ru.vasily.simulation
 import collection.immutable.Queue
 import ru.vasily.simulation.MonitoringService.Report
 
-case class SimpleServer(indexNumber: Int) extends AgentId {
+case class SimpleServer(indexNumber: Int, serverPerformance: Double) extends AgentId {
 
-  def taskCompletedMessage(task: Task) =
-    DelayedMessage(TaskCompleted(), this, task.executionTime)
+  def taskCompletedMessage(task: Task) = {
+    val executionTime: Long = (task.executionTime / serverPerformance).toInt
+    DelayedMessage(TaskCompleted(), this, executionTime)
+  }
 
   def monitoringMessage(task: Task, time: Long) = {
     val report = Report(this, TaskRecord(task, time))
@@ -47,6 +49,12 @@ case class SimpleServer(indexNumber: Int) extends AgentId {
         StateTransition(newState, newMessage)
       }
     }
+  }
+}
+
+object SimpleServer {
+  def generateServers(serversPerformance: Seq[Double]) = serversPerformance.zipWithIndex map {
+    case (performance, index) => SimpleServer(index, performance)
   }
 }
 

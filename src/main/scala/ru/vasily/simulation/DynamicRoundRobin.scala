@@ -2,11 +2,10 @@ package ru.vasily.simulation
 
 import annotation.tailrec
 
-case class DynamicRoundRobin(numberOfServers: Int, maxWeight: Int) extends ClusterModel {
-  val serverIds = (0 until numberOfServers) map {
-    SimpleServer(_)
-  }
-  val defaultWeights = Vector.fill(numberOfServers)(1)
+case class DynamicRoundRobin(serversPerformance: Seq[Double], maxWeight: Int) extends ClusterModel {
+  val numberOfServers = serversPerformance.size
+  val serverIds = SimpleServer.generateServers(serversPerformance)
+  val defaultWeights = Vector(serversPerformance.map(_.toInt): _*)
 
   @tailrec
   private def gcd(a: Int, b: Int): Int =
@@ -79,9 +78,10 @@ case class DynamicRoundRobin(numberOfServers: Int, maxWeight: Int) extends Clust
           val newState = RoundRobinState(nextServersLoad, nextAlgState)
           StateTransition(newState, message)
         }
-        case ServerFinishedTask(SimpleServer(index)) => {
-          val currentServerLoad = serversLoad(index)
-          val nextServersLoad = serversLoad.updated(index, currentServerLoad - 1)
+        case ServerFinishedTask(server: SimpleServer) => {
+          val serverIndex: Int = server.indexNumber
+          val currentServerLoad = serversLoad(serverIndex)
+          val nextServersLoad = serversLoad.updated(serverIndex, currentServerLoad - 1)
           val newState = RoundRobinState(nextServersLoad, algorithmState)
           StateTransition(newState)
         }

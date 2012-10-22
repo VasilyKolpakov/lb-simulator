@@ -2,10 +2,9 @@ package ru.vasily.simulation
 
 import collection.immutable.Queue
 
-case class MasterWorkerClusterModel(numberOfServers: Int) extends ClusterModel {
-  val serverIds = (0 until numberOfServers) map {
-    SimpleServer(_)
-  }
+case class MasterWorkerClusterModel(serversPerformance: Seq[Double]) extends ClusterModel {
+  val numberOfServers = serversPerformance.size
+  val serverIds = SimpleServer.generateServers(serversPerformance)
 
   def agents = {
     val serverAgents =

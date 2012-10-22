@@ -1,5 +1,7 @@
 package ru.vasily
 
 trait Runner {
-  def getResult: String
+  def getResult: AnyRef
+
+  def getResultString: String = Serializer.marshal(getResult)
 }

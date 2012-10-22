@@ -1,58 +1,2257 @@
-{
-  "clusterModel RoundRobinClusterModel(5)" : [ {
+[ {
+  "config" : {
+    "custerModel" : {
+      "type" : "RoundRobin"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 4,
+      "minPerf" : 2,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 80,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 20,
+      "maxExecTime" : 40,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
     "performance metrics" : {
-      "average slowdown metric" : 1.0401960784313726,
-      "min-max slowdown metric" : 1.4705882352941178,
-      "makespan" : 109
+      "average slowdown metric" : 0.32943131699050154,
+      "min-max slowdown metric" : 2.185714285714286,
+      "makespan" : 2368
     }
   }, {
     "uniformity metrics" : {
-      "min-max metric" : 0.5263157894736842,
-      "standard deviation" : 0.024181752941462752,
-      "Jain index" : 0.9702398800599704,
-      "balancing efficiency" : 0.792105263157895
-    }
-  } ],
-  "clusterModel_wrr DynamicRoundRobin(5,3)" : [ {
-    "performance metrics" : {
-      "average slowdown metric" : 1.1152224450386217,
-      "min-max slowdown metric" : 2.0625,
-      "makespan" : 116
-    }
-  }, {
-    "uniformity metrics" : {
-      "min-max metric" : 0.5263157894736843,
-      "standard deviation" : 0.025055675222989,
-      "Jain index" : 0.9616284351578471,
-      "balancing efficiency" : 0.7657894736842107
-    }
-  } ],
-  "clusterModel_rand RandomClusterModel(5)" : [ {
-    "performance metrics" : {
-      "average slowdown metric" : 1.2447014973330763,
-      "min-max slowdown metric" : 2.5,
-      "makespan" : 116
-    }
-  }, {
-    "uniformity metrics" : {
-      "min-max metric" : 0.5263157894736843,
-      "standard deviation" : 0.02374996088613088,
-      "Jain index" : 0.9669425087108013,
-      "balancing efficiency" : 0.7842105263157894
-    }
-  } ],
-  "clusterModel2 RoundRobinClusterModel(10)" : [ {
-    "performance metrics" : {
-      "average slowdown metric" : 1.0,
-      "min-max slowdown metric" : 1.0,
-      "makespan" : 114
-    }
-  }, {
-    "uniformity metrics" : {
-      "min-max metric" : 0.5263157894736842,
-      "standard deviation" : 0.025007693491488476,
-      "Jain index" : 0.9620298995561782,
-      "balancing efficiency" : 0.7552631578947367
+      "min-max metric" : 0.5,
+      "standard deviation" : 0.0025352734834591757,
+      "Jain index" : 0.9633683444920148,
+      "balancing efficiency" : 0.7696875000000001
     }
   } ]
-}
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "RoundRobin"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 4,
+      "minPerf" : 2,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 320,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 20,
+      "maxExecTime" : 40,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.3276927488150559,
+      "min-max slowdown metric" : 2.237837837837838,
+      "makespan" : 2404
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 0.5,
+      "standard deviation" : 0.00256051242654439,
+      "Jain index" : 0.9595281910810025,
+      "balancing efficiency" : 0.7492968750000026
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "RoundRobin"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 4,
+      "minPerf" : 2,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 40,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 40,
+      "maxExecTime" : 80,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.33728348704673566,
+      "min-max slowdown metric" : 2.0499500499500503,
+      "makespan" : 2376
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 0.525,
+      "standard deviation" : 0.005043090446791582,
+      "Jain index" : 0.966789068282754,
+      "balancing efficiency" : 0.8081250000000003
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "RoundRobin"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 4,
+      "minPerf" : 2,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 160,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 40,
+      "maxExecTime" : 80,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.3380485432673586,
+      "min-max slowdown metric" : 2.119718309859155,
+      "makespan" : 2414
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 0.5,
+      "standard deviation" : 0.004659138095936383,
+      "Jain index" : 0.9666343969561797,
+      "balancing efficiency" : 0.7567187500000002
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "RoundRobin"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 4,
+      "minPerf" : 2,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 80,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 30,
+      "maxExecTime" : 30,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.3266666666666667,
+      "min-max slowdown metric" : 2.0,
+      "makespan" : 2368
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 1.0,
+      "standard deviation" : 2.2551405187698492E-17,
+      "Jain index" : 1.0000000000000024,
+      "balancing efficiency" : 1.0000000000000018
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "RoundRobin"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 4,
+      "minPerf" : 2,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 320,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 30,
+      "maxExecTime" : 30,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.3266666666666661,
+      "min-max slowdown metric" : 2.0,
+      "makespan" : 2404
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 1.0,
+      "standard deviation" : 8.673617379884035E-18,
+      "Jain index" : 1.0000000000000067,
+      "balancing efficiency" : 0.9999999999999993
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "RoundRobin"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 4,
+      "minPerf" : 2,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 40,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 60,
+      "maxExecTime" : 60,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.33750000000000013,
+      "min-max slowdown metric" : 1.9333333333333333,
+      "makespan" : 2381
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 1.0,
+      "standard deviation" : 1.3877787807814457E-17,
+      "Jain index" : 0.9999999999999986,
+      "balancing efficiency" : 0.9999999999999994
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "RoundRobin"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 4,
+      "minPerf" : 2,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 160,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 60,
+      "maxExecTime" : 60,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.3374999999999998,
+      "min-max slowdown metric" : 1.9333333333333333,
+      "makespan" : 2417
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 1.0,
+      "standard deviation" : 6.938893903907228E-17,
+      "Jain index" : 1.0000000000000024,
+      "balancing efficiency" : 1.0000000000000029
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "RoundRobin"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 3,
+      "minPerf" : 3,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 80,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 20,
+      "maxExecTime" : 40,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.32110571037592867,
+      "min-max slowdown metric" : 1.1111111111111112,
+      "makespan" : 2365
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 0.5,
+      "standard deviation" : 0.0025384894751929506,
+      "Jain index" : 0.9633683444920143,
+      "balancing efficiency" : 0.7696874999999996
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "RoundRobin"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 3,
+      "minPerf" : 3,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 320,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 20,
+      "maxExecTime" : 40,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.32146198641656193,
+      "min-max slowdown metric" : 1.1111111111111112,
+      "makespan" : 2402
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 0.5,
+      "standard deviation" : 0.0025626444102467565,
+      "Jain index" : 0.9595281910809978,
+      "balancing efficiency" : 0.7492968750000008
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "RoundRobin"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 3,
+      "minPerf" : 3,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 40,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 40,
+      "maxExecTime" : 80,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.3283160963564384,
+      "min-max slowdown metric" : 1.0476190476190477,
+      "makespan" : 2371
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 0.525,
+      "standard deviation" : 0.005053725390795782,
+      "Jain index" : 0.9667890682827538,
+      "balancing efficiency" : 0.8081250000000001
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "RoundRobin"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 3,
+      "minPerf" : 3,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 160,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 40,
+      "maxExecTime" : 80,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.3271605177771208,
+      "min-max slowdown metric" : 1.051282051282051,
+      "makespan" : 2412
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 0.5,
+      "standard deviation" : 0.0046630013945234,
+      "Jain index" : 0.9666343969561794,
+      "balancing efficiency" : 0.7567187500000002
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "RoundRobin"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 3,
+      "minPerf" : 3,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 80,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 30,
+      "maxExecTime" : 30,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.333333333333333,
+      "min-max slowdown metric" : 1.0,
+      "makespan" : 2365
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 1.0,
+      "standard deviation" : 1.0408340855860843E-17,
+      "Jain index" : 1.0000000000000004,
+      "balancing efficiency" : 1.0000000000000009
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "RoundRobin"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 3,
+      "minPerf" : 3,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 320,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 30,
+      "maxExecTime" : 30,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.333333333333332,
+      "min-max slowdown metric" : 1.0,
+      "makespan" : 2401
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 1.0,
+      "standard deviation" : 1.9081958235744878E-17,
+      "Jain index" : 0.9999999999999932,
+      "balancing efficiency" : 0.9999999999999984
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "RoundRobin"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 3,
+      "minPerf" : 3,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 40,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 60,
+      "maxExecTime" : 60,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.3333333333333335,
+      "min-max slowdown metric" : 1.0,
+      "makespan" : 2375
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 1.0,
+      "standard deviation" : 1.3877787807814457E-17,
+      "Jain index" : 1.0000000000000002,
+      "balancing efficiency" : 1.0000000000000004
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "RoundRobin"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 3,
+      "minPerf" : 3,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 160,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 60,
+      "maxExecTime" : 60,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.333333333333334,
+      "min-max slowdown metric" : 1.0,
+      "makespan" : 2411
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 1.0,
+      "standard deviation" : 1.0755285551056204E-16,
+      "Jain index" : 0.9999999999999902,
+      "balancing efficiency" : 0.9999999999999957
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "DynamicWRR",
+      "maxWeight" : 3
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 4,
+      "minPerf" : 2,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 80,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 20,
+      "maxExecTime" : 40,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.33215086181309367,
+      "min-max slowdown metric" : 2.137142857142857,
+      "makespan" : 2367
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 0.5,
+      "standard deviation" : 0.002536344574918178,
+      "Jain index" : 0.9633683444920151,
+      "balancing efficiency" : 0.7696875000000001
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "DynamicWRR",
+      "maxWeight" : 3
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 4,
+      "minPerf" : 2,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 320,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 20,
+      "maxExecTime" : 40,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.3262045485017821,
+      "min-max slowdown metric" : 2.237837837837838,
+      "makespan" : 2406
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 0.5,
+      "standard deviation" : 0.002558383987287079,
+      "Jain index" : 0.9595281910809961,
+      "balancing efficiency" : 0.749296875
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "DynamicWRR",
+      "maxWeight" : 3
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 4,
+      "minPerf" : 2,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 40,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 40,
+      "maxExecTime" : 80,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.33859063469572676,
+      "min-max slowdown metric" : 2.0506329113924053,
+      "makespan" : 2369
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 0.525,
+      "standard deviation" : 0.0050579919381919785,
+      "Jain index" : 0.9667890682827531,
+      "balancing efficiency" : 0.8081249999999998
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "DynamicWRR",
+      "maxWeight" : 3
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 4,
+      "minPerf" : 2,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 160,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 40,
+      "maxExecTime" : 80,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.33571895073329255,
+      "min-max slowdown metric" : 2.0655737704918034,
+      "makespan" : 2416
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 0.5,
+      "standard deviation" : 0.004655281193539086,
+      "Jain index" : 0.966634396956179,
+      "balancing efficiency" : 0.7567187500000001
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "DynamicWRR",
+      "maxWeight" : 3
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 4,
+      "minPerf" : 2,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 80,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 30,
+      "maxExecTime" : 30,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.3291666666666667,
+      "min-max slowdown metric" : 2.0,
+      "makespan" : 2367
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 1.0,
+      "standard deviation" : 1.214306433183765E-17,
+      "Jain index" : 1.0,
+      "balancing efficiency" : 1.0000000000000009
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "DynamicWRR",
+      "maxWeight" : 3
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 4,
+      "minPerf" : 2,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 320,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 30,
+      "maxExecTime" : 30,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.32447916666666593,
+      "min-max slowdown metric" : 2.0,
+      "makespan" : 2398
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 1.0,
+      "standard deviation" : 4.336808689942018E-17,
+      "Jain index" : 1.0000000000000042,
+      "balancing efficiency" : 1.0000000000000036
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "DynamicWRR",
+      "maxWeight" : 3
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 4,
+      "minPerf" : 2,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 40,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 60,
+      "maxExecTime" : 60,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.33750000000000013,
+      "min-max slowdown metric" : 1.9333333333333333,
+      "makespan" : 2372
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 1.0,
+      "standard deviation" : 0.0,
+      "Jain index" : 1.0,
+      "balancing efficiency" : 1.0
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "DynamicWRR",
+      "maxWeight" : 3
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 4,
+      "minPerf" : 2,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 160,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 60,
+      "maxExecTime" : 60,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.3353124999999999,
+      "min-max slowdown metric" : 1.9333333333333333,
+      "makespan" : 2412
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 1.0,
+      "standard deviation" : 0.0,
+      "Jain index" : 1.0000000000000004,
+      "balancing efficiency" : 1.0
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "DynamicWRR",
+      "maxWeight" : 3
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 3,
+      "minPerf" : 3,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 80,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 20,
+      "maxExecTime" : 40,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.3211057103759286,
+      "min-max slowdown metric" : 1.1111111111111112,
+      "makespan" : 2365
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 0.5,
+      "standard deviation" : 0.00253848947519295,
+      "Jain index" : 0.963368344492015,
+      "balancing efficiency" : 0.7696875
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "DynamicWRR",
+      "maxWeight" : 3
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 3,
+      "minPerf" : 3,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 320,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 20,
+      "maxExecTime" : 40,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.3214619864165617,
+      "min-max slowdown metric" : 1.1111111111111112,
+      "makespan" : 2402
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 0.5,
+      "standard deviation" : 0.002562644410246755,
+      "Jain index" : 0.9595281910809952,
+      "balancing efficiency" : 0.749296875
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "DynamicWRR",
+      "maxWeight" : 3
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 3,
+      "minPerf" : 3,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 40,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 40,
+      "maxExecTime" : 80,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.3283160963564384,
+      "min-max slowdown metric" : 1.0476190476190477,
+      "makespan" : 2371
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 0.525,
+      "standard deviation" : 0.005053725390795782,
+      "Jain index" : 0.9667890682827538,
+      "balancing efficiency" : 0.8081250000000001
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "DynamicWRR",
+      "maxWeight" : 3
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 3,
+      "minPerf" : 3,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 160,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 40,
+      "maxExecTime" : 80,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.32716051777712074,
+      "min-max slowdown metric" : 1.051282051282051,
+      "makespan" : 2412
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 0.5,
+      "standard deviation" : 0.0046630013945234,
+      "Jain index" : 0.9666343969561794,
+      "balancing efficiency" : 0.7567187500000002
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "DynamicWRR",
+      "maxWeight" : 3
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 3,
+      "minPerf" : 3,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 80,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 30,
+      "maxExecTime" : 30,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.333333333333333,
+      "min-max slowdown metric" : 1.0,
+      "makespan" : 2365
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 1.0,
+      "standard deviation" : 1.0408340855860843E-17,
+      "Jain index" : 1.0000000000000004,
+      "balancing efficiency" : 1.0000000000000009
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "DynamicWRR",
+      "maxWeight" : 3
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 3,
+      "minPerf" : 3,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 320,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 30,
+      "maxExecTime" : 30,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.333333333333332,
+      "min-max slowdown metric" : 1.0,
+      "makespan" : 2401
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 1.0,
+      "standard deviation" : 1.9081958235744878E-17,
+      "Jain index" : 0.9999999999999932,
+      "balancing efficiency" : 0.9999999999999984
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "DynamicWRR",
+      "maxWeight" : 3
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 3,
+      "minPerf" : 3,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 40,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 60,
+      "maxExecTime" : 60,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.3333333333333335,
+      "min-max slowdown metric" : 1.0,
+      "makespan" : 2375
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 1.0,
+      "standard deviation" : 1.3877787807814457E-17,
+      "Jain index" : 1.0000000000000002,
+      "balancing efficiency" : 1.0000000000000004
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "DynamicWRR",
+      "maxWeight" : 3
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 3,
+      "minPerf" : 3,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 160,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 60,
+      "maxExecTime" : 60,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.333333333333334,
+      "min-max slowdown metric" : 1.0,
+      "makespan" : 2411
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 1.0,
+      "standard deviation" : 1.0755285551056204E-16,
+      "Jain index" : 0.9999999999999902,
+      "balancing efficiency" : 0.9999999999999957
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "Random"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 4,
+      "minPerf" : 2,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 80,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 20,
+      "maxExecTime" : 40,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.331468933087813,
+      "min-max slowdown metric" : 2.2342857142857144,
+      "makespan" : 2363
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 0.5,
+      "standard deviation" : 0.002540638006276482,
+      "Jain index" : 0.9633683444920159,
+      "balancing efficiency" : 0.7696875
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "Random"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 4,
+      "minPerf" : 2,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 320,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 20,
+      "maxExecTime" : 40,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.3535506577293817,
+      "min-max slowdown metric" : 5.695238095238095,
+      "makespan" : 2404
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 0.5,
+      "standard deviation" : 0.0025605124265443897,
+      "Jain index" : 0.9595281910810017,
+      "balancing efficiency" : 0.7492968750000026
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "Random"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 4,
+      "minPerf" : 2,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 40,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 40,
+      "maxExecTime" : 80,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.35206055798906455,
+      "min-max slowdown metric" : 2.5671641791044775,
+      "makespan" : 2369
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 0.525,
+      "standard deviation" : 0.005057991938191978,
+      "Jain index" : 0.9667890682827535,
+      "balancing efficiency" : 0.8081249999999999
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "Random"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 4,
+      "minPerf" : 2,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 160,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 40,
+      "maxExecTime" : 80,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.3719394354380887,
+      "min-max slowdown metric" : 4.40625,
+      "makespan" : 2409
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 0.5,
+      "standard deviation" : 0.004668808370108109,
+      "Jain index" : 0.9666343969561766,
+      "balancing efficiency" : 0.756718749999999
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "Random"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 4,
+      "minPerf" : 2,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 80,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 30,
+      "maxExecTime" : 30,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.3270833333333335,
+      "min-max slowdown metric" : 2.0,
+      "makespan" : 2363
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 1.0,
+      "standard deviation" : 1.734723475976807E-17,
+      "Jain index" : 1.000000000000003,
+      "balancing efficiency" : 1.0000000000000013
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "Random"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 4,
+      "minPerf" : 2,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 320,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 30,
+      "maxExecTime" : 30,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.3497916666666663,
+      "min-max slowdown metric" : 4.142857142857143,
+      "makespan" : 2401
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 1.0,
+      "standard deviation" : 1.9081958235744878E-17,
+      "Jain index" : 0.9999999999999932,
+      "balancing efficiency" : 0.9999999999999984
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "Random"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 4,
+      "minPerf" : 2,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 40,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 60,
+      "maxExecTime" : 60,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.3475000000000001,
+      "min-max slowdown metric" : 2.533333333333333,
+      "makespan" : 2371
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 1.0,
+      "standard deviation" : 3.469446951953614E-18,
+      "Jain index" : 0.9999999999999994,
+      "balancing efficiency" : 1.0000000000000002
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "Random"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 4,
+      "minPerf" : 2,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 160,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 60,
+      "maxExecTime" : 60,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.3741666666666666,
+      "min-max slowdown metric" : 4.4,
+      "makespan" : 2408
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 1.0,
+      "standard deviation" : 7.979727989493313E-17,
+      "Jain index" : 1.0000000000000104,
+      "balancing efficiency" : 1.000000000000003
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "Random"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 3,
+      "minPerf" : 3,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 80,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 20,
+      "maxExecTime" : 40,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.32158647960669773,
+      "min-max slowdown metric" : 1.153846153846154,
+      "makespan" : 2365
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 0.5,
+      "standard deviation" : 0.00253848947519295,
+      "Jain index" : 0.9633683444920154,
+      "balancing efficiency" : 0.7696875
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "Random"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 3,
+      "minPerf" : 3,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 320,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 20,
+      "maxExecTime" : 40,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.3407086319644354,
+      "min-max slowdown metric" : 3.0303030303030303,
+      "makespan" : 2402
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 0.5,
+      "standard deviation" : 0.0025626444102467556,
+      "Jain index" : 0.9595281910809975,
+      "balancing efficiency" : 0.7492968750000008
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "Random"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 3,
+      "minPerf" : 3,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 40,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 40,
+      "maxExecTime" : 80,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.3316523562335236,
+      "min-max slowdown metric" : 1.2665245202558635,
+      "makespan" : 2371
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 0.525,
+      "standard deviation" : 0.0050537253907957805,
+      "Jain index" : 0.966789068282754,
+      "balancing efficiency" : 0.8081250000000001
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "Random"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 3,
+      "minPerf" : 3,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 160,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 40,
+      "maxExecTime" : 80,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.3489278763312834,
+      "min-max slowdown metric" : 2.956730769230769,
+      "makespan" : 2412
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 0.5,
+      "standard deviation" : 0.004663001394523398,
+      "Jain index" : 0.966634396956179,
+      "balancing efficiency" : 0.75671875
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "Random"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 3,
+      "minPerf" : 3,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 80,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 30,
+      "maxExecTime" : 30,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.33374999999999966,
+      "min-max slowdown metric" : 1.1,
+      "makespan" : 2365
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 1.0,
+      "standard deviation" : 1.0408340855860843E-17,
+      "Jain index" : 1.0000000000000004,
+      "balancing efficiency" : 1.0000000000000009
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "Random"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 3,
+      "minPerf" : 3,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 320,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 30,
+      "maxExecTime" : 30,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.3523958333333318,
+      "min-max slowdown metric" : 2.3000000000000003,
+      "makespan" : 2401
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 1.0,
+      "standard deviation" : 1.9081958235744878E-17,
+      "Jain index" : 0.9999999999999932,
+      "balancing efficiency" : 0.9999999999999984
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "Random"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 3,
+      "minPerf" : 3,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 40,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 60,
+      "maxExecTime" : 60,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.33416666666666683,
+      "min-max slowdown metric" : 1.1,
+      "makespan" : 2375
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 1.0,
+      "standard deviation" : 1.3877787807814457E-17,
+      "Jain index" : 1.0000000000000002,
+      "balancing efficiency" : 1.0000000000000004
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "Random"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 3,
+      "minPerf" : 3,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 160,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 60,
+      "maxExecTime" : 60,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.3588541666666675,
+      "min-max slowdown metric" : 3.1000000000000005,
+      "makespan" : 2411
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 1.0,
+      "standard deviation" : 1.0755285551056204E-16,
+      "Jain index" : 0.9999999999999902,
+      "balancing efficiency" : 0.9999999999999957
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "RoundRobin"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 4,
+      "minPerf" : 2,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 80,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 20,
+      "maxExecTime" : 40,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.32943131699050154,
+      "min-max slowdown metric" : 2.185714285714286,
+      "makespan" : 2368
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 0.5,
+      "standard deviation" : 0.0025352734834591757,
+      "Jain index" : 0.9633683444920148,
+      "balancing efficiency" : 0.7696875000000001
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "RoundRobin"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 4,
+      "minPerf" : 2,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 320,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 20,
+      "maxExecTime" : 40,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.3276927488150559,
+      "min-max slowdown metric" : 2.237837837837838,
+      "makespan" : 2404
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 0.5,
+      "standard deviation" : 0.00256051242654439,
+      "Jain index" : 0.9595281910810025,
+      "balancing efficiency" : 0.7492968750000026
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "RoundRobin"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 4,
+      "minPerf" : 2,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 40,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 40,
+      "maxExecTime" : 80,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.33728348704673566,
+      "min-max slowdown metric" : 2.0499500499500503,
+      "makespan" : 2376
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 0.525,
+      "standard deviation" : 0.005043090446791582,
+      "Jain index" : 0.966789068282754,
+      "balancing efficiency" : 0.8081250000000003
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "RoundRobin"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 4,
+      "minPerf" : 2,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 160,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 40,
+      "maxExecTime" : 80,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.3380485432673586,
+      "min-max slowdown metric" : 2.119718309859155,
+      "makespan" : 2414
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 0.5,
+      "standard deviation" : 0.004659138095936383,
+      "Jain index" : 0.9666343969561797,
+      "balancing efficiency" : 0.7567187500000002
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "RoundRobin"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 4,
+      "minPerf" : 2,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 80,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 30,
+      "maxExecTime" : 30,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.3266666666666667,
+      "min-max slowdown metric" : 2.0,
+      "makespan" : 2368
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 1.0,
+      "standard deviation" : 2.2551405187698492E-17,
+      "Jain index" : 1.0000000000000024,
+      "balancing efficiency" : 1.0000000000000018
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "RoundRobin"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 4,
+      "minPerf" : 2,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 320,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 30,
+      "maxExecTime" : 30,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.3266666666666661,
+      "min-max slowdown metric" : 2.0,
+      "makespan" : 2404
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 1.0,
+      "standard deviation" : 8.673617379884035E-18,
+      "Jain index" : 1.0000000000000067,
+      "balancing efficiency" : 0.9999999999999993
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "RoundRobin"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 4,
+      "minPerf" : 2,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 40,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 60,
+      "maxExecTime" : 60,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.33750000000000013,
+      "min-max slowdown metric" : 1.9333333333333333,
+      "makespan" : 2381
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 1.0,
+      "standard deviation" : 1.3877787807814457E-17,
+      "Jain index" : 0.9999999999999986,
+      "balancing efficiency" : 0.9999999999999994
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "RoundRobin"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 4,
+      "minPerf" : 2,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 160,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 60,
+      "maxExecTime" : 60,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.3374999999999998,
+      "min-max slowdown metric" : 1.9333333333333333,
+      "makespan" : 2417
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 1.0,
+      "standard deviation" : 6.938893903907228E-17,
+      "Jain index" : 1.0000000000000024,
+      "balancing efficiency" : 1.0000000000000029
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "RoundRobin"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 3,
+      "minPerf" : 3,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 80,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 20,
+      "maxExecTime" : 40,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.32110571037592867,
+      "min-max slowdown metric" : 1.1111111111111112,
+      "makespan" : 2365
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 0.5,
+      "standard deviation" : 0.0025384894751929506,
+      "Jain index" : 0.9633683444920143,
+      "balancing efficiency" : 0.7696874999999996
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "RoundRobin"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 3,
+      "minPerf" : 3,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 320,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 20,
+      "maxExecTime" : 40,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.32146198641656193,
+      "min-max slowdown metric" : 1.1111111111111112,
+      "makespan" : 2402
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 0.5,
+      "standard deviation" : 0.0025626444102467565,
+      "Jain index" : 0.9595281910809978,
+      "balancing efficiency" : 0.7492968750000008
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "RoundRobin"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 3,
+      "minPerf" : 3,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 40,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 40,
+      "maxExecTime" : 80,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.3283160963564384,
+      "min-max slowdown metric" : 1.0476190476190477,
+      "makespan" : 2371
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 0.525,
+      "standard deviation" : 0.005053725390795782,
+      "Jain index" : 0.9667890682827538,
+      "balancing efficiency" : 0.8081250000000001
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "RoundRobin"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 3,
+      "minPerf" : 3,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 160,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 40,
+      "maxExecTime" : 80,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.3271605177771208,
+      "min-max slowdown metric" : 1.051282051282051,
+      "makespan" : 2412
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 0.5,
+      "standard deviation" : 0.0046630013945234,
+      "Jain index" : 0.9666343969561794,
+      "balancing efficiency" : 0.7567187500000002
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "RoundRobin"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 3,
+      "minPerf" : 3,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 80,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 30,
+      "maxExecTime" : 30,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.333333333333333,
+      "min-max slowdown metric" : 1.0,
+      "makespan" : 2365
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 1.0,
+      "standard deviation" : 1.0408340855860843E-17,
+      "Jain index" : 1.0000000000000004,
+      "balancing efficiency" : 1.0000000000000009
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "RoundRobin"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 3,
+      "minPerf" : 3,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 320,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 30,
+      "maxExecTime" : 30,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.333333333333332,
+      "min-max slowdown metric" : 1.0,
+      "makespan" : 2401
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 1.0,
+      "standard deviation" : 1.9081958235744878E-17,
+      "Jain index" : 0.9999999999999932,
+      "balancing efficiency" : 0.9999999999999984
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "RoundRobin"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 3,
+      "minPerf" : 3,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 40,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 60,
+      "maxExecTime" : 60,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.3333333333333335,
+      "min-max slowdown metric" : 1.0,
+      "makespan" : 2375
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 1.0,
+      "standard deviation" : 1.3877787807814457E-17,
+      "Jain index" : 1.0000000000000002,
+      "balancing efficiency" : 1.0000000000000004
+    }
+  } ]
+}, {
+  "config" : {
+    "custerModel" : {
+      "type" : "RoundRobin"
+    },
+    "servers" : {
+      "type" : "RandomPerformance",
+      "numberOfServers" : 20,
+      "maxPerf" : 3,
+      "minPerf" : 3,
+      "seed" : 1
+    },
+    "taskGenerator" : {
+      "type" : "RandomTaskGen",
+      "tasks" : 160,
+      "maxArrivalTime" : 2400,
+      "minExecTime" : 60,
+      "maxExecTime" : 60,
+      "seed" : 1
+    }
+  },
+  "result" : [ {
+    "performance metrics" : {
+      "average slowdown metric" : 0.333333333333334,
+      "min-max slowdown metric" : 1.0,
+      "makespan" : 2411
+    }
+  }, {
+    "uniformity metrics" : {
+      "min-max metric" : 1.0,
+      "standard deviation" : 1.0755285551056204E-16,
+      "Jain index" : 0.9999999999999902,
+      "balancing efficiency" : 0.9999999999999957
+    }
+  } ]
+} ]
