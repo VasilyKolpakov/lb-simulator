@@ -13,7 +13,7 @@ class UniformRandomTaskGenerator(numberOfTasks: Int,
     val random = new Random(seed)
     for (i <- 1 to numberOfTasks) yield {
       Task(
-        random.nextInt(maxExecutionTime - minExecutionTime) + minExecutionTime,
+        random.nextInt(maxExecutionTime - minExecutionTime + 1) + minExecutionTime,
         random.nextInt(latestArrivalTime)
       )
     }
