@@ -1,5 +1,7 @@
 package ru.vasily.di
 
+import collection.immutable.ListMap
+
 trait ScopeDrivenDI {
   protected def accept[T](injector: Injector[T]): (T, Map[String, Any]) = {
     val env = new Environment {
@@ -32,6 +34,7 @@ class ScopeDrivenDIImpl private[di](scope: DIScope, name: String, parent: ScopeD
       .orElse(parent.getInstance(key))
   }
 
+  // todo: add runtime type checking  (scala.reflect.Manifest?)
   def instantiate(component: SDComponent, key: String = ""): (Any, Any) = component match {
     case Primitive(value) => (value, value)
     case MapComponent(map) => {
@@ -48,9 +51,12 @@ class ScopeDrivenDIImpl private[di](scope: DIScope, name: String, parent: ScopeD
       }
       instancesWithConfig.unzip
     }
-    case ComplexComponent(injector, innerScope) => {
+    case ComplexComponent(injector, innerScope) => try {
       val (instance, config) = child(innerScope, key).accept(injector)
-      (instance, config.updated("type", injector.typeName))
+      (instance, ListMap("type" -> injector.typeName) ++ config)
+    } catch {
+      case e: DIException => throw e
+      case e => throw new DIException("error during instatiation of " + injector.typeName + " in path " + scopePath, e)
     }
   }
 
@@ -63,3 +69,7 @@ class ScopeDrivenDIImpl private[di](scope: DIScope, name: String, parent: ScopeD
 object ScopeDrivenDI {
   private[di] def apply(initialScope: DIScope) = new ScopeDrivenDIImpl(initialScope, "", EmptyScopeDrivenDI)
 }
+
+class DIException(message: String, cause: Throwable = null)
+  extends RuntimeException(message, cause)
+
