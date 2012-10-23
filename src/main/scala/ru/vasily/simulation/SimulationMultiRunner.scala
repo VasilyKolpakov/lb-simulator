@@ -16,7 +16,7 @@ class SimulationMultiRunner(clusterModelFactoriesAndConfig: (Seq[(Seq[Double]) =
       (tasks, tasksConfig) <- taskGensWithConfigs
     } yield {
       val resultConfig = Map(
-        "custerModel" -> modelConfig,
+        "clusterModel" -> modelConfig,
         "servers" -> serversConfig,
         "taskGenerator" -> tasksConfig
       )
