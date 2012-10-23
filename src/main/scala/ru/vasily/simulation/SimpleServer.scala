@@ -1,9 +1,9 @@
 package ru.vasily.simulation
 
 import collection.immutable.Queue
-import ru.vasily.simulation.MonitoringService.Report
+import ru.vasily.simulation.MonitoringService.{PostServerLoad, Report}
 
-case class SimpleServer(indexNumber: Int, serverPerformance: Double) extends AgentId {
+case class SimpleServer(indexNumber: Int, serverPerformance: Double, monitoringAgent: MonitoringAgent) extends AgentId {
 
   def taskCompletedMessage(task: Task) = {
     val executionTime: Long = (task.executionTime / serverPerformance).toInt
@@ -15,6 +15,8 @@ case class SimpleServer(indexNumber: Int, serverPerformance: Double) extends Age
     DelayedMessage(report, MonitoringService, 0)
   }
 
+  def serverLoadInfo(agentId: AgentId, load: Int) = DelayedMessage(LoadLevelResponse(load), agentId, 0)
+
   object BusyState {
     def apply(taskMessages: TaskMessage*): BusyState = BusyState(Queue(taskMessages: _*))
   }
@@ -25,6 +27,9 @@ case class SimpleServer(indexNumber: Int, serverPerformance: Double) extends Age
       case taskMessage: TaskMessage => StateTransition(BusyState(taskQueue.enqueue(taskMessage)))
 
       case TaskCompleted() => completeCurrentTask(currentTime)
+      case LoadLevelRequest(sender) => {
+        sendMessages(serverLoadInfo(sender, taskQueue.size))
+      }
     }
 
     def completeCurrentTask(currentTime: Long) = {
@@ -33,7 +38,8 @@ case class SimpleServer(indexNumber: Int, serverPerformance: Double) extends Age
       val callbackMessage = DelayedMessage(ServerFinishedTask(thisAgent), messageSender, 0)
       val messages = List(reportMessage, callbackMessage)
       if (queueTail.isEmpty) {
-        StateTransition(IdleState(), messages)
+        val monitoringAgentMessage = DelayedMessage(TurnOff(), monitoringAgent, 0)
+        StateTransition(IdleState(), monitoringAgentMessage :: messages)
       } else {
         StateTransition(BusyState(queueTail),
           taskCompletedMessage(queueTail.head.task) :: messages)
@@ -44,19 +50,69 @@ case class SimpleServer(indexNumber: Int, serverPerformance: Double) extends Age
   case class IdleState() extends AgentState {
     def changeState(currentTime: Long, message: AnyRef) = message match {
       case taskMessage: TaskMessage => {
-        val newState = BusyState(taskMessage)
-        val newMessage = taskCompletedMessage(taskMessage.task)
-        StateTransition(newState, newMessage)
+        val selfMessage = taskCompletedMessage(taskMessage.task)
+        val monitoringAgentMessage = DelayedMessage(TurnOn(thisAgent), monitoringAgent, 0)
+        newState(BusyState(taskMessage),
+          selfMessage,
+          monitoringAgentMessage)
       }
     }
   }
+
 }
 
 object SimpleServer {
-  def generateServers(serversPerformance: Seq[Double]) = serversPerformance.zipWithIndex map {
-    case (performance, index) => SimpleServer(index, performance)
+  def generateAgents(serversPerformance: Seq[Double], refreshTime: Int = 0) = {
+    val monitoringAgents = (0 until serversPerformance.size).map {
+      index =>
+        val agent = MonitoringAgent(index, refreshTime)
+        Agent(agent, agent.Off())
+    }
+    val servers = serversPerformance.zipWithIndex.zip(monitoringAgents) map {
+      case ((performance, index), monitoringAgent) => {
+        val agentId = SimpleServer(index, performance, monitoringAgent.id)
+        Agent(agentId, agentId.IdleState())
+      }
+    }
+
+    (servers, monitoringAgents)
   }
 }
+
+
+case class MonitoringAgent(serverIndex: Int, refreshTime: Int) extends AgentId {
+
+  case class On(serverId: AgentId) extends AgentState {
+    def changeState(currentTime: Long, message: AnyRef) = message match {
+      case Tic() =>
+        sendMessages(
+          DelayedMessage(Tic(), thisAgent, refreshTime),
+          DelayedMessage(LoadLevelRequest(thisAgent), serverId, 0)
+        )
+      case LoadLevelResponse(loadLevel) => sendMessages(
+        DelayedMessage(PostServerLoad(serverId, loadLevel), MonitoringService, 0)
+      )
+      case TurnOff() => newState(Off())
+    }
+  }
+
+  case class Off() extends AgentState {
+    def changeState(currentTime: Long, message: AnyRef) = message match {
+      case TurnOn(serverId) => newState(On(serverId))
+    }
+  }
+
+}
+
+case class LoadLevelRequest(sender: AgentId)
+
+case class LoadLevelResponse(loadLevel: Int)
+
+case class Tic()
+
+case class TurnOff()
+
+case class TurnOn(serverId: SimpleServer)
 
 case class TaskMessage(sender: AgentId, task: Task)
 

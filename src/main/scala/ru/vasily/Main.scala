@@ -40,22 +40,14 @@ object Main {
     Injector("DynamicWRR") {
       env => for {
         maxWeigh <- env("maxWeight", classOf[Int])
+        refreshTime <- env("refreshTime", classOf[Int])
       } yield {
-        (servers: Seq[Double]) => DynamicRoundRobin(servers, maxWeigh)
+        (servers: Seq[Double]) => DynamicRoundRobin(servers, maxWeigh, refreshTime)
       }
     },
-    Injector("MasterSlave") {
-      env =>
-        ((servers: Seq[Double]) => MasterWorkerClusterModel(servers), Map())
-    },
-    Injector("Random") {
-      env =>
-        ((servers: Seq[Double]) => RandomClusterModel(servers), Map())
-    },
-    Injector("RoundRobin") {
-      env =>
-        ((servers: Seq[Double]) => RoundRobinClusterModel(servers), Map())
-    },
+    Injector("MasterSlave", (servers: Seq[Double]) => MasterWorkerClusterModel(servers)),
+    Injector("Random", (servers: Seq[Double]) => RandomClusterModel(servers)),
+    Injector("RoundRobin", (servers: Seq[Double]) => RoundRobinClusterModel(servers)),
 
     // TasksGenerator
     ClassInjector("RandomTaskGen", classOf[UniformRandomTaskGenerator],

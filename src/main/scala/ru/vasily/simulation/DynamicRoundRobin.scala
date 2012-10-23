@@ -1,10 +1,12 @@
 package ru.vasily.simulation
 
 import annotation.tailrec
+import ru.vasily.simulation.MonitoringService.{GetServersLoad, ServersLoad}
 
-case class DynamicRoundRobin(serversPerformance: Seq[Double], maxWeight: Int) extends ClusterModel {
+case class DynamicRoundRobin(serversPerformance: Seq[Double], maxWeight: Int, refreshTime: Int) extends ClusterModel {
   val numberOfServers = serversPerformance.size
-  val serverIds = SimpleServer.generateServers(serversPerformance)
+  val (servers, monitoringAgents) = SimpleServer.generateAgents(serversPerformance, refreshTime)
+  val serverIds = servers.map(_.id)
   val defaultWeights = Vector(serversPerformance.map(_.toInt): _*)
 
   @tailrec
@@ -25,7 +27,6 @@ case class DynamicRoundRobin(serversPerformance: Seq[Double], maxWeight: Int) ex
       val (serverWeights, currentWeight) = recalculateWeights(serversLoad)
       val (nextIndex, nextWeight) = getNextIndex(serverWeights, currentServerIndex, currentWeight)
       RoundRobinAlgorithmState(serverWeights, nextIndex, nextWeight)
-
     }
 
     def recalculateWeights(serversLoad: Vector[Int]): (Vector[Int], Int) =
@@ -62,6 +63,8 @@ case class DynamicRoundRobin(serversPerformance: Seq[Double], maxWeight: Int) ex
 
   case class MainServer() extends AgentId {
 
+    val monitoringServiceMessage = DelayedMessage(GetServersLoad(thisAgent), MonitoringService, 0)
+
     case class RoundRobinState(serversLoad: Vector[Int],
                                algorithmState: RoundRobinAlgorithmState = RoundRobinAlgorithmState())
       extends AgentState {
@@ -72,33 +75,26 @@ case class DynamicRoundRobin(serversPerformance: Seq[Double], maxWeight: Int) ex
         case task: Task => {
           val nextAlgState = algorithmState.nextState(serversLoad)
           val serverIndex = nextAlgState.currentServerIndex
-          val message = serverMessage(serverIds(serverIndex), task)
-          val currentServerLoad = serversLoad(serverIndex)
-          val nextServersLoad = serversLoad.updated(serverIndex, currentServerLoad + 1)
-          val newState = RoundRobinState(nextServersLoad, nextAlgState)
-          StateTransition(newState, message)
+          val srvMessage = serverMessage(serverIds(serverIndex), task)
+          val newState = RoundRobinState(serversLoad, nextAlgState)
+          StateTransition(newState, srvMessage, monitoringServiceMessage)
         }
-        case ServerFinishedTask(server: SimpleServer) => {
-          val serverIndex: Int = server.indexNumber
-          val currentServerLoad = serversLoad(serverIndex)
-          val nextServersLoad = serversLoad.updated(serverIndex, currentServerLoad - 1)
-          val newState = RoundRobinState(nextServersLoad, algorithmState)
-          StateTransition(newState)
+        case ServersLoad(freshLoadDataMap) => {
+          val freshLoadData = serverIds.map(freshLoadDataMap.get(_).getOrElse(0))
+          newState(RoundRobinState(Vector(freshLoadData: _*), algorithmState))
         }
+        case ServerFinishedTask(server: SimpleServer) => StateTransition(this)
       }
     }
 
   }
 
   def agents = {
-    val serverAgents =
-      for (serverId <- serverIds)
-      yield (serverId, serverId.IdleState())
     val mainServerId = MainServer()
     val zeroLoad = Vector.iterate(0, numberOfServers)(x => 0)
-    val mainServerAgent = (mainServerId, mainServerId.RoundRobinState(zeroLoad))
+    val mainServerAgent = Agent(mainServerId, mainServerId.RoundRobinState(zeroLoad))
 
-    serverAgents :+ mainServerAgent :+ MonitoringService.agent
+    servers ++ monitoringAgents :+ mainServerAgent :+ MonitoringService.agent
   }
 
   def initialMessagesReceiver = MainServer()

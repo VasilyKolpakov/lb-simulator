@@ -1,8 +1,9 @@
 {
     type : "MultiRunner",
     seed : 1,
-    maxArrivalTime : 2400,
+    maxArrivalTime : 8000,
     numberOfServers : 20,
+    refreshTime : 0,
     clusterModels :
     [
         {
@@ -43,29 +44,29 @@
         {
             type : "RandomTaskGen",
             tasks : 80,
-            minExecTime : 20,
-            maxExecTime : 40
+            minExecTime : 2000,
+            maxExecTime : 4000
         },
         // маленькие задания часто
         {
             type : "RandomTaskGen",
             tasks : 320,
-            minExecTime : 20,
-            maxExecTime : 40
+            minExecTime : 2000,
+            maxExecTime : 4000
         },
         // большие задания редко
         {
             type : "RandomTaskGen",
             tasks : 40,
-            minExecTime : 40,
-            maxExecTime : 80
+            minExecTime : 4000,
+            maxExecTime : 8000
         },
         // большие задания часто
         {
             type : "RandomTaskGen",
             tasks : 160,
-            minExecTime : 40,
-            maxExecTime : 80
+            minExecTime : 4000,
+            maxExecTime : 8000
         },
 
         // одинаковые задачи
@@ -73,29 +74,29 @@
         {
             type : "RandomTaskGen",
             tasks : 80,
-            minExecTime : 30,
-            maxExecTime : 30
+            minExecTime : 3000,
+            maxExecTime : 3000
         },
         // маленькие задания часто
         {
             type : "RandomTaskGen",
             tasks : 320,
-            minExecTime : 30,
-            maxExecTime : 30
+            minExecTime : 3000,
+            maxExecTime : 3000
         },
         // большие задания редко
         {
             type : "RandomTaskGen",
             tasks : 40,
-            minExecTime : 60,
-            maxExecTime : 60
+            minExecTime : 6000,
+            maxExecTime : 6000
         },
         // большие задания часто
         {
             type : "RandomTaskGen",
             tasks : 160,
-            minExecTime : 60,
-            maxExecTime : 60
+            minExecTime : 6000,
+            maxExecTime : 6000
         }
     ]
 }

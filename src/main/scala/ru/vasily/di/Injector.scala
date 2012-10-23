@@ -13,4 +13,12 @@ object Injector {
 
       def typeName = typeNameString
     }
+
+  def apply[T](typeNameString: String, obj: T) =
+    new Injector[T] {
+      def create(env: Environment) = (obj, Map())
+
+      def typeName = typeNameString
+    }
+
 }

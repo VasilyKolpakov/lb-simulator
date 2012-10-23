@@ -50,11 +50,12 @@ class ModelState(agentIdToAgentStateMap: immutable.Map[AgentId, AgentState],
 }
 
 object ModelState {
-  def apply(agents: Seq[Pair[AgentId, AgentState]], initialMessages: Seq[DelayedMessage]) = {
-    val queueElements = initialMessages map {
+  def apply(agents: Seq[Agent[AgentId, AgentState]], initialMessages: Seq[DelayedMessage] = Nil) = {
+    val queueElements = (initialMessages ++ agents.flatMap(_.initialMessages)) map {
       delayedMessageToQueueElement(_, currentTime = 0)
     }
-    new ModelState(Map(agents: _*), ImmutableMessageQueue(queueElements: _*))
+    val agentsMap = agents.map(agent => (agent.id, agent.initialState)).toMap
+    new ModelState(agentsMap, ImmutableMessageQueue(queueElements: _*))
   }
 
   def prettyToString(modelState: ModelState) = {

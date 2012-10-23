@@ -19,22 +19,29 @@ class SimulationRunner(clusterModel: ClusterModel, taskGenerator: TasksGenerator
     //    }
 
     val lastModelState = initialModelState.nextStates.last
-    val MonitoringService.State(history) = lastModelState.agents.get(MonitoringService).getOrElse {
+    val history = lastModelState.agents.get(MonitoringService).collect {
+      case serviceState: MonitoringService.State => serviceState.serversHistory.toList.collect {
+        case (server: SimpleServer, taskRecords) => (server, taskRecords)
+      }.toMap
+    }.getOrElse {
       throw new RuntimeException("MonitoringService is not present in cluster model " + clusterModel)
     }
 
     val totalSimulationTime = lastModelState.timeOfLastEvent
-    val uniMetrics = new UniformityMetrics(history, totalSimulationTime)
+    val metrics = new AlgorithmMetrics(history, totalSimulationTime)
     val performanceMetrics = Map("performance metrics" -> Map(
-      "average slowdown metric" -> averageSlowdownMetric(history),
-      "min-max slowdown metric" -> minMaxSlowdownMetric(history),
+      "average slowdown" -> metrics.averageSlowdownMetric,
+      "min-max slowdown" -> metrics.minMaxSlowdownMetric,
+      "average utilization" -> metrics.averageUtilization,
       "makespan" -> totalSimulationTime
     ))
+
     val uniformityMetrics = Map("uniformity metrics" -> Map(
-      "min-max metric" -> uniMetrics.minMaxMetric,
-      "standard deviation" -> uniMetrics.standardDeviation,
-      "Jain index" -> uniMetrics.JainsIndex,
-      "balancing efficiency" -> uniMetrics.balancingEfficiency
+      "min-max utilization" -> metrics.minMaxMetric,
+      "standard deviation" -> metrics.standardDeviation,
+      "coefficient of variation" -> metrics.coefficientOfVariation,
+      "Jain index" -> metrics.JainsIndex,
+      "balancing efficiency" -> metrics.balancingEfficiency
     ))
     // TODO investigate compiler hang
     val prettyHistory = history.mapValues {
@@ -53,27 +60,31 @@ class SimulationRunner(clusterModel: ClusterModel, taskGenerator: TasksGenerator
     List[AnyRef](performanceMetrics, uniformityMetrics) ++ historyList
   }
 
-  def averageSlowdownMetric(history: Map[AgentId, Seq[TaskRecord]]): Double = {
-    val taskSlowdowns = slowdowns(history)
-    taskSlowdowns.sum / taskSlowdowns.size
-  }
+  class AlgorithmMetrics(history: Map[SimpleServer, Seq[TaskRecord]], makespan: Long) {
 
-  def minMaxSlowdownMetric(history: Map[AgentId, Seq[TaskRecord]]): Double = {
-    val taskSlowdowns = slowdowns(history)
-    taskSlowdowns.max / taskSlowdowns.min
-  }
+    val slowdowns = for ((server, taskRecords) <- history;
+                         taskRecord <- taskRecords;
+                         task = taskRecord.task)
+    yield (taskRecord.completionTime - task.arrivalTime).toDouble /
+        (task.executionTime / server.serverPerformance)
 
-  def slowdowns(history: Map[AgentId, Seq[TaskRecord]]) = for ((_, taskRecords) <- history;
-                                                               taskRecord <- taskRecords;
-                                                               task = taskRecord.task)
-  yield (taskRecord.completionTime - task.arrivalTime).toDouble / task.executionTime
+    val serversUtilization = for ((server, taskRecords) <- history) yield {
+      taskRecords.map(_.task.executionTime).sum.toDouble / (makespan * server.serverPerformance)
+    }
 
+    def averageUtilization = serversUtilization.sum / serversUtilization.size
 
-  class UniformityMetrics(history: Map[AgentId, Seq[TaskRecord]], makespan: Long) {
+    def averageSlowdownMetric = {
+      val taskSlowdowns = slowdowns
+      taskSlowdowns.sum / taskSlowdowns.size
+    }
 
+    def minMaxSlowdownMetric = {
+      val taskSlowdowns = slowdowns
+      taskSlowdowns.max / taskSlowdowns.min
+    }
 
     def minMaxMetric = serversUtilization.min / serversUtilization.max
-
 
     def standardDeviation = {
       val size: Int = serversUtilization.size
@@ -82,6 +93,8 @@ class SimulationRunner(clusterModel: ClusterModel, taskGenerator: TasksGenerator
         serversUtilization.map(x => (x - average) * (x - average)).sum / size
       math.sqrt(squareDeviation)
     }
+
+    def coefficientOfVariation = standardDeviation / averageUtilization
 
     def JainsIndex = {
       val utilSum: Double = serversUtilization.sum
@@ -95,12 +108,6 @@ class SimulationRunner(clusterModel: ClusterModel, taskGenerator: TasksGenerator
       average / serversUtilization.max
     }
 
-    val serversUtilization: Iterable[Double] = {
-      for ((_, taskRecords) <- history;
-           taskRecord <- taskRecords;
-           task = taskRecord.task)
-      yield task.executionTime.toDouble / makespan
-    }
   }
 
 }

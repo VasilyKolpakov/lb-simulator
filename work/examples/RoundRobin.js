@@ -3,7 +3,7 @@
     clusterModel :
     { 
         type : "RoundRobin",
-        refreshTime : 5
+        refreshTime : 0
     },
     servers :
     {
@@ -16,8 +16,8 @@
     { 
         type : "RandomTaskGen",
         tasks : 20,
-        maxArrivalTime : 100,
-        minExecTime : 10,
-        maxExecTime : 20
+        maxArrivalTime : 5000,
+        minExecTime : 1000,
+        maxExecTime : 2000
     }
 }

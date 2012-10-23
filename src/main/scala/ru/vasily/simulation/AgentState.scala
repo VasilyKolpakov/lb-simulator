@@ -9,4 +9,10 @@ package ru.vasily.simulation
 * */
 trait AgentState {
   def changeState(currentTime: Long, message: AnyRef): StateTransition[AgentState]
+
+  def sendMessages(messages: DelayedMessage*) = StateTransition(this, messages)
+
+  def newState(state: AgentState, messages: DelayedMessage*) = StateTransition(state, messages)
+
+  def doNothing = StateTransition(this)
 }

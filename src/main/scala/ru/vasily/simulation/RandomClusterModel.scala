@@ -4,7 +4,8 @@ import util.Random
 
 case class RandomClusterModel(serversPerformance: Seq[Double]) extends ClusterModel {
   val numberOfServers = serversPerformance.size
-  val serverIds = SimpleServer.generateServers(serversPerformance)
+  val (servers, monitoringAgents) = SimpleServer.generateAgents(serversPerformance)
+  val serverIds = servers.map(_.id)
 
   object MainServer extends AgentId {
     val random = new Random(0)
@@ -29,12 +30,8 @@ case class RandomClusterModel(serversPerformance: Seq[Double]) extends ClusterMo
   def initialMessagesReceiver = MainServer
 
   def agents = {
-    val slaveServers =
-      for (serverId <- serverIds)
-      yield (serverId, serverId.IdleState())
-    val mainServerId = MainServer
-    val mainServer = (mainServerId, mainServerId.State())
-    slaveServers :+ mainServer :+ MonitoringService.agent
+    val mainServer = Agent(MainServer, MainServer.State())
+    servers ++ monitoringAgents :+ mainServer :+ MonitoringService.agent
   }
 
 }
