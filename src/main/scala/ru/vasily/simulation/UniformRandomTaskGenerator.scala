@@ -14,7 +14,7 @@ class UniformRandomTaskGenerator(numberOfTasks: Int,
     for (i <- 1 to numberOfTasks) yield {
       Task(
         random.nextInt(maxExecutionTime - minExecutionTime + 1) + minExecutionTime,
-        random.nextInt(latestArrivalTime)
+        random.nextInt(latestArrivalTime + 1)
       )
     }
   }
