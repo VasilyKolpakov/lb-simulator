@@ -1,15 +1,16 @@
 {
-    clusterModel : 
+    seed : 1,
+    clusterModel :
     { 
-        type : "RoundRobin"
+        type : "RoundRobin",
+        refreshTime : 5
     },
     servers :
     {
         type : "RandomPerformance",
         numberOfServers : 5,
         maxPerf: 2,
-        minPerf: 1,
-        seed: 0
+        minPerf: 1
     },
     taskGenerator :
     { 
@@ -17,7 +18,6 @@
         tasks : 20,
         maxArrivalTime : 100,
         minExecTime : 10,
-        maxExecTime : 20,
-        seed : 1 
+        maxExecTime : 20
     }
 }

@@ -1,16 +1,23 @@
 {
-    clusterModel : 
+    seed: 0,
+    clusterModel :
     { 
         type : "Random",
-        servers : 5
+        refreshTime : 5
     },
-    taskGenerator : 
+    servers :
+    {
+        type : "RandomPerformance",
+        numberOfServers : 5,
+        maxPerf: 2,
+        minPerf: 1
+    },
+    taskGenerator :
     { 
         type : "RandomTaskGen",
         tasks : 20,
         maxArrivalTime : 100,
         minExecTime : 10,
-        maxExecTime : 20,
-        seed : 1 
+        maxExecTime : 20
     }
 }
