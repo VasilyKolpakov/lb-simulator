@@ -4,7 +4,7 @@
     maxArrivalTime : 8000,
     numberOfServers : 20,
     refreshTime : 0,
-    outputFormat : "json",
+    outputFormat : "csv",
     clusterModels :
     [
         {
