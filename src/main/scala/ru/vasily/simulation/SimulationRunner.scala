@@ -29,20 +29,20 @@ class SimulationRunner(clusterModel: ClusterModel, taskGenerator: TasksGenerator
 
     val totalSimulationTime = lastModelState.timeOfLastEvent
     val metrics = new AlgorithmMetrics(history, totalSimulationTime)
-    val performanceMetrics = Map("performance metrics" -> Map(
+    val performanceMetrics = Map(
       "average slowdown" -> metrics.averageSlowdownMetric,
       "min-max slowdown" -> metrics.minMaxSlowdownMetric,
       "average utilization" -> metrics.averageUtilization,
-      "makespan" -> totalSimulationTime
-    ))
+      "makespan" -> totalSimulationTime.toDouble
+    )
 
-    val uniformityMetrics = Map("uniformity metrics" -> Map(
+    val uniformityMetrics = Map(
       "min-max utilization" -> metrics.minMaxMetric,
       "standard deviation" -> metrics.standardDeviation,
       "coefficient of variation" -> metrics.coefficientOfVariation,
       "Jain index" -> metrics.JainsIndex,
       "balancing efficiency" -> metrics.balancingEfficiency
-    ))
+    )
     // TODO investigate compiler hang
     val prettyHistory = history.mapValues {
       taskRecords =>
@@ -51,13 +51,11 @@ class SimulationRunner(clusterModel: ClusterModel, taskGenerator: TasksGenerator
             Map("executionTime" -> executionTime, "arrivalTime " -> arrivalTime, "completionTime" -> completionTime)
         }
     }
-    val historyList =
-      if (showHistory) {
-        List(Map("history" -> prettyHistory))
-      } else {
-        Nil
-      }
-    List[AnyRef](performanceMetrics, uniformityMetrics) ++ historyList
+    SimulationResult(performanceMetrics, uniformityMetrics, if (showHistory) {
+      prettyHistory
+    } else {
+      Map.empty
+    })
   }
 
   class AlgorithmMetrics(history: Map[SimpleServer, Seq[TaskRecord]], makespan: Long) {
@@ -111,3 +109,7 @@ class SimulationRunner(clusterModel: ClusterModel, taskGenerator: TasksGenerator
   }
 
 }
+
+case class SimulationResult(performanceMetrics: Map[String, Double],
+                            uniformityMetrics: Map[String, Double],
+                            history: Map[SimpleServer, Seq[Map[String, Long]]])

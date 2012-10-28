@@ -26,7 +26,8 @@ object Main {
         models <- env.seqWithConfig("clusterModels", classOf[Seq[Double] => ClusterModel])
         serversPerformances <- env.seqWithConfig("servers", classOf[Seq[Double]])
         taskGenerators <- env.seqWithConfig("taskGenerators", classOf[TasksGenerator])
-      } yield new SimulationMultiRunner(models, serversPerformances, taskGenerators)
+        outputFormat <- env("outputFormat", classOf[String])
+      } yield new SimulationMultiRunner(models, serversPerformances, taskGenerators, outputFormat)
     },
     Injector("Runner") {
       env => for {

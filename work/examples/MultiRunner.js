@@ -4,6 +4,7 @@
     maxArrivalTime : 8000,
     numberOfServers : 20,
     refreshTime : 0,
+    outputFormat : "json",
     clusterModels :
     [
         {
@@ -17,7 +18,7 @@
             type : "Random"
         },
         {
-            type : "RoundRobin"
+            type : "MasterSlave"
         }
     ],
     servers :
