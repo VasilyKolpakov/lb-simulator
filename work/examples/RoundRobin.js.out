@@ -1,19 +1,17 @@
-[ {
-  "performance metrics" : {
+{
+  "performanceMetrics" : {
     "average slowdown" : 1.0546558901071599,
     "min-max slowdown" : 1.5848198064328494,
     "average utilization" : 0.6878743469226951,
-    "makespan" : 5577
-  }
-}, {
-  "uniformity metrics" : {
+    "makespan" : 5577.0
+  },
+  "uniformityMetrics" : {
     "min-max utilization" : 0.6588152834707015,
     "coefficient of variation" : 0.14106292332092,
     "standard deviation" : 0.09703356625438406,
     "Jain index" : 0.9804894864629337,
     "balancing efficiency" : 0.8677891990984832
-  }
-}, {
+  },
   "history" : {
     "SimpleServer(0,1.7308781907032909,MonitoringAgent(0,0))" : [ {
       "executionTime" : 1823,
@@ -101,4 +99,4 @@
       "completionTime" : 2002
     } ]
   }
-} ]
+}
