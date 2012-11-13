@@ -32,8 +32,7 @@
       "standard deviation" : 0.11160041076722807,
       "Jain index" : 0.9379798403571982,
       "balancing efficiency" : 0.68149033446874
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -69,8 +68,7 @@
       "standard deviation" : 0.13406699176838355,
       "Jain index" : 0.9625910614946088,
       "balancing efficiency" : 0.6840192716540615
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -106,8 +104,7 @@
       "standard deviation" : 0.09862085216717723,
       "Jain index" : 0.9413076939905707,
       "balancing efficiency" : 0.7037866338429504
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -143,8 +140,7 @@
       "standard deviation" : 0.14925636234627557,
       "Jain index" : 0.9494568088409139,
       "balancing efficiency" : 0.6537272847797896
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -180,8 +176,7 @@
       "standard deviation" : 0.095150203786923,
       "Jain index" : 0.9571725224883142,
       "balancing efficiency" : 0.6965909078358221
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -217,8 +212,7 @@
       "standard deviation" : 0.14653139316667094,
       "Jain index" : 0.9571725224883141,
       "balancing efficiency" : 0.6965909078358221
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -254,8 +248,7 @@
       "standard deviation" : 0.08328235541391657,
       "Jain index" : 0.9571725224883135,
       "balancing efficiency" : 0.6965909078358221
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -291,8 +284,7 @@
       "standard deviation" : 0.1457234049705197,
       "Jain index" : 0.9571725224883139,
       "balancing efficiency" : 0.696590907835822
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -328,8 +320,7 @@
       "standard deviation" : 0.0425253291656168,
       "Jain index" : 0.9906132628353364,
       "balancing efficiency" : 0.8476367536646406
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -365,8 +356,7 @@
       "standard deviation" : 0.03889315937173749,
       "Jain index" : 0.9979989749316663,
       "balancing efficiency" : 0.877410623556582
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -402,8 +392,7 @@
       "standard deviation" : 0.05839596601493923,
       "Jain index" : 0.9779713656798545,
       "balancing efficiency" : 0.809124405439807
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -439,8 +428,7 @@
       "standard deviation" : 0.052598082857084824,
       "Jain index" : 0.9966629332446372,
       "balancing efficiency" : 0.9355011305161389
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -476,8 +464,7 @@
       "standard deviation" : 0.0,
       "Jain index" : 0.9999999999999997,
       "balancing efficiency" : 1.0
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -513,8 +500,7 @@
       "standard deviation" : 0.0,
       "Jain index" : 0.9999999999999998,
       "balancing efficiency" : 1.0
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -550,8 +536,7 @@
       "standard deviation" : 0.0,
       "Jain index" : 0.9999999999999994,
       "balancing efficiency" : 1.0
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -587,8 +572,7 @@
       "standard deviation" : 0.0,
       "Jain index" : 1.0000000000000004,
       "balancing efficiency" : 1.0
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -626,8 +610,7 @@
       "standard deviation" : 0.08617671162184767,
       "Jain index" : 0.962688634100639,
       "balancing efficiency" : 0.688799047564805
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -665,8 +648,7 @@
       "standard deviation" : 0.13861320021400794,
       "Jain index" : 0.9605813577902482,
       "balancing efficiency" : 0.6877848491444516
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -704,8 +686,7 @@
       "standard deviation" : 0.09028158361713214,
       "Jain index" : 0.9449343470115427,
       "balancing efficiency" : 0.7751092732802408
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -743,8 +724,7 @@
       "standard deviation" : 0.1584432385406972,
       "Jain index" : 0.9547243503683116,
       "balancing efficiency" : 0.7396998978930385
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -782,8 +762,7 @@
       "standard deviation" : 0.09558491591126227,
       "Jain index" : 0.9571725224883142,
       "balancing efficiency" : 0.6965909078358222
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -821,8 +800,7 @@
       "standard deviation" : 0.1466291989440964,
       "Jain index" : 0.9571725224883144,
       "balancing efficiency" : 0.6965909078358223
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -860,8 +838,7 @@
       "standard deviation" : 0.08468698264959848,
       "Jain index" : 0.9571725224883142,
       "balancing efficiency" : 0.6965909078358222
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -899,8 +876,7 @@
       "standard deviation" : 0.14596547042728136,
       "Jain index" : 0.9571725224883142,
       "balancing efficiency" : 0.6965909078358222
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -938,8 +914,7 @@
       "standard deviation" : 0.04252532916561679,
       "Jain index" : 0.9906132628353364,
       "balancing efficiency" : 0.8476367536646406
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -977,8 +952,7 @@
       "standard deviation" : 0.03889315937173749,
       "Jain index" : 0.9979989749316667,
       "balancing efficiency" : 0.8774106235565821
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -1016,8 +990,7 @@
       "standard deviation" : 0.05839596601493924,
       "Jain index" : 0.9779713656798545,
       "balancing efficiency" : 0.809124405439807
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -1055,8 +1028,7 @@
       "standard deviation" : 0.05259808285708483,
       "Jain index" : 0.9966629332446375,
       "balancing efficiency" : 0.9355011305161391
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -1094,8 +1066,7 @@
       "standard deviation" : 0.0,
       "Jain index" : 0.9999999999999997,
       "balancing efficiency" : 1.0
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -1133,8 +1104,7 @@
       "standard deviation" : 0.0,
       "Jain index" : 0.9999999999999998,
       "balancing efficiency" : 1.0
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -1172,8 +1142,7 @@
       "standard deviation" : 0.0,
       "Jain index" : 0.9999999999999994,
       "balancing efficiency" : 1.0
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -1211,8 +1180,7 @@
       "standard deviation" : 0.0,
       "Jain index" : 1.0000000000000004,
       "balancing efficiency" : 1.0
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -1248,8 +1216,7 @@
       "standard deviation" : 0.20044762112991138,
       "Jain index" : 0.7442792216081991,
       "balancing efficiency" : 0.4037078749845038
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -1285,8 +1252,7 @@
       "standard deviation" : 0.19959386283087868,
       "Jain index" : 0.8878243429462296,
       "balancing efficiency" : 0.5651735389194308
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -1322,8 +1288,7 @@
       "standard deviation" : 0.15844507375174646,
       "Jain index" : 0.8040400918956111,
       "balancing efficiency" : 0.4952904485105671
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -1359,8 +1324,7 @@
       "standard deviation" : 0.20425632022748783,
       "Jain index" : 0.777070941429928,
       "balancing efficiency" : 0.3850262718739445
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -1396,8 +1360,7 @@
       "standard deviation" : 0.19556945842332818,
       "Jain index" : 0.7546219052357646,
       "balancing efficiency" : 0.402110712739047
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -1433,8 +1396,7 @@
       "standard deviation" : 0.18829861356966918,
       "Jain index" : 0.8831434911673639,
       "balancing efficiency" : 0.5206121056567112
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -1470,8 +1432,7 @@
       "standard deviation" : 0.15326729850722273,
       "Jain index" : 0.8083291900958647,
       "balancing efficiency" : 0.49625731803051887
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -1507,8 +1468,7 @@
       "standard deviation" : 0.20421699097136722,
       "Jain index" : 0.7983601935400693,
       "balancing efficiency" : 0.41052751582708796
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -1544,8 +1504,7 @@
       "standard deviation" : 0.17840699280279243,
       "Jain index" : 0.7840991001578481,
       "balancing efficiency" : 0.5017438415305174
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -1581,8 +1540,7 @@
       "standard deviation" : 0.16527513323987197,
       "Jain index" : 0.9457298158992851,
       "balancing efficiency" : 0.6958933516990754
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -1618,8 +1576,7 @@
       "standard deviation" : 0.16417996029449713,
       "Jain index" : 0.8400136935659688,
       "balancing efficiency" : 0.5868650450432941
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -1655,8 +1612,7 @@
       "standard deviation" : 0.18485803739698178,
       "Jain index" : 0.8620381831422627,
       "balancing efficiency" : 0.46788280252293357
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -1692,8 +1648,7 @@
       "standard deviation" : 0.1748178924500486,
       "Jain index" : 0.7920792079207917,
       "balancing efficiency" : 0.49999999999999994
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -1729,8 +1684,7 @@
       "standard deviation" : 0.1505607519521526,
       "Jain index" : 0.9467455621301774,
       "balancing efficiency" : 0.64
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -1766,8 +1720,7 @@
       "standard deviation" : 0.16122349773372627,
       "Jain index" : 0.8403361344537814,
       "balancing efficiency" : 0.5882352941176472
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -1803,8 +1756,7 @@
       "standard deviation" : 0.1797789941063483,
       "Jain index" : 0.8827586206896549,
       "balancing efficiency" : 0.49999999999999994
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -1840,8 +1792,7 @@
       "standard deviation" : 0.11160041076722807,
       "Jain index" : 0.9379798403571982,
       "balancing efficiency" : 0.68149033446874
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -1877,8 +1828,7 @@
       "standard deviation" : 0.13406699176838355,
       "Jain index" : 0.9625910614946088,
       "balancing efficiency" : 0.6840192716540615
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -1914,8 +1864,7 @@
       "standard deviation" : 0.09862085216717723,
       "Jain index" : 0.9413076939905707,
       "balancing efficiency" : 0.7037866338429504
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -1951,8 +1900,7 @@
       "standard deviation" : 0.14925636234627557,
       "Jain index" : 0.9494568088409139,
       "balancing efficiency" : 0.6537272847797896
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -1988,8 +1936,7 @@
       "standard deviation" : 0.095150203786923,
       "Jain index" : 0.9571725224883142,
       "balancing efficiency" : 0.6965909078358221
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -2025,8 +1972,7 @@
       "standard deviation" : 0.14653139316667094,
       "Jain index" : 0.9571725224883141,
       "balancing efficiency" : 0.6965909078358221
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -2062,8 +2008,7 @@
       "standard deviation" : 0.08328235541391657,
       "Jain index" : 0.9571725224883135,
       "balancing efficiency" : 0.6965909078358221
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -2099,8 +2044,7 @@
       "standard deviation" : 0.1457234049705197,
       "Jain index" : 0.9571725224883139,
       "balancing efficiency" : 0.696590907835822
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -2136,8 +2080,7 @@
       "standard deviation" : 0.0425253291656168,
       "Jain index" : 0.9906132628353364,
       "balancing efficiency" : 0.8476367536646406
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -2173,8 +2116,7 @@
       "standard deviation" : 0.03889315937173749,
       "Jain index" : 0.9979989749316663,
       "balancing efficiency" : 0.877410623556582
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -2210,8 +2152,7 @@
       "standard deviation" : 0.05839596601493923,
       "Jain index" : 0.9779713656798545,
       "balancing efficiency" : 0.809124405439807
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -2247,8 +2188,7 @@
       "standard deviation" : 0.052598082857084824,
       "Jain index" : 0.9966629332446372,
       "balancing efficiency" : 0.9355011305161389
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -2284,8 +2224,7 @@
       "standard deviation" : 0.0,
       "Jain index" : 0.9999999999999997,
       "balancing efficiency" : 1.0
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -2321,8 +2260,7 @@
       "standard deviation" : 0.0,
       "Jain index" : 0.9999999999999998,
       "balancing efficiency" : 1.0
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -2358,8 +2296,7 @@
       "standard deviation" : 0.0,
       "Jain index" : 0.9999999999999994,
       "balancing efficiency" : 1.0
-    },
-    "history" : { }
+    }
   }
 }, {
   "config" : {
@@ -2395,7 +2332,6 @@
       "standard deviation" : 0.0,
       "Jain index" : 1.0000000000000004,
       "balancing efficiency" : 1.0
-    },
-    "history" : { }
+    }
   }
 } ]

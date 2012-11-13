@@ -10,7 +10,7 @@ class SimulationMultiRunner(clusterModelFactoriesAndConfig: (Seq[(Seq[Double]) =
     val modelsFactoriesWithConfigs = unwrapAndZip(clusterModelFactoriesAndConfig)
     val serverPerformancesWithConfigs = unwrapAndZip(serverPerformancesAndConfig)
     val taskGensWithConfigs = unwrapAndZip(taskGeneratorsAndConfig)
-    for {
+    val result = for {
       (model, modelConfig) <- modelsFactoriesWithConfigs
       (servers, serversConfig) <- serverPerformancesWithConfigs
       (tasks, tasksConfig) <- taskGensWithConfigs
@@ -20,9 +20,16 @@ class SimulationMultiRunner(clusterModelFactoriesAndConfig: (Seq[(Seq[Double]) =
         "servers" -> serversConfig,
         "taskGenerator" -> tasksConfig
       )
-      val result = new SimulationRunner(model(servers), tasks, false).getResult
-      Map("config" -> resultConfig, "result" -> result)
+      val SimulationResult(performanceMetrics, uniformityMetrics, _) = new SimulationRunner(model(servers), tasks).getNonSerializedResult
+      Map(
+        "config" -> resultConfig,
+        "result" -> Map(
+          "performanceMetrics" -> performanceMetrics,
+          "uniformityMetrics" -> uniformityMetrics
+        )
+      )
     }
+    Serializer.marshal(result)
   }
 
   def unwrapAndZip[A, B](pair: (Seq[A], Seq[B])) = pair._1.zip(pair._2)

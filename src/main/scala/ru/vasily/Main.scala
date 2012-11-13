@@ -33,7 +33,7 @@ object Main {
         model <- env("clusterModel", classOf[(Seq[Double]) => ClusterModel])
         serversPerformance <- env("servers", classOf[Seq[Double]])
         taskGenerator <- env("taskGenerator", classOf[TasksGenerator])
-      } yield new SimulationRunner(model(serversPerformance), taskGenerator, true)
+      } yield new SimulationRunner(model(serversPerformance), taskGenerator)
     },
 
     // ClusterModel
@@ -75,7 +75,7 @@ object Main {
         injectors,
         defaultRootType = "Runner")
       val runner = sdComponent.instance.asInstanceOf[Runner]
-      outputFile.text = runner.getResultString
+      outputFile.text = runner.getResult
     }
   }
 }

@@ -1,11 +1,6 @@
 package ru.vasily.simulation
 
 import collection.immutable
-import collection.immutable.Stream._
-import collection.immutable.SortedSet
-import annotation.tailrec
-import sun.swing.plaf.synth.Paint9Painter.PaintType
-import runtime.RichLong
 
 class ModelState(agentIdToAgentStateMap: immutable.Map[AgentId, AgentState],
                  messageQueue: ImmutableMessageQueue[Message], val timeOfLastEvent: Long = 0) {
@@ -65,7 +60,10 @@ object ModelState {
         "agents:") ++
         (for (agent <- modelState.agents) yield agent.toString) ++
         Seq("messages:") ++
-        (for (message <- modelState.messages) yield message.toString) ++
+        modelState.messages.map {
+          case (timestamp, message) =>
+            "time: %d, msg: %s".format(timestamp, message.toString)
+        } ++
         Seq("======================")
     lines.mkString("\n")
   }
