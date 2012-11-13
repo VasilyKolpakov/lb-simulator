@@ -14,37 +14,51 @@ object SvgTrash {
     val green = Color(0, 100, 0)
   }
 
-  trait Shape
-
-  case class Rectangle(wight: Int, height: Int, x: Int, y: Int, color: Color) extends Shape
-
-  case class Line(x1: Int, y1: Int, x2: Int, y2: Int, color: Color) extends Shape
-
-  case class ComplexShape(shapes: Seq[Shape], x: Int = 0, y: Int = 0) extends Shape {
-    def translate(xShift: Int, yShift: Int) = ComplexShape(shapes, x + xShift, y + yShift)
+  trait Shape[T <: Shape[T]] {
+    this: T =>
+    def translate(xShift: Int, yShift: Int): T
   }
 
-  def toSvg(shape: Shape, xTranslate: Int = 0, yTranslate: Int = 0): Node = shape match {
-    case Rectangle(wight, height, x, y, color) => {
-      val Color(r, g, b) = color
-        <rect x={(x + xTranslate).toString}
-              y={(y + yTranslate).toString}
-              width={wight.toString}
-              height={height.toString}
-              style={"fill:rgb(%d,%d,%d)".format(r, g, b)}/>
-    }
-    case Line(x1, y1, x2, y2, color) => {
-      val Color(r, g, b) = color
-        <line x1={(x1 + xTranslate).toString}
-              y1={(y1 + yTranslate).toString}
-              x2={(x2 + xTranslate).toString}
-              y2={(y2 + yTranslate).toString}
-              style={"stroke:rgb(%s,%s,%s);stroke-width:2".format(r, g, b)}/>
-    }
-    case ComplexShape(shapes, x, y) => Group(
-      shapes.map(toSvg(_, xTranslate + x, yTranslate + y))
-    )
+  case class Rectangle(width: Int, height: Int, x: Int, y: Int, color: Color) extends Shape[Rectangle] {
+    def translate(xShift: Int, yShift: Int) = copy(x = x + xShift, y = y + yShift)
   }
+
+  case class Line(x1: Int, y1: Int, x2: Int, y2: Int, color: Color) extends Shape[Line] {
+    def translate(xShift: Int, yShift: Int) =
+      copy(
+        x1 = x1 + xShift,
+        x2 = x1 + xShift,
+        y1 = y1 + yShift,
+        y2 = y2 + yShift
+      )
+  }
+
+  case class ComplexShape(shapes: Seq[Shape[_]], x: Int = 0, y: Int = 0) extends Shape[ComplexShape] {
+    def translate(xShift: Int, yShift: Int) = copy(x = x + xShift, y = y + yShift)
+  }
+
+  def toSvg(shape: Shape[_], xTranslate: Int = 0, yTranslate: Int = 0): Node =
+    shape.translate(xTranslate, yTranslate) match {
+      case ComplexShape(shapes, x, y) => Group(
+        shapes.map(toSvg(_, x, y))
+      )
+      case Rectangle(width, height, x, y, color) => {
+        val Color(r, g, b) = color
+          <rect x={x.toString}
+                y={y.toString}
+                width={width.toString}
+                height={height.toString}
+                style={"fill:rgb(%d,%d,%d)".format(r, g, b)}/>
+      }
+      case Line(x1, y1, x2, y2, color) => {
+        val Color(r, g, b) = color
+          <line x1={x1.toString}
+                y1={y1.toString}
+                x2={x2.toString}
+                y2={y2.toString}
+                style={"stroke:rgb(%s,%s,%s);stroke-width:2".format(r, g, b)}/>
+      }
+    }
 
   def main(args: Array[String]) {
     def task(serverIndex: Int, executionTime: Int, completionTime: Int) = {
