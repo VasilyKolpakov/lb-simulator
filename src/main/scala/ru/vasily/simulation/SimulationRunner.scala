@@ -2,8 +2,14 @@ package ru.vasily.simulation
 
 import ru.vasily.{Serializer, Runner}
 
-class SimulationRunner(clusterModel: ClusterModel, taskGenerator: TasksGenerator, showHistory: Boolean = true) extends Runner {
-  def getResult: AnyRef = {
+class SimulationRunner(clusterModel: ClusterModel, taskGenerator: TasksGenerator) extends Runner {
+  def getResult: String = {
+    val result: SimulationResult = getNonSerializedResult
+    Serializer.marshal(result)
+  }
+
+
+  def getNonSerializedResult: SimulationResult = {
     val initialMessagesReceiver = clusterModel.initialMessagesReceiver
     val agents = clusterModel.agents
     val tasks = taskGenerator.generateTasks
@@ -51,11 +57,7 @@ class SimulationRunner(clusterModel: ClusterModel, taskGenerator: TasksGenerator
             Map("executionTime" -> executionTime, "arrivalTime " -> arrivalTime, "completionTime" -> completionTime)
         }
     }
-    SimulationResult(performanceMetrics, uniformityMetrics, if (showHistory) {
-      prettyHistory
-    } else {
-      Map.empty
-    })
+    SimulationResult(performanceMetrics, uniformityMetrics, prettyHistory)
   }
 
   class AlgorithmMetrics(history: Map[SimpleServer, Seq[TaskRecord]], makespan: Long) {
