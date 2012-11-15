@@ -1,4 +1,4 @@
-package ru.vasily.simulation
+package ru.vasily.simulation.core
 
 import org.scalatest.FlatSpec
 import org.scalatest.matchers.ShouldMatchers

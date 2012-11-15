@@ -1,4 +1,4 @@
-package ru.vasily.simulation
+package ru.vasily.simulation.core
 
 /*
 * Instances of this trait represent agents in agent-based model.

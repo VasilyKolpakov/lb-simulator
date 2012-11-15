@@ -1,5 +1,7 @@
 package ru.vasily.simulation
 
+import core.{DelayedMessage, ModelState, Message}
+
 object HistoryGetter {
   def getHistory(clusterModel: ClusterModel, taskGenerator: TasksGenerator) = {
     val initialMessagesReceiver = clusterModel.initialMessagesReceiver

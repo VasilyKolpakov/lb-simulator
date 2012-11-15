@@ -1,5 +1,7 @@
 package ru.vasily.simulation
 
+import core.{DelayedMessage, Agent, AgentState, AgentId}
+
 object MonitoringService extends AgentId {
 
   val agent = Agent(MonitoringService, State(Map(), Map()))

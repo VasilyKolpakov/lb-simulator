@@ -1,7 +1,7 @@
-package ru.vasily.simulation
+package ru.vasily.simulation.core
 
 import collection.immutable.SortedMap
-import ru.vasily.simulation.ImmutableMessageQueue.OrderedTimestamp
+import ru.vasily.simulation.core.ImmutableMessageQueue.OrderedTimestamp
 
 class ImmutableMessageQueue[M] private(sortedMap: SortedMap[OrderedTimestamp, M]) {
 

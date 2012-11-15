@@ -1,6 +1,7 @@
 package ru.vasily.simulation
 
 import collection.immutable.Queue
+import core._
 
 case class MasterWorkerClusterModel(serversPerformance: Seq[Double]) extends ClusterModel {
   val numberOfServers = serversPerformance.size

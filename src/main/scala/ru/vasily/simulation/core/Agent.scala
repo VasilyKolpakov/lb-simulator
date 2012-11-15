@@ -1,4 +1,4 @@
-package ru.vasily.simulation
+package ru.vasily.simulation.core
 
 case class Agent[+I <: AgentId, +S <: AgentState](id: I, initialState: S, initialMessages: List[DelayedMessage] = Nil)
 

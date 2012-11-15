@@ -1,4 +1,4 @@
-package ru.vasily.simulation
+package ru.vasily.simulation.core
 
 /**
  * marker trait for agent ids

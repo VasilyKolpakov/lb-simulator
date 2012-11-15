@@ -1,5 +1,6 @@
 package ru.vasily.simulation
 
+import core._
 import util.Random
 
 case class RandomClusterModel(serversPerformance: Seq[Double]) extends ClusterModel {

@@ -1,7 +1,9 @@
 package ru.vasily.simulation
 
 import annotation.tailrec
-import ru.vasily.simulation.MonitoringService.{GetServersLoad, ServersLoad}
+import core._
+import ru.vasily.simulation.MonitoringService.ServersLoad
+import ru.vasily.simulation.MonitoringService.GetServersLoad
 
 case class DynamicRoundRobin(serversPerformance: Seq[Double], maxWeight: Int, refreshTime: Int) extends ClusterModel {
   val numberOfServers = serversPerformance.size

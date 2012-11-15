@@ -1,7 +1,9 @@
 package ru.vasily.simulation
 
 import collection.immutable.Queue
-import ru.vasily.simulation.MonitoringService.{PostServerLoad, Report}
+import core._
+import ru.vasily.simulation.MonitoringService.PostServerLoad
+import ru.vasily.simulation.MonitoringService.Report
 
 case class SimpleServer(indexNumber: Int, serverPerformance: Double, monitoringAgent: MonitoringAgent) extends AgentId {
 
