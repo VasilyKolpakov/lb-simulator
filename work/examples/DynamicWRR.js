@@ -3,21 +3,23 @@
     clusterModel :
     {
         type : "DynamicWRR",
-        refreshTime : 5
+        maxWeight : 3,
+        refreshTime : 1000
     },
     servers :
     {
         type : "RandomPerformance",
-        numberOfServers : 5,
+        numberOfServers : 2,
         maxPerf: 2,
         minPerf: 1
     },
     taskGenerator :
     {
         type : "RandomTaskGen",
-        tasks : 20,
-        maxArrivalTime : 100,
-        minExecTime : 10,
-        maxExecTime : 20
-    }
+        tasks : 10,
+        maxArrivalTime : 10000,
+        minExecTime : 10000,
+        maxExecTime : 20000
+    },
+    outputFormat : {type : "JSON"}
 }

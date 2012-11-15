@@ -3,7 +3,7 @@
     seed : 1,
     maxArrivalTime : 8000,
     numberOfServers : 20,
-    refreshTime : 0,
+    refreshTime : 100,
     clusterModels :
     [
         {
@@ -11,7 +11,7 @@
         },
         {
             type : "DynamicWRR",
-            maxWeight : 3
+            maxWeight : 5
         },
         {
             type : "Random"

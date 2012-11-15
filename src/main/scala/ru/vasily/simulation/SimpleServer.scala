@@ -5,7 +5,7 @@ import core._
 import ru.vasily.simulation.MonitoringService.PostServerLoad
 import ru.vasily.simulation.MonitoringService.Report
 
-case class SimpleServer(indexNumber: Int, serverPerformance: Double, monitoringAgent: MonitoringAgent) extends AgentId {
+case class SimpleServer(indexNumber: Int, serverPerformance: Double, monitoringAgent: AgentId) extends AgentId {
 
   def taskCompletedMessage(task: Task) = {
     val executionTime: Long = (task.executionTime / serverPerformance).toInt
@@ -29,9 +29,7 @@ case class SimpleServer(indexNumber: Int, serverPerformance: Double, monitoringA
       case taskMessage: TaskMessage => StateTransition(BusyState(taskQueue.enqueue(taskMessage)))
 
       case TaskCompleted() => completeCurrentTask(currentTime)
-      case LoadLevelRequest(sender) => {
-        sendMessages(serverLoadInfo(sender, taskQueue.size))
-      }
+      case LoadLevelRequest() => sendMessages(serverLoadInfo(monitoringAgent, taskQueue.size))
     }
 
     def completeCurrentTask(currentTime: Long) = {
@@ -58,13 +56,14 @@ case class SimpleServer(indexNumber: Int, serverPerformance: Double, monitoringA
           selfMessage,
           monitoringAgentMessage)
       }
+      case LoadLevelRequest() => sendMessages(DelayedMessage(LoadLevelResponse(0), monitoringAgent))
     }
   }
 
 }
 
 object SimpleServer {
-  def generateAgents(serversPerformance: Seq[Double], refreshTime: Int = 0) = {
+  def generateAgents(serversPerformance: Seq[Double], refreshTime: Option[Int] = None) = {
     val monitoringAgents = (0 until serversPerformance.size).map {
       index =>
         val agent = MonitoringAgent(index, refreshTime)
@@ -82,14 +81,14 @@ object SimpleServer {
 }
 
 
-case class MonitoringAgent(serverIndex: Int, refreshTime: Int) extends AgentId {
+case class MonitoringAgent(serverIndex: Int, refreshTime: Option[Int]) extends AgentId {
 
   case class On(serverId: AgentId) extends AgentState {
     def changeState(currentTime: Long, message: AnyRef) = message match {
       case Tic() =>
         sendMessages(
-          DelayedMessage(Tic(), thisAgent, refreshTime),
-          DelayedMessage(LoadLevelRequest(thisAgent), serverId, 0)
+          DelayedMessage(Tic(), thisAgent, refreshTime.get),
+          DelayedMessage(LoadLevelRequest(), serverId, 0)
         )
       case LoadLevelResponse(loadLevel) => sendMessages(
         DelayedMessage(PostServerLoad(serverId, loadLevel), MonitoringService, 0)
@@ -100,13 +99,18 @@ case class MonitoringAgent(serverIndex: Int, refreshTime: Int) extends AgentId {
 
   case class Off() extends AgentState {
     def changeState(currentTime: Long, message: AnyRef) = message match {
-      case TurnOn(serverId) => newState(On(serverId))
+
+      case TurnOn(serverId) if refreshTime.isDefined =>
+        newState(On(serverId),
+          DelayedMessage(Tic(), thisAgent, 0)
+        )
+      case _ => doNothing
     }
   }
 
 }
 
-case class LoadLevelRequest(sender: AgentId)
+case class LoadLevelRequest()
 
 case class LoadLevelResponse(loadLevel: Int)
 

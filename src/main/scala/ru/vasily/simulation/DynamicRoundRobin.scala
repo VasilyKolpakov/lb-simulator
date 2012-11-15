@@ -7,7 +7,7 @@ import ru.vasily.simulation.MonitoringService.GetServersLoad
 
 case class DynamicRoundRobin(serversPerformance: Seq[Double], maxWeight: Int, refreshTime: Int) extends ClusterModel {
   val numberOfServers = serversPerformance.size
-  val (servers, monitoringAgents) = SimpleServer.generateAgents(serversPerformance, refreshTime)
+  val (servers, monitoringAgents) = SimpleServer.generateAgents(serversPerformance, Some(refreshTime))
   val serverIds = servers.map(_.id)
   val defaultWeights = Vector(serversPerformance.map(_.toInt): _*)
 
