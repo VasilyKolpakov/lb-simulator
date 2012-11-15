@@ -20,13 +20,11 @@ class SimulationMultiRunner(clusterModelFactoriesAndConfig: (Seq[(Seq[Double]) =
         "servers" -> serversConfig,
         "taskGenerator" -> tasksConfig
       )
-      val SimulationResult(performanceMetrics, uniformityMetrics, _) = new SimulationRunner(model(servers), tasks).getNonSerializedResult
+      val (totalSimulationTime, history) = HistoryGetter.getHistory(model(servers), tasks)
+      val metricsMap = new AlgorithmMetrics(history, totalSimulationTime).metricsMap
       Map(
         "config" -> resultConfig,
-        "result" -> Map(
-          "performanceMetrics" -> performanceMetrics,
-          "uniformityMetrics" -> uniformityMetrics
-        )
+        "result" -> metricsMap
       )
     }
     Serializer.marshal(result)

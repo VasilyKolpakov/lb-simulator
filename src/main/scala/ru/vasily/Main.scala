@@ -6,15 +6,10 @@ import RichFile.enrichFile
 import java.io.File
 import simulation._
 import simulation.DynamicRoundRobin
-import simulation.DynamicRoundRobin
-import simulation.MasterWorkerClusterModel
 import simulation.MasterWorkerClusterModel
 import simulation.RandomClusterModel
-import simulation.RandomClusterModel
-import simulation.RoundRobinClusterModel
 import simulation.RoundRobinClusterModel
 import utils.TestConfigPrinter
-import java.math.SignedMutableBigInteger
 
 object Main {
   val injectors = List[Injector[_]](
@@ -33,8 +28,13 @@ object Main {
         model <- env("clusterModel", classOf[(Seq[Double]) => ClusterModel])
         serversPerformance <- env("servers", classOf[Seq[Double]])
         taskGenerator <- env("taskGenerator", classOf[TasksGenerator])
-      } yield new SimulationRunner(model(serversPerformance), taskGenerator)
+        outputFormat <- env("outputFormat", classOf[SimulationResultOutputFormat])
+      } yield new SimulationRunner(model(serversPerformance), taskGenerator, outputFormat)
     },
+
+    // OutputFormats
+    Injector("JSON", new JsonOutputFormat()),
+    Injector("SVG", new SvgOutputFormat()),
 
     // ClusterModel
     Injector("DynamicWRR") {

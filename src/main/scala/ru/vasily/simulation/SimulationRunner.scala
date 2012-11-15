@@ -1,93 +1,79 @@
 package ru.vasily.simulation
 
 import ru.vasily.{Serializer, Runner}
+import ru.vasily.graphics._
 
-class SimulationRunner(clusterModel: ClusterModel, taskGenerator: TasksGenerator) extends Runner {
+class SimulationRunner(clusterModel: ClusterModel, taskGenerator: TasksGenerator, outputFormat: SimulationResultOutputFormat) extends Runner {
   def getResult: String = {
-    val result: SimulationResult = getNonSerializedResult
-    Serializer.marshal(result)
-  }
-
-  def getNonSerializedResult: SimulationResult = {
     val (totalSimulationTime, history) = HistoryGetter.getHistory(clusterModel, taskGenerator)
-    val metrics = new AlgorithmMetrics(history, totalSimulationTime)
-    val performanceMetrics = Map(
-      "average slowdown" -> metrics.averageSlowdownMetric,
-      "min-max slowdown" -> metrics.minMaxSlowdownMetric,
-      "average utilization" -> metrics.averageUtilization,
-      "makespan" -> totalSimulationTime.toDouble
-    )
-
-    val uniformityMetrics = Map(
-      "min-max utilization" -> metrics.minMaxMetric,
-      "standard deviation" -> metrics.standardDeviation,
-      "coefficient of variation" -> metrics.coefficientOfVariation,
-      "Jain index" -> metrics.JainsIndex,
-      "balancing efficiency" -> metrics.balancingEfficiency
-    )
-    // TODO investigate compiler hang
-    val prettyHistory = history.mapValues {
-      taskRecords =>
-        taskRecords.map {
-          case TaskRecord(Task(executionTime, arrivalTime), completionTime) =>
-            Map("executionTime" -> executionTime, "arrivalTime " -> arrivalTime, "completionTime" -> completionTime)
-        }
-    }
-    SimulationResult(performanceMetrics, uniformityMetrics, prettyHistory)
-  }
-
-  class AlgorithmMetrics(history: Map[SimpleServer, Seq[TaskRecord]], makespan: Long) {
-
-    val slowdowns = for ((server, taskRecords) <- history;
-                         taskRecord <- taskRecords;
-                         task = taskRecord.task)
-    yield (taskRecord.completionTime - task.arrivalTime).toDouble /
-        (task.executionTime / server.serverPerformance)
-
-    val serversUtilization = for ((server, taskRecords) <- history) yield {
-      taskRecords.map(_.task.executionTime).sum.toDouble / (makespan * server.serverPerformance)
-    }
-
-    def averageUtilization = serversUtilization.sum / serversUtilization.size
-
-    def averageSlowdownMetric = {
-      val taskSlowdowns = slowdowns
-      taskSlowdowns.sum / taskSlowdowns.size
-    }
-
-    def minMaxSlowdownMetric = {
-      val taskSlowdowns = slowdowns
-      taskSlowdowns.max / taskSlowdowns.min
-    }
-
-    def minMaxMetric = serversUtilization.min / serversUtilization.max
-
-    def standardDeviation = {
-      val size: Int = serversUtilization.size
-      val average = serversUtilization.sum / size
-      val squareDeviation =
-        serversUtilization.map(x => (x - average) * (x - average)).sum / size
-      math.sqrt(squareDeviation)
-    }
-
-    def coefficientOfVariation = standardDeviation / averageUtilization
-
-    def JainsIndex = {
-      val utilSum: Double = serversUtilization.sum
-      val sumSquared = utilSum * utilSum
-      val squareSummed = serversUtilization.map(x => x * x).sum
-      sumSquared / squareSummed / serversUtilization.size
-    }
-
-    def balancingEfficiency = {
-      val average = serversUtilization.sum / serversUtilization.size
-      average / serversUtilization.max
-    }
-
+    outputFormat.format(history, totalSimulationTime)
   }
 
 }
 
-case class SimulationResult(performanceMetrics: Map[String, Double],
-                            uniformityMetrics: Map[String, Double],
-                            history: Map[SimpleServer, Seq[Map[String, Long]]])
+trait SimulationResultOutputFormat {
+  def format(history: Map[SimpleServer, Seq[TaskRecord]], makespan: Long): String
+}
+
+class JsonOutputFormat extends SimulationResultOutputFormat {
+  def format(history: Map[SimpleServer, Seq[TaskRecord]], makespan: Long) = {
+    val metrics = new AlgorithmMetrics(history, makespan)
+    val result = metrics.metricsMap + ("history" -> prettyHistory(history))
+    Serializer.marshal(result)
+  }
+
+  private def prettyHistory(history: Map[SimpleServer, Seq[TaskRecord]]) = history.mapValues {
+    taskRecords =>
+      taskRecords.map {
+        case TaskRecord(Task(executionTime, arrivalTime), completionTime) =>
+          Map("executionTime" -> executionTime, "arrivalTime " -> arrivalTime, "completionTime" -> completionTime)
+      }
+  }
+}
+
+class SvgOutputFormat extends SimulationResultOutputFormat {
+  def format(history: Map[SimpleServer, Seq[TaskRecord]], makespan: Long) = {
+    val sortedHistory = history.mapValues(_.sortBy(_.completionTime)).toList.
+      sortBy(_._1.indexNumber)
+
+    implicit def longToInt(l: Long) = l.toInt
+
+    val timeScale = 1000.0 / makespan
+
+    def taskShape(taskIndex: Int, startTime: Int, completionTime: Int) = {
+      val rectColor = if (taskIndex % 2 == 0) Color.grayShade(200) else Color.grayShade(100)
+
+      val scaledStartTime = (startTime * timeScale).toInt
+      val scaledEndTime = (completionTime * timeScale).toInt
+
+      val rect = Rectangle(scaledEndTime - scaledStartTime, 30, scaledStartTime, 0, rectColor)
+      def borderLine(x: Int) = Line(x, -10, x, 40, Color.black)
+      ComplexShape(
+        Seq(
+          rect,
+          borderLine(scaledStartTime), borderLine(scaledEndTime)
+        ))
+    }
+    def serverHistoryToShape(serverId: SimpleServer, records: Seq[TaskRecord]) = {
+      val taskShapes = records.zipWithIndex.map {
+        case (TaskRecord(Task(execTime, _), completionTime), taskIndex) => {
+          val startTime = (completionTime - execTime / serverId.serverPerformance).toInt
+          taskShape(taskIndex, startTime, completionTime)
+        }
+      }
+      val textShift: Int = 110
+      val text = Text("server # " + serverId.indexNumber, -textShift, 20)
+      ComplexShape(text +: taskShapes, textShift, serverId.indexNumber * 60 + 30)
+    }
+
+    def allHistoryShape(history: List[(SimpleServer, Seq[TaskRecord])]) = {
+      val shapes = history.map {
+        case (serverId, taskRecords) =>
+          serverHistoryToShape(serverId, taskRecords)
+      }
+      ComplexShape(shapes)
+    }
+    val shape = allHistoryShape(sortedHistory)
+    SVG.toSvgString(shape)
+  }
+}

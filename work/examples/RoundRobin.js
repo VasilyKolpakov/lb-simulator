@@ -19,5 +19,6 @@
         maxArrivalTime : 5000,
         minExecTime : 1000,
         maxExecTime : 2000
-    }
+    },
+    outputFormat : {type : "JSON"}
 }

@@ -1,7 +1,5 @@
 package ru.vasily.graphics
 
-import ru.vasily.graphics.SvgTrash.Color
-
 sealed trait Shape[T <: Shape[T]] {
   this: T =>
   def translate(xShift: Int, yShift: Int): T
