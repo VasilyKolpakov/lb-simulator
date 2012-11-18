@@ -1,16 +1,18 @@
 package ru.vasily.utils
 
-import ru.vasily.Runner
+import ru.vasily.{FileContents, Runner}
 import ru.vasily.simulation.TasksGenerator
 
-class TestConfigPrinter(name: String, numberOfServers: Int, taskGenerator: TasksGenerator) extends Runner {
+class TestConfigPrinter(name: String, numberOfServers: Int, taskGenerator: TasksGenerator)
+  extends Runner {
+
   def getResult = {
     val tasks = taskGenerator.generateTasks.sortWith(_.arrivalTime < _.arrivalTime)
     val header =
       """param NameOfTest :=  "%s";
         |param NW := %d;
         |param NK := %d;
-        |""".stripMargin.format(
+        | """.stripMargin.format(
         name,
         numberOfServers,
         tasks.size
@@ -29,12 +31,13 @@ class TestConfigPrinter(name: String, numberOfServers: Int, taskGenerator: Tasks
         case (task, i) => "%d %.1f".format(i, task.arrivalTime.toDouble)
       }.mkString("\n") + "\n;\n"
 
-    Seq(
+    val output = Seq(
       header,
       workersPerformance,
       tasksExecutionTime,
       tasksArrivalTime,
       "end;"
     ).mkString
+    FileContents(output, "txt")
   }
 }

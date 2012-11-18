@@ -19,5 +19,5 @@
         minExecTime : 1000,
         maxExecTime : 5000
     },
-    outputFormat : {type : "SVG"}
+    outputFormat : {type : "SVG", imageWidth : 600}
 }

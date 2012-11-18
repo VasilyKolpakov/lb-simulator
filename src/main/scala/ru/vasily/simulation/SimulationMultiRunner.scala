@@ -1,11 +1,12 @@
 package ru.vasily.simulation
 
-import ru.vasily.{Serializer, Runner}
+import ru.vasily.{FileContents, Serializer, Runner}
 
 class SimulationMultiRunner(clusterModelFactoriesAndConfig: (Seq[(Seq[Double]) => ClusterModel], Seq[Any]),
                             serverPerformancesAndConfig: (Seq[Seq[Double]], Seq[Any]),
                             taskGeneratorsAndConfig: (Seq[TasksGenerator], Seq[Any])
                              ) extends Runner {
+
   def getResult = {
     val modelsFactoriesWithConfigs = unwrapAndZip(clusterModelFactoriesAndConfig)
     val serverPerformancesWithConfigs = unwrapAndZip(serverPerformancesAndConfig)
@@ -27,7 +28,8 @@ class SimulationMultiRunner(clusterModelFactoriesAndConfig: (Seq[(Seq[Double]) =
         "result" -> metricsMap
       )
     }
-    Serializer.marshal(result)
+    val output = Serializer.marshal(result)
+    FileContents(output, "js")
   }
 
   def unwrapAndZip[A, B](pair: (Seq[A], Seq[B])) = pair._1.zip(pair._2)

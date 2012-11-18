@@ -1,10 +1,14 @@
 package ru.vasily.simulation
 
-import ru.vasily.{Serializer, Runner}
+import ru.vasily.{FileContents, Serializer, Runner}
 import ru.vasily.graphics._
 
-class SimulationRunner(clusterModel: ClusterModel, taskGenerator: TasksGenerator, outputFormat: SimulationResultOutputFormat) extends Runner {
-  def getResult: String = {
+class SimulationRunner(clusterModel: ClusterModel,
+                       taskGenerator: TasksGenerator,
+                       outputFormat: SimulationResultOutputFormat)
+  extends Runner {
+
+  def getResult = {
     val (totalSimulationTime, history) = HistoryGetter.getHistory(clusterModel, taskGenerator)
     outputFormat.format(history, totalSimulationTime)
   }
@@ -12,14 +16,15 @@ class SimulationRunner(clusterModel: ClusterModel, taskGenerator: TasksGenerator
 }
 
 trait SimulationResultOutputFormat {
-  def format(history: Map[SimpleServer, Seq[TaskRecord]], makespan: Long): String
+  def format(history: Map[SimpleServer, Seq[TaskRecord]], makespan: Long): FileContents
 }
 
 class JsonOutputFormat extends SimulationResultOutputFormat {
   def format(history: Map[SimpleServer, Seq[TaskRecord]], makespan: Long) = {
     val metrics = new AlgorithmMetrics(history, makespan)
     val result = metrics.metricsMap + ("history" -> prettyHistory(history))
-    Serializer.marshal(result)
+    val output = Serializer.marshal(result)
+    FileContents(output, "js")
   }
 
   private def prettyHistory(history: Map[SimpleServer, Seq[TaskRecord]]) = history.mapValues {
@@ -31,14 +36,14 @@ class JsonOutputFormat extends SimulationResultOutputFormat {
   }
 }
 
-class SvgOutputFormat extends SimulationResultOutputFormat {
+class SvgOutputFormat(imageWidth: Int) extends SimulationResultOutputFormat {
   def format(history: Map[SimpleServer, Seq[TaskRecord]], makespan: Long) = {
     val sortedHistory = history.mapValues(_.sortBy(_.completionTime)).toList.
       sortBy(_._1.indexNumber)
 
     implicit def longToInt(l: Long) = l.toInt
 
-    val timeScale = 1000.0 / makespan
+    val timeScale = imageWidth.toDouble / makespan
 
     def taskShape(taskIndex: Int, startTime: Int, completionTime: Int) = {
       val rectColor = if (taskIndex % 2 == 0) Color.grayShade(200) else Color.grayShade(100)
@@ -74,6 +79,7 @@ class SvgOutputFormat extends SimulationResultOutputFormat {
       ComplexShape(shapes)
     }
     val shape = allHistoryShape(sortedHistory)
-    SVG.toSvgString(shape)
+    val svgHtml = SVG.toSvgString(shape)
+    FileContents(svgHtml, "svg")
   }
 }

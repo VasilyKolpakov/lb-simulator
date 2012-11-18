@@ -45,7 +45,7 @@ object Main {
 
     // OutputFormats
     Injector("JSON", new JsonOutputFormat()),
-    Injector("SVG", new SvgOutputFormat()),
+    ClassInjector("SVG", classOf[SvgOutputFormat], "imageWidth"),
 
     // ClusterModel
     Injector("DynamicWRR") {
@@ -77,16 +77,27 @@ object Main {
   )
 
   def main(args: Array[String]) {
-    for (fileName <- args) {
-      val inputFile = new File(fileName)
-      val outputFile = new File(fileName + ".out")
-
+    for (inputFilePath <- args) {
+      val inputFile = new File(inputFilePath)
       val sdComponent = JsonDiLoader.createSDComponent(
         inputFile.text,
         injectors,
         defaultRootType = "Runner")
       val runner = sdComponent.instance.asInstanceOf[Runner]
-      outputFile.text = runner.getResult
+      runner.getResult match {
+        case FileContents(contents, ext) => {
+          val outputFile = new File(inputFilePath + ".out." + ext)
+          outputFile.text = contents
+        }
+        case ExecScript(script, ext, command) => {
+          val inputFileDir: File = inputFile.getParentFile
+          val inputFileName = inputFile.getName
+          val scriptFile = new File(inputFileDir, inputFileName + ".out." + ext)
+          scriptFile.text = script(inputFileName + ".out")
+          import scala.sys.process.Process
+          Process(command(scriptFile.getName), inputFileDir).!
+        }
+      }
     }
   }
 }
