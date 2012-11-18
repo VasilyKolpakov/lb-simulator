@@ -43,7 +43,7 @@ class ScopeDrivenDIImpl private[di](scope: DIScope, name: String, parent: ScopeD
       }
       val mapConfig = instancesWithConfigs.mapValues(_._2)
       val mapInstance = instancesWithConfigs.mapValues(_._1)
-      (mapConfig, mapInstance)
+      (mapInstance, mapConfig)
     }
     case SeqComponent(seq) => {
       val instancesWithConfig = seq.zipWithIndex.map {
