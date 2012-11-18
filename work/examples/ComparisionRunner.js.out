@@ -1,0 +1,7 @@
+jpeg("barChart.jpg")
+data <- c(16520.0, 22944.0)
+name <- c("Master-Slave", "Random")
+barplot(data, names.arg = name)
+dev.off()
+q()
+    

@@ -18,10 +18,10 @@ object Main {
       "testName", "servers", "taskGenerator"),
     Injector("MultiRunner") {
       env => for {
-        models <- env.seqWithConfig("clusterModels", classOf[Seq[Double] => ClusterModel])
+        modelFactories <- env.seqWithConfig("clusterModels", classOf[Seq[Double] => ClusterModel])
         serversPerformances <- env.seqWithConfig("servers", classOf[Seq[Double]])
         taskGenerators <- env.seqWithConfig("taskGenerators", classOf[TasksGenerator])
-      } yield new SimulationMultiRunner(models, serversPerformances, taskGenerators)
+      } yield new SimulationMultiRunner(modelFactories, serversPerformances, taskGenerators)
     },
     Injector("Runner") {
       env => for {
@@ -30,6 +30,17 @@ object Main {
         taskGenerator <- env("taskGenerator", classOf[TasksGenerator])
         outputFormat <- env("outputFormat", classOf[SimulationResultOutputFormat])
       } yield new SimulationRunner(model(serversPerformance), taskGenerator, outputFormat)
+    },
+    Injector("ComparingRunner") {
+      env => for {
+        modelFactories <- env("clusterModels", classOf[Map[String, Seq[Double] => ClusterModel]])
+        serversPerformance <- env("servers", classOf[Seq[Double]])
+        taskGenerator <- env("taskGenerator", classOf[TasksGenerator])
+        metricPath <- env("metricPath", classOf[Seq[String]])
+      } yield {
+        val models = modelFactories.mapValues(factory => factory(serversPerformance))
+        new ComparingRunner(models, taskGenerator, metricPath)
+      }
     },
 
     // OutputFormats
