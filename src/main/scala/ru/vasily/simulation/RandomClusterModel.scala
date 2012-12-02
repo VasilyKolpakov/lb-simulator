@@ -3,13 +3,13 @@ package ru.vasily.simulation
 import core._
 import util.Random
 
-case class RandomClusterModel(serversPerformance: Seq[Double]) extends ClusterModel {
+case class RandomClusterModel(serversPerformance: Seq[Double], seed: Int) extends ClusterModel {
   val numberOfServers = serversPerformance.size
   val (servers, monitoringAgents) = SimpleServer.generateAgents(serversPerformance)
   val serverIds = servers.map(_.id)
 
   object MainServer extends AgentId {
-    val random = new Random(0)
+    val random = new Random(seed)
 
     case class State() extends AgentState {
 

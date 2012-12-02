@@ -20,13 +20,14 @@ class ComparingRunner(clusterModels: Map[String, ClusterModel],
       """jpeg("%s.jpg")
         |data <- c(%s)
         |name <- c(%s)
-        |barplot(data, names.arg = name)
+        |barplot(data, names.arg = name, main = "%s")
         |dev.off()
         |q()
       """.stripMargin.format(
         outputFileNamePrefix,
         argString(metricValues),
-        argString(modelKeys.map("\"" + _ + "\""))
+        argString(modelKeys.map("\"" + _ + "\"")),
+        metricKey
       )
     ExecScript(code, "r", (scriptFile) => "Rscript " + scriptFile)
   }

@@ -45,7 +45,7 @@ object Main {
 
     // OutputFormats
     Injector("JSON", new JsonOutputFormat()),
-    ClassInjector("SVG", classOf[SvgOutputFormat], "imageWidth"),
+    ClassInjector("SVG", classOf[SvgOutputFormat], "imageWidth", "makespan"),
 
     // ClusterModel
     Injector("DynamicWRR") {
@@ -57,7 +57,11 @@ object Main {
       }
     },
     Injector("MasterSlave", (servers: Seq[Double]) => MasterWorkerClusterModel(servers)),
-    Injector("Random", (servers: Seq[Double]) => RandomClusterModel(servers)),
+    Injector("Random") {
+      env => for {
+        seed <- env("seed", classOf[Int])
+      } yield (servers: Seq[Double]) => RandomClusterModel(servers, seed)
+    },
     Injector("RoundRobin", (servers: Seq[Double]) => RoundRobinClusterModel(servers)),
 
     // TasksGenerator

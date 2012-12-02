@@ -36,45 +36,51 @@ class JsonOutputFormat extends SimulationResultOutputFormat {
   }
 }
 
-class SvgOutputFormat(imageWidth: Int) extends SimulationResultOutputFormat {
+class SvgOutputFormat(imageWidth: Int, expectedMakespan: Int) extends SimulationResultOutputFormat {
   def format(history: Map[SimpleServer, Seq[TaskRecord]], makespan: Long) = {
     val sortedHistory = history.mapValues(_.sortBy(_.completionTime)).toList.
       sortBy(_._1.indexNumber)
 
     implicit def longToInt(l: Long) = l.toInt
 
-    val timeScale = imageWidth.toDouble / makespan
+    val timeScale = imageWidth.toDouble / expectedMakespan
 
-    def taskShape(taskIndex: Int, startTime: Int, completionTime: Int) = {
-      val rectColor = if (taskIndex % 2 == 0) Color.grayShade(200) else Color.grayShade(100)
+    def taskShape(taskIndex: Int, taskServerIndex: Int, startTime: Int, completionTime: Int) = {
+      val rectColor = if (taskServerIndex % 2 == 0) Color.grayShade(200) else Color.grayShade(100)
 
       val scaledStartTime = (startTime * timeScale).toInt
       val scaledEndTime = (completionTime * timeScale).toInt
 
       val rect = Rectangle(scaledEndTime - scaledStartTime, 30, scaledStartTime, 0, rectColor)
       def borderLine(x: Int) = Line(x, -10, x, 40, Color.black)
+      val center = (scaledEndTime + scaledStartTime) / 2
+      val indexText = Text(taskIndex.toString, (center + 2): Int, 20)
       ComplexShape(
         Seq(
           rect,
-          borderLine(scaledStartTime), borderLine(scaledEndTime)
+          borderLine(scaledStartTime), borderLine(scaledEndTime),
+          indexText
         ))
     }
-    def serverHistoryToShape(serverId: SimpleServer, records: Seq[TaskRecord]) = {
+    def serverHistoryToShape(serverId: SimpleServer, records: Seq[TaskRecord], taskIndexes: Map[TaskRecord, Int]) = {
       val taskShapes = records.zipWithIndex.map {
-        case (TaskRecord(Task(execTime, _), completionTime), taskIndex) => {
+        case (record@TaskRecord(Task(execTime, _), completionTime), taskIndex) => {
           val startTime = (completionTime - execTime / serverId.serverPerformance).toInt
-          taskShape(taskIndex, startTime, completionTime)
+          taskShape(taskIndexes(record), taskIndex, startTime, completionTime)
         }
       }
-      val textShift: Int = 110
+      val textShift: Int = 55
       val text = Text("server # " + serverId.indexNumber, -textShift, 20)
-      ComplexShape(text +: taskShapes, textShift, serverId.indexNumber * 60 + 30)
+      ComplexShape(text +: taskShapes, textShift + 55, serverId.indexNumber * 60 + 30)
     }
 
     def allHistoryShape(history: List[(SimpleServer, Seq[TaskRecord])]) = {
+      val taskRecordIndexes = history.flatMap(_._2).sortBy {
+        (record) => (record.task.arrivalTime, record.task.executionTime)
+      }.zipWithIndex.toMap
       val shapes = history.map {
         case (serverId, taskRecords) =>
-          serverHistoryToShape(serverId, taskRecords)
+          serverHistoryToShape(serverId, taskRecords, taskRecordIndexes)
       }
       ComplexShape(shapes)
     }

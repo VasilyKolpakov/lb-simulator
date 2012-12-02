@@ -75,9 +75,8 @@ case class DynamicRoundRobin(serversPerformance: Seq[Double], maxWeight: Int, re
 
       def changeState(currentTime: Long, message: AnyRef) = message match {
         case task: Task => {
+          val srvMessage = serverMessage(serverIds(algorithmState.currentServerIndex), task)
           val nextAlgState = algorithmState.nextState(serversLoad)
-          val serverIndex = nextAlgState.currentServerIndex
-          val srvMessage = serverMessage(serverIds(serverIndex), task)
           val newState = RoundRobinState(serversLoad, nextAlgState)
           StateTransition(newState, srvMessage, monitoringServiceMessage)
         }

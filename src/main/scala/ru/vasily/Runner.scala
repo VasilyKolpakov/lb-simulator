@@ -4,7 +4,7 @@ trait Runner {
   def getResult: Result
 }
 
-trait Result
+sealed trait Result
 
 case class FileContents(contents: String, extension: String) extends Result
 

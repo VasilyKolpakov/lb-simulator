@@ -25,7 +25,7 @@ object SVG {
                 style={"stroke:rgb(%s,%s,%s);stroke-width:2".format(r, g, b)}/>
       }
       case Text(text, x, y) =>
-        <text x={x.toString} y={y.toString} font-size="20">
+        <text x={x.toString} y={y.toString} font-size="20" text-anchor="middle">
           {text}
         </text>
     }

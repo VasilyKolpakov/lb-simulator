@@ -1,7 +1,7 @@
 {
     type : "ComparingRunner",
     seed : 1,
-    metricPath : ["performanceMetrics", "makespan"],
+    metricPath : ["uniformityMetrics", "balancing efficiency"],
     clusterModels :
     {
         "Master-Slave" : {
@@ -9,6 +9,14 @@
         },
         "Random" :{
             type : "Random"
+        },
+        "Round Robin" :{
+            type : "RoundRobin"
+        },
+        "Weighted RR" : {
+            type : "DynamicWRR",
+            maxWeight : 3,
+            refreshTime: 100
         }
     },
     servers :
@@ -21,8 +29,8 @@
     taskGenerator :
     {
         type : "RandomTaskGen",
-        maxArrivalTime : 8000,
-        tasks : 320,
+        maxArrivalTime : 70000,
+        tasks : 1000,
         minExecTime : 2000,
         maxExecTime : 4000
     }
