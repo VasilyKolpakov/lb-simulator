@@ -16,9 +16,12 @@ class ModelState(agentIdToAgentStateMap: immutable.Map[AgentId, AgentState],
       }
       val agentId = message.receiverId
       val agentState = agentIdToAgentStateMap(agentId)
-      val StateTransition(newAgentState, newMessages) = agentState.changeState(nextEventTime, message.contents)
+      val StateTransition(newAgentState, messageActions) = agentState.changeState(nextEventTime, message.contents)
       val nextAgentStates = agentIdToAgentStateMap.updated(agentId, newAgentState)
-      val prioritizedMessages = newMessages map {
+      val sendMessageActions = messageActions.collect {
+        case m: SendMessage => m
+      }
+      val prioritizedMessages = sendMessageActions map {
         ModelState.delayedMessageToQueueElement(_, nextEventTime)
       }
       val nextMessages = remainingMessages ++ prioritizedMessages
@@ -45,8 +48,13 @@ class ModelState(agentIdToAgentStateMap: immutable.Map[AgentId, AgentState],
 }
 
 object ModelState {
-  def apply(agents: Seq[Agent[AgentId, AgentState]], initialMessages: Seq[DelayedMessage] = Nil) = {
-    val queueElements = (initialMessages ++ agents.flatMap(_.initialMessages)) map {
+  def apply(agents: Seq[Agent[AgentId, AgentState]], initialMessages: Seq[SendMessage] = Nil) = {
+    val agentMessages = for {
+      agent <- agents
+      message <- agent.messageActions.asInstanceOf[Seq[SendMessage]]
+    } yield message
+
+    val queueElements = (initialMessages ++ agentMessages).map {
       delayedMessageToQueueElement(_, currentTime = 0)
     }
     val agentsMap = agents.map(agent => (agent.id, agent.initialState)).toMap
@@ -68,6 +76,6 @@ object ModelState {
     lines.mkString("\n")
   }
 
-  private def delayedMessageToQueueElement(dm: DelayedMessage, currentTime: Long) = (dm.delay + currentTime, dm.message)
+  private def delayedMessageToQueueElement(sm: SendMessage, currentTime: Long) = (sm.delay + currentTime, sm.message)
 }
 

@@ -14,13 +14,15 @@ class ModelStateTest extends FlatSpec with ShouldMatchers {
 
       def changeState(currentTime: Long, message: AnyRef) = message match {
         case Tic() => {
-          val ticMessage = DelayedMessage(Tic(), Clock(), ticTime)
+          val ticMessage = SendMessage(
+            message = Message(Tic(), Clock()),
+            delay = ticTime)
           currentTime should equal(currentClockTime)
-          StateTransition(ClockState(currentClockTime + ticTime), ticMessage)
+          newState(ClockState(currentClockTime + ticTime), ticMessage)
         }
       }
     }
-    val initialTic: DelayedMessage = DelayedMessage(Tic(), Clock(), 0)
+    val initialTic = SendMessage.withoutDelay(Tic(), Clock())
     val clockAgent = Agent(Clock(), ClockState(0), initialTic)
     val initialState = ModelState(Seq(clockAgent))
     initialState.nextStates.take(10).last

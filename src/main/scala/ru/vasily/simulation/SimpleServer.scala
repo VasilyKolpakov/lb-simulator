@@ -9,15 +9,18 @@ case class SimpleServer(indexNumber: Int, serverPerformance: Double, monitoringA
 
   def taskCompletedMessage(task: Task) = {
     val executionTime: Long = (task.executionTime / serverPerformance).toInt
-    DelayedMessage(TaskCompleted(), this, executionTime)
+    SendMessage(
+      message = Message(TaskCompleted(), this),
+      delay = executionTime
+    )
   }
 
   def monitoringMessage(task: Task, time: Long) = {
     val report = Report(this, TaskRecord(task, time))
-    DelayedMessage(report, MonitoringService, 0)
+    SendMessage.withoutDelay(report, MonitoringService)
   }
 
-  def serverLoadInfo(agentId: AgentId, load: Int) = DelayedMessage(LoadLevelResponse(load), agentId, 0)
+  def serverLoadInfo(agentId: AgentId, load: Int) = SendMessage.withoutDelay(LoadLevelResponse(load), agentId)
 
   object BusyState {
     def apply(taskMessages: TaskMessage*): BusyState = BusyState(Queue(taskMessages: _*))
@@ -26,19 +29,19 @@ case class SimpleServer(indexNumber: Int, serverPerformance: Double, monitoringA
   case class BusyState(taskQueue: Queue[TaskMessage]) extends AgentState {
 
     def changeState(currentTime: Long, message: AnyRef) = message match {
-      case taskMessage: TaskMessage => StateTransition(BusyState(taskQueue.enqueue(taskMessage)))
+      case taskMessage: TaskMessage => newState(BusyState(taskQueue.enqueue(taskMessage)))
 
       case TaskCompleted() => completeCurrentTask(currentTime)
-      case LoadLevelRequest() => sendMessages(serverLoadInfo(monitoringAgent, taskQueue.size))
+      case LoadLevelRequest() => newActions(serverLoadInfo(monitoringAgent, taskQueue.size))
     }
 
     def completeCurrentTask(currentTime: Long) = {
       val (TaskMessage(messageSender, completedTask), queueTail) = taskQueue.dequeue
       val reportMessage = monitoringMessage(completedTask, currentTime)
-      val callbackMessage = DelayedMessage(ServerFinishedTask(thisAgent), messageSender, 0)
+      val callbackMessage = SendMessage.withoutDelay(ServerFinishedTask(thisAgent), messageSender)
       val messages = List(reportMessage, callbackMessage)
       if (queueTail.isEmpty) {
-        val monitoringAgentMessage = DelayedMessage(TurnOff(), monitoringAgent, 0)
+        val monitoringAgentMessage = SendMessage.withoutDelay(TurnOff(), monitoringAgent)
         StateTransition(IdleState(), monitoringAgentMessage :: messages)
       } else {
         StateTransition(BusyState(queueTail),
@@ -51,12 +54,12 @@ case class SimpleServer(indexNumber: Int, serverPerformance: Double, monitoringA
     def changeState(currentTime: Long, message: AnyRef) = message match {
       case taskMessage: TaskMessage => {
         val selfMessage = taskCompletedMessage(taskMessage.task)
-        val monitoringAgentMessage = DelayedMessage(TurnOn(thisAgent), monitoringAgent, 0)
+        val monitoringAgentMessage = SendMessage.withoutDelay(TurnOn(thisAgent), monitoringAgent)
         newState(BusyState(taskMessage),
           selfMessage,
           monitoringAgentMessage)
       }
-      case LoadLevelRequest() => sendMessages(DelayedMessage(LoadLevelResponse(0), monitoringAgent))
+      case LoadLevelRequest() => newActions(SendMessage.withoutDelay(LoadLevelResponse(0), monitoringAgent))
     }
   }
 
@@ -85,13 +88,15 @@ case class MonitoringAgent(serverIndex: Int, refreshTime: Option[Int]) extends A
 
   case class On(serverId: AgentId) extends AgentState {
     def changeState(currentTime: Long, message: AnyRef) = message match {
-      case Tic() =>
-        sendMessages(
-          DelayedMessage(Tic(), thisAgent, refreshTime.get),
-          DelayedMessage(LoadLevelRequest(), serverId, 0)
-        )
-      case LoadLevelResponse(loadLevel) => sendMessages(
-        DelayedMessage(PostServerLoad(serverId, loadLevel), MonitoringService, 0)
+      case Tic() => newActions(
+        SendMessage(
+          message = Message(Tic(), thisAgent),
+          delay = refreshTime.get
+        ),
+        SendMessage.withoutDelay(LoadLevelRequest(), serverId)
+      )
+      case LoadLevelResponse(loadLevel) => newActions(
+        SendMessage.withoutDelay(PostServerLoad(serverId, loadLevel), MonitoringService)
       )
       case TurnOff() => newState(Off())
     }
@@ -102,9 +107,9 @@ case class MonitoringAgent(serverIndex: Int, refreshTime: Option[Int]) extends A
 
       case TurnOn(serverId) if refreshTime.isDefined =>
         newState(On(serverId),
-          DelayedMessage(Tic(), thisAgent, 0)
+          SendMessage.withoutDelay(Tic(), thisAgent)
         )
-      case _ => doNothing
+      case _ => noChanges
     }
   }
 
