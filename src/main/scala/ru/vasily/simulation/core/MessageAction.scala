@@ -11,6 +11,6 @@ object SendMessage {
     new SendMessage(Message(contents, receiverId), 0, tags)
 }
 
-case class CancelMessage(tags: MessageTag*) extends MessageAction
+case class CancelMessages(tags: MessageTag*) extends MessageAction
 
 

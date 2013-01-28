@@ -3,13 +3,10 @@ package ru.vasily.simulation.core
 import collection.immutable
 
 class ModelState(agentIdToAgentStateMap: immutable.Map[AgentId, AgentState],
-                 messageQueue: ImmutableMessageQueue[Message], val timeOfLastEvent: Long = 0) {
+                 messageQueue: MessageQueue, val timeOfLastEvent: Long = 0) {
 
-  def nextState = {
-    if (messageQueue.isEmpty) {
-      None
-    } else {
-      val ((nextEventTime, message), remainingMessages) = messageQueue.dequeue
+  def nextState = messageQueue.dequeueOption.map {
+    case ((nextEventTime, message), remainingMessages) =>
       if (nextEventTime < timeOfLastEvent) {
         throw new RuntimeException("time consistency violated for message: " + message
           + " current time: " + timeOfLastEvent + " message timestamp: " + nextEventTime)
@@ -18,26 +15,15 @@ class ModelState(agentIdToAgentStateMap: immutable.Map[AgentId, AgentState],
       val agentState = agentIdToAgentStateMap(agentId)
       val StateTransition(newAgentState, messageActions) = agentState.changeState(nextEventTime, message.contents)
       val nextAgentStates = agentIdToAgentStateMap.updated(agentId, newAgentState)
-      val sendMessageActions = messageActions.collect {
-        case m: SendMessage => m
-      }
-      val prioritizedMessages = sendMessageActions map {
-        ModelState.delayedMessageToQueueElement(_, nextEventTime)
-      }
-      val nextMessages = remainingMessages ++ prioritizedMessages
-      Some(new ModelState(nextAgentStates, nextMessages, nextEventTime))
-    }
+      val nextMessages = remainingMessages ++ messageActions
+      new ModelState(nextAgentStates, nextMessages, nextEventTime)
   }
 
   def agents = agentIdToAgentStateMap
 
-  def messages = messageQueue.toSeq
+  def messages = messageQueue.messagesSeq
 
-  def timeOfNextEvent = if (messageQueue.isEmpty) {
-    None
-  } else {
-    Some(messageQueue.head._1)
-  }
+  def timeOfNextEvent = messageQueue.timeOfNextEventOption
 
   def nextStates: Stream[ModelState] = nextState match {
     case Some(state) => Stream.cons(state, state.nextStates)
@@ -54,11 +40,9 @@ object ModelState {
       message <- agent.messageActions.asInstanceOf[Seq[SendMessage]]
     } yield message
 
-    val queueElements = (initialMessages ++ agentMessages).map {
-      delayedMessageToQueueElement(_, currentTime = 0)
-    }
+    val queueElements = initialMessages ++ agentMessages
     val agentsMap = agents.map(agent => (agent.id, agent.initialState)).toMap
-    new ModelState(agentsMap, ImmutableMessageQueue(queueElements: _*))
+    new ModelState(agentsMap, MessageQueue(queueElements: _*))
   }
 
   def prettyToString(modelState: ModelState) = {
