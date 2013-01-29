@@ -599,17 +599,17 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 1.0558709759125227,
-      "min-max slowdown" : 2.9783426749337005,
-      "average utilization" : 0.42715845715545175,
-      "makespan" : 9544.0
+      "average slowdown" : 1.0728918913095484,
+      "min-max slowdown" : 4.666729973020771,
+      "average utilization" : 0.43755859078421305,
+      "makespan" : 9377.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.46186975574200945,
-      "coefficient of variation" : 0.19732072751751073,
-      "standard deviation" : 0.08428721753117117,
-      "Jain index" : 0.9625236882840505,
-      "balancing efficiency" : 0.7179030096578559
+      "min-max utilization" : 0.4387182408420083,
+      "coefficient of variation" : 0.22661081664493593,
+      "standard deviation" : 0.09915550958761786,
+      "Jain index" : 0.9511558073378863,
+      "balancing efficiency" : 0.708134604003002
     }
   }
 }, {
@@ -637,17 +637,17 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 4.54662196123375,
-      "min-max slowdown" : 12.507968234957417,
-      "average utilization" : 0.8090007225463038,
-      "makespan" : 19903.0
+      "average slowdown" : 4.582776008657234,
+      "min-max slowdown" : 13.371023775234343,
+      "average utilization" : 0.8459628479441881,
+      "makespan" : 18832.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.6912060237824225,
-      "coefficient of variation" : 0.1319678279389676,
-      "standard deviation" : 0.10676206815549111,
-      "Jain index" : 0.9828826005887967,
-      "balancing efficiency" : 0.8116225502870228
+      "min-max utilization" : 0.7538948850923031,
+      "coefficient of variation" : 0.08715747084615841,
+      "standard deviation" : 0.0737319822566287,
+      "Jain index" : 0.9924608458923645,
+      "balancing efficiency" : 0.8612233399931705
     }
   }
 }, {
@@ -675,17 +675,17 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 1.1086312895618904,
-      "min-max slowdown" : 2.964479687365612,
-      "average utilization" : 0.38638557328931744,
-      "makespan" : 10654.0
+      "average slowdown" : 1.0950574559981308,
+      "min-max slowdown" : 2.920450881283652,
+      "average utilization" : 0.29220479771088403,
+      "makespan" : 14346.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.3072647323479411,
-      "coefficient of variation" : 0.30022448768404303,
-      "standard deviation" : 0.11600241078929059,
-      "Jain index" : 0.917317796186668,
-      "balancing efficiency" : 0.6536626669274322
+      "min-max utilization" : 0.15333601037679928,
+      "coefficient of variation" : 0.41709133586695385,
+      "standard deviation" : 0.12187608942396563,
+      "Jain index" : 0.8518140188012714,
+      "balancing efficiency" : 0.4016688529399069
     }
   }
 }, {
@@ -713,17 +713,17 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 2.680753617461038,
-      "min-max slowdown" : 6.345059493700142,
-      "average utilization" : 0.7156751175221119,
-      "makespan" : 22830.0
+      "average slowdown" : 2.6620455887898355,
+      "min-max slowdown" : 6.848561569190702,
+      "average utilization" : 0.6378062002875782,
+      "makespan" : 25772.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.5666850371844446,
-      "coefficient of variation" : 0.16644834975152356,
-      "standard deviation" : 0.1191229422697832,
-      "Jain index" : 0.9730418245483063,
-      "balancing efficiency" : 0.7459861899231562
+      "min-max utilization" : 0.49968166153045335,
+      "coefficient of variation" : 0.19728965154893352,
+      "standard deviation" : 0.1258325630104856,
+      "Jain index" : 0.9625350494043066,
+      "balancing efficiency" : 0.6450365782799019
     }
   }
 }, {
@@ -751,17 +751,17 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 1.0672378412737853,
-      "min-max slowdown" : 3.7175070992836736,
-      "average utilization" : 0.44577034586106634,
-      "makespan" : 9319.0
+      "average slowdown" : 1.066379091302519,
+      "min-max slowdown" : 3.6871152630719775,
+      "average utilization" : 0.452667958273867,
+      "makespan" : 9177.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.5113018222672797,
-      "coefficient of variation" : 0.21152715898186167,
-      "standard deviation" : 0.09429253481835324,
-      "Jain index" : 0.9571725224883136,
-      "balancing efficiency" : 0.696590907835822
+      "min-max utilization" : 0.5113018222672798,
+      "coefficient of variation" : 0.21152715898186158,
+      "standard deviation" : 0.09575156717579096,
+      "Jain index" : 0.9571725224883141,
+      "balancing efficiency" : 0.6965909078358222
     }
   }
 }, {
@@ -789,17 +789,17 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 4.493521276932751,
-      "min-max slowdown" : 10.409425471400235,
-      "average utilization" : 0.7566933941217462,
-      "makespan" : 21532.0
+      "average slowdown" : 4.500500130355917,
+      "min-max slowdown" : 9.700296991299089,
+      "average utilization" : 0.7707983300946872,
+      "makespan" : 21047.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.652966280986055,
-      "coefficient of variation" : 0.1303294981453939,
-      "standard deviation" : 0.09861947030582194,
-      "Jain index" : 0.9832979197420206,
-      "balancing efficiency" : 0.7737621928542163
+      "min-max utilization" : 0.6587442452157971,
+      "coefficient of variation" : 0.10900435462492394,
+      "standard deviation" : 0.08402037451794048,
+      "Jain index" : 0.9882575735884045,
+      "balancing efficiency" : 0.7772491169160489
     }
   }
 }, {
@@ -827,17 +827,17 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 1.128964449384849,
-      "min-max slowdown" : 3.6152112467865174,
-      "average utilization" : 0.37682209828169605,
-      "makespan" : 10846.0
+      "average slowdown" : 1.130141579653309,
+      "min-max slowdown" : 3.6558129610849903,
+      "average utilization" : 0.2892728150072218,
+      "makespan" : 14446.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.3139739555204475,
-      "coefficient of variation" : 0.2871999600811305,
-      "standard deviation" : 0.10822329158419094,
-      "Jain index" : 0.923801339318107,
-      "balancing efficiency" : 0.5895100636032373
+      "min-max utilization" : 0.206748111928364,
+      "coefficient of variation" : 0.4147233934254033,
+      "standard deviation" : 0.11996820346551396,
+      "Jain index" : 0.8532456019894303,
+      "balancing efficiency" : 0.39690669071410956
     }
   }
 }, {
@@ -865,17 +865,17 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 2.666651523221071,
-      "min-max slowdown" : 5.630772986512326,
-      "average utilization" : 0.7749511623851297,
-      "makespan" : 21132.0
+      "average slowdown" : 2.692971254150376,
+      "min-max slowdown" : 5.9202078586084275,
+      "average utilization" : 0.7232411932037419,
+      "makespan" : 22547.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.5935980613723985,
-      "coefficient of variation" : 0.152736324325757,
-      "standard deviation" : 0.11836319207467756,
-      "Jain index" : 0.9772034225613521,
-      "balancing efficiency" : 0.7845925990232561
+      "min-max utilization" : 0.5659002901473718,
+      "coefficient of variation" : 0.1727566835337327,
+      "standard deviation" : 0.12494474993285806,
+      "Jain index" : 0.971020031729491,
+      "balancing efficiency" : 0.7294114190202303
     }
   }
 }, {
@@ -903,17 +903,17 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 1.0570789196646941,
-      "min-max slowdown" : 3.00976546681014,
-      "average utilization" : 0.4321303587051618,
+      "average slowdown" : 1.0701652456138429,
+      "min-max slowdown" : 4.530879720534893,
+      "average utilization" : 0.43213035870516175,
       "makespan" : 9144.0
     },
     "uniformityMetrics" : {
       "min-max utilization" : 0.7157496911112726,
-      "coefficient of variation" : 0.08737326439658838,
-      "standard deviation" : 0.03775664008493868,
-      "Jain index" : 0.992423750419624,
-      "balancing efficiency" : 0.8615597063740096
+      "coefficient of variation" : 0.08761518240063342,
+      "standard deviation" : 0.03786118019880389,
+      "Jain index" : 0.9923820583340914,
+      "balancing efficiency" : 0.8615597063740095
     }
   }
 }, {
@@ -941,17 +941,17 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 4.601309404973209,
-      "min-max slowdown" : 12.992671622798206,
-      "average utilization" : 0.8895729137398144,
-      "makespan" : 17795.0
+      "average slowdown" : 4.648777355610433,
+      "min-max slowdown" : 13.122190074341972,
+      "average utilization" : 0.8949542062415198,
+      "makespan" : 17688.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.8049845788394858,
-      "coefficient of variation" : 0.061198300925657714,
-      "standard deviation" : 0.054440350870363315,
-      "Jain index" : 0.9962687423893506,
-      "balancing efficiency" : 0.9097498132219688
+      "min-max utilization" : 0.7741935483870968,
+      "coefficient of variation" : 0.06890837514788509,
+      "standard deviation" : 0.06166984018386837,
+      "Jain index" : 0.9952740762415024,
+      "balancing efficiency" : 0.9064678373735446
     }
   }
 }, {
@@ -979,17 +979,17 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 1.1117317079288673,
-      "min-max slowdown" : 3.0164487045989623,
-      "average utilization" : 0.3611998325258687,
-      "makespan" : 11146.0
+      "average slowdown" : 1.0893044540124817,
+      "min-max slowdown" : 2.8318107340204106,
+      "average utilization" : 0.33985592886487714,
+      "makespan" : 11846.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.20233016834090178,
-      "coefficient of variation" : 0.2786845332784325,
-      "standard deviation" : 0.1006608067477197,
-      "Jain index" : 0.9279320901119122,
-      "balancing efficiency" : 0.5540021099949541
+      "min-max utilization" : 0.18541403951240015,
+      "coefficient of variation" : 0.29962152770726164,
+      "standard deviation" : 0.10182815260686492,
+      "Jain index" : 0.9176222434084564,
+      "balancing efficiency" : 0.5076839007986551
     }
   }
 }, {
@@ -1017,17 +1017,17 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 2.69966237492658,
-      "min-max slowdown" : 6.97703142124761,
-      "average utilization" : 0.8203844247303558,
-      "makespan" : 19501.0
+      "average slowdown" : 2.6783593156643475,
+      "min-max slowdown" : 6.556005233318796,
+      "average utilization" : 0.836600777423347,
+      "makespan" : 19123.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.699193409987987,
-      "coefficient of variation" : 0.08047138216905951,
-      "standard deviation" : 0.0660174685680205,
-      "Jain index" : 0.9935660208063691,
-      "balancing efficiency" : 0.8236648361077743
+      "min-max utilization" : 0.7214930049154648,
+      "coefficient of variation" : 0.07324822923297925,
+      "standard deviation" : 0.06127952552119397,
+      "Jain index" : 0.9946633297674987,
+      "balancing efficiency" : 0.8641666216532526
     }
   }
 }, {
@@ -1055,8 +1055,8 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 1.0687000000000002,
-      "min-max slowdown" : 3.754,
+      "average slowdown" : 1.0642375,
+      "min-max slowdown" : 3.583,
       "average utilization" : 0.4435081494622465,
       "makespan" : 9019.0
     },
@@ -1093,17 +1093,17 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 4.533415624999999,
-      "min-max slowdown" : 9.475,
-      "average utilization" : 0.9126169290440341,
-      "makespan" : 17532.0
+      "average slowdown" : 4.549325000000001,
+      "min-max slowdown" : 9.476,
+      "average utilization" : 0.912512832211703,
+      "makespan" : 17534.0
     },
     "uniformityMetrics" : {
       "min-max utilization" : 0.8823529411764706,
-      "coefficient of variation" : 0.03423265984407286,
-      "standard deviation" : 0.0312413048999068,
-      "Jain index" : 0.9988294966835746,
-      "balancing efficiency" : 0.9411764705882357
+      "coefficient of variation" : 0.03952847075210477,
+      "standard deviation" : 0.036070236799000586,
+      "Jain index" : 0.9984399375975042,
+      "balancing efficiency" : 0.9411764705882353
     }
   }
 }, {
@@ -1131,8 +1131,8 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 1.131975,
-      "min-max slowdown" : 3.6655,
+      "average slowdown" : 1.1241500000000002,
+      "min-max slowdown" : 3.545,
       "average utilization" : 0.3348401138456386,
       "makespan" : 11946.0
     },
@@ -1140,7 +1140,7 @@
       "min-max utilization" : 0.25,
       "coefficient of variation" : 0.27386127875258315,
       "standard deviation" : 0.09169974175542711,
-      "Jain index" : 0.9302325581395339,
+      "Jain index" : 0.9302325581395342,
       "balancing efficiency" : 0.49999999999999983
     }
   }
@@ -1169,23 +1169,24 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 2.7649593749999997,
-      "min-max slowdown" : 5.7615,
-      "average utilization" : 0.8620225203383439,
-      "makespan" : 18561.0
+      "average slowdown" : 2.6824218749999993,
+      "min-max slowdown" : 5.4805,
+      "average utilization" : 0.9370424597364568,
+      "makespan" : 17075.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.6666666666666666,
-      "coefficient of variation" : 0.15811388300841897,
-      "standard deviation" : 0.13629772793139938,
-      "Jain index" : 0.9756097560975607,
-      "balancing efficiency" : 0.888888888888889
+      "min-max utilization" : 1.0,
+      "coefficient of variation" : 0.0,
+      "standard deviation" : 0.0,
+      "Jain index" : 0.9999999999999997,
+      "balancing efficiency" : 1.0
     }
   }
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "Random"
+      "type" : "Random",
+      "seed" : 1
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -1205,23 +1206,24 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 1.3852382585530798,
-      "min-max slowdown" : 5.992197108595266,
-      "average utilization" : 0.3419682965451352,
-      "makespan" : 12056.0
+      "average slowdown" : 1.40334882148693,
+      "min-max slowdown" : 3.602690258198085,
+      "average utilization" : 0.34758798724463597,
+      "makespan" : 11985.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.05944802345007352,
-      "coefficient of variation" : 0.5861584923368913,
-      "standard deviation" : 0.20044762112991144,
-      "Jain index" : 0.7442792216081989,
-      "balancing efficiency" : 0.4037078749845038
+      "min-max utilization" : 0.1156749354184805,
+      "coefficient of variation" : 0.5529465229219606,
+      "standard deviation" : 0.19219756895636422,
+      "Jain index" : 0.7658434687755321,
+      "balancing efficiency" : 0.41853691852905706
     }
   }
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "Random"
+      "type" : "Random",
+      "seed" : 1
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -1241,23 +1243,24 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 5.492482193495717,
-      "min-max slowdown" : 18.462741763991666,
-      "average utilization" : 0.5615150444583576,
-      "makespan" : 29690.0
+      "average slowdown" : 5.3803256743159125,
+      "min-max slowdown" : 19.1941476462807,
+      "average utilization" : 0.6898975335148941,
+      "makespan" : 23564.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.2801817736563618,
-      "coefficient of variation" : 0.355455948688621,
-      "standard deviation" : 0.1995938628308787,
-      "Jain index" : 0.8878243429462296,
-      "balancing efficiency" : 0.5651735389194308
+      "min-max utilization" : 0.33270076995993114,
+      "coefficient of variation" : 0.2758815747121547,
+      "standard deviation" : 0.1903300179361205,
+      "Jain index" : 0.9292724742181842,
+      "balancing efficiency" : 0.697422062583878
     }
   }
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "Random"
+      "type" : "Random",
+      "seed" : 1
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -1277,23 +1280,24 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 1.2500877521075613,
-      "min-max slowdown" : 2.3908597061463124,
-      "average utilization" : 0.3209474871275198,
-      "makespan" : 15469.0
+      "average slowdown" : 1.2955540077792764,
+      "min-max slowdown" : 3.461483443998995,
+      "average utilization" : 0.30989736052835404,
+      "makespan" : 15425.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.17383100526509035,
-      "coefficient of variation" : 0.4936791223069853,
-      "standard deviation" : 0.15844507375174643,
-      "Jain index" : 0.8040400918956111,
-      "balancing efficiency" : 0.4952904485105671
+      "min-max utilization" : 0.09595275319031424,
+      "coefficient of variation" : 0.621052336711027,
+      "standard deviation" : 0.19246247989671386,
+      "Jain index" : 0.7216537970097527,
+      "balancing efficiency" : 0.32062199835617794
     }
   }
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "Random"
+      "type" : "Random",
+      "seed" : 1
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -1313,23 +1317,24 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 3.4480964684242634,
-      "min-max slowdown" : 13.198928924990888,
-      "average utilization" : 0.3813488991475088,
-      "makespan" : 44767.0
+      "average slowdown" : 3.5582903242428885,
+      "min-max slowdown" : 14.583467472607596,
+      "average utilization" : 0.48351486329899374,
+      "makespan" : 35024.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.125190475140539,
-      "coefficient of variation" : 0.5356153398740502,
-      "standard deviation" : 0.20425632022748783,
-      "Jain index" : 0.7770709414299279,
-      "balancing efficiency" : 0.3850262718739445
+      "min-max utilization" : 0.1823352225005489,
+      "coefficient of variation" : 0.44599190554055634,
+      "standard deviation" : 0.21564371523989984,
+      "Jain index" : 0.8340918148588411,
+      "balancing efficiency" : 0.4866165506867618
     }
   }
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "Random"
+      "type" : "Random",
+      "seed" : 1
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -1349,23 +1354,24 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 1.4019975521144072,
-      "min-max slowdown" : 4.324166444058309,
-      "average utilization" : 0.3429634521363586,
-      "makespan" : 12163.0
+      "average slowdown" : 1.4168829701028052,
+      "min-max slowdown" : 3.638606085436984,
+      "average utilization" : 0.3913528152544322,
+      "makespan" : 10765.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.07464492995490205,
-      "coefficient of variation" : 0.5702341086349103,
-      "standard deviation" : 0.19556945842332818,
-      "Jain index" : 0.7546219052357649,
-      "balancing efficiency" : 0.402110712739047
+      "min-max utilization" : 0.11306009444256081,
+      "coefficient of variation" : 0.5338692977959135,
+      "standard deviation" : 0.2089312526703376,
+      "Jain index" : 0.7782001684088453,
+      "balancing efficiency" : 0.4477592681407487
     }
   }
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "Random"
+      "type" : "Random",
+      "seed" : 1
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -1385,23 +1391,24 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 5.366345436038076,
-      "min-max slowdown" : 19.039181980259166,
-      "average utilization" : 0.5176501032057637,
-      "makespan" : 32604.0
+      "average slowdown" : 5.249876513497027,
+      "min-max slowdown" : 15.764111181895478,
+      "average utilization" : 0.6772791573679895,
+      "makespan" : 24323.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.25865435312029433,
-      "coefficient of variation" : 0.36375654598260804,
-      "standard deviation" : 0.18829861356966918,
-      "Jain index" : 0.8831434911673641,
-      "balancing efficiency" : 0.5206121056567112
+      "min-max utilization" : 0.31960038008771363,
+      "coefficient of variation" : 0.27715298774575375,
+      "standard deviation" : 0.18770994200246482,
+      "Jain index" : 0.9286656800444211,
+      "balancing efficiency" : 0.6808829718605085
     }
   }
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "Random"
+      "type" : "Random",
+      "seed" : 1
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -1421,23 +1428,24 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 1.2712750164266329,
-      "min-max slowdown" : 2.68825530313385,
-      "average utilization" : 0.3147499318075886,
-      "makespan" : 15666.0
+      "average slowdown" : 1.2980336738560616,
+      "min-max slowdown" : 3.248632928324939,
+      "average utilization" : 0.28676734864534564,
+      "makespan" : 16648.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.15586778831218492,
-      "coefficient of variation" : 0.4869494256186761,
-      "standard deviation" : 0.15326729850722273,
-      "Jain index" : 0.8083291900958643,
-      "balancing efficiency" : 0.4962573180305188
+      "min-max utilization" : 0.09452113129546763,
+      "coefficient of variation" : 0.6593174373420504,
+      "standard deviation" : 0.1890707134222236,
+      "Jain index" : 0.6970100789199529,
+      "balancing efficiency" : 0.29598564568224117
     }
   }
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "Random"
+      "type" : "Random",
+      "seed" : 1
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -1457,23 +1465,24 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 3.516579902837177,
-      "min-max slowdown" : 13.17851244432422,
-      "average utilization" : 0.40635272290315577,
-      "makespan" : 41922.0
+      "average slowdown" : 3.4402475628622255,
+      "min-max slowdown" : 10.230458307563781,
+      "average utilization" : 0.4804968291388415,
+      "makespan" : 35176.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.1492898599098041,
-      "coefficient of variation" : 0.5025609020467605,
-      "standard deviation" : 0.20421699097136728,
-      "Jain index" : 0.7983601935400697,
-      "balancing efficiency" : 0.410527515827088
+      "min-max utilization" : 0.2185756797215375,
+      "coefficient of variation" : 0.44333105813186574,
+      "standard deviation" : 0.2130191676911289,
+      "Jain index" : 0.8357413639063681,
+      "balancing efficiency" : 0.48364172140297934
     }
   }
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "Random"
+      "type" : "Random",
+      "seed" : 1
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -1493,23 +1502,24 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 1.3449806725495261,
-      "min-max slowdown" : 5.900805749648451,
-      "average utilization" : 0.33999311650318365,
-      "makespan" : 11622.0
+      "average slowdown" : 1.3784888527530135,
+      "min-max slowdown" : 3.5145885504629892,
+      "average utilization" : 0.38652059082461115,
+      "makespan" : 10223.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.09955134174214848,
-      "coefficient of variation" : 0.5247370730257767,
-      "standard deviation" : 0.17840699280279246,
-      "Jain index" : 0.7840991001578475,
-      "balancing efficiency" : 0.5017438415305172
+      "min-max utilization" : 0.14100838146523648,
+      "coefficient of variation" : 0.45128883338982134,
+      "standard deviation" : 0.17443242651438326,
+      "Jain index" : 0.8307982831245576,
+      "balancing efficiency" : 0.5147956746428106
     }
   }
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "Random"
+      "type" : "Random",
+      "seed" : 1
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -1529,23 +1539,24 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 5.40477419910236,
-      "min-max slowdown" : 17.012014040664948,
-      "average utilization" : 0.6899385460251046,
-      "makespan" : 22944.0
+      "average slowdown" : 5.441932184990952,
+      "min-max slowdown" : 21.8198439826118,
+      "average utilization" : 0.6054212720388572,
+      "makespan" : 26147.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.4266518177688554,
-      "coefficient of variation" : 0.2395505138712139,
-      "standard deviation" : 0.16527513323987197,
-      "Jain index" : 0.9457298158992851,
-      "balancing efficiency" : 0.6958933516990754
+      "min-max utilization" : 0.38350646867631133,
+      "coefficient of variation" : 0.25195537285309677,
+      "standard deviation" : 0.1525391423297464,
+      "Jain index" : 0.9403078386243479,
+      "balancing efficiency" : 0.6053132368873877
     }
   }
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "Random"
+      "type" : "Random",
+      "seed" : 1
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -1565,23 +1576,24 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 1.2336596189918734,
-      "min-max slowdown" : 2.4062821569369888,
-      "average utilization" : 0.37620271301530933,
-      "makespan" : 12590.0
+      "average slowdown" : 1.214371000492167,
+      "min-max slowdown" : 2.287352594385623,
+      "average utilization" : 0.35688999994090154,
+      "makespan" : 12534.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.193953411531472,
-      "coefficient of variation" : 0.43641354677794664,
-      "standard deviation" : 0.16417996029449713,
-      "Jain index" : 0.8400136935659686,
-      "balancing efficiency" : 0.586865045043294
+      "min-max utilization" : 0.16919100853467964,
+      "coefficient of variation" : 0.46562454311490487,
+      "standard deviation" : 0.1661767431647607,
+      "Jain index" : 0.821823547207913,
+      "balancing efficiency" : 0.40328698695088894
     }
   }
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "Random"
+      "type" : "Random",
+      "seed" : 1
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -1601,23 +1613,24 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 3.400173450821792,
-      "min-max slowdown" : 12.41925378243308,
-      "average utilization" : 0.46208528296073786,
-      "makespan" : 34622.0
+      "average slowdown" : 3.49893434091621,
+      "min-max slowdown" : 13.212396748312678,
+      "average utilization" : 0.5566568081651588,
+      "makespan" : 28740.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.20260482164965538,
-      "coefficient of variation" : 0.4000517744528312,
-      "standard deviation" : 0.18485803739698178,
-      "Jain index" : 0.8620381831422621,
-      "balancing efficiency" : 0.4678828025229335
+      "min-max utilization" : 0.29866254404256853,
+      "coefficient of variation" : 0.35092096809650564,
+      "standard deviation" : 0.19534254601882836,
+      "Jain index" : 0.8903565717749575,
+      "balancing efficiency" : 0.575189353083579
     }
   }
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "Random"
+      "type" : "Random",
+      "seed" : 1
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -1637,23 +1650,24 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 1.3569374999999997,
-      "min-max slowdown" : 4.261,
-      "average utilization" : 0.34120958798942247,
-      "makespan" : 11723.0
+      "average slowdown" : 1.3829249999999997,
+      "min-max slowdown" : 3.804,
+      "average utilization" : 0.4260304611779741,
+      "makespan" : 9389.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.125,
-      "coefficient of variation" : 0.51234753829798,
-      "standard deviation" : 0.1748178924500486,
-      "Jain index" : 0.7920792079207921,
-      "balancing efficiency" : 0.49999999999999994
+      "min-max utilization" : 0.14285714285714288,
+      "coefficient of variation" : 0.4330127018922194,
+      "standard deviation" : 0.18447660108306285,
+      "Jain index" : 0.8421052631578945,
+      "balancing efficiency" : 0.5714285714285713
     }
   }
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "Random"
+      "type" : "Random",
+      "seed" : 1
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -1673,23 +1687,24 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 5.305709374999999,
-      "min-max slowdown" : 17.261,
-      "average utilization" : 0.6348198698619266,
-      "makespan" : 25204.0
+      "average slowdown" : 5.304759374999999,
+      "min-max slowdown" : 18.11,
+      "average utilization" : 0.6153136176595009,
+      "makespan" : 26003.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.39999999999999997,
-      "coefficient of variation" : 0.23717082451262844,
-      "standard deviation" : 0.15056075195215263,
-      "Jain index" : 0.9467455621301774,
-      "balancing efficiency" : 0.64
+      "min-max utilization" : 0.3846153846153846,
+      "coefficient of variation" : 0.24286699034656803,
+      "standard deviation" : 0.14943936644022185,
+      "Jain index" : 0.9443009959424566,
+      "balancing efficiency" : 0.6153846153846154
     }
   }
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "Random"
+      "type" : "Random",
+      "seed" : 1
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -1709,23 +1724,24 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 1.2577,
-      "min-max slowdown" : 2.5345,
-      "average utilization" : 0.3698720704976167,
-      "makespan" : 12723.0
+      "average slowdown" : 1.2238499999999999,
+      "min-max slowdown" : 2.3005,
+      "average utilization" : 0.3549875754348599,
+      "makespan" : 12520.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.25,
-      "coefficient of variation" : 0.4358898943540673,
-      "standard deviation" : 0.16122349773372627,
-      "Jain index" : 0.8403361344537817,
-      "balancing efficiency" : 0.5882352941176472
+      "min-max utilization" : 0.16666666666666666,
+      "coefficient of variation" : 0.48733971724044794,
+      "standard deviation" : 0.17299954463629683,
+      "Jain index" : 0.8080808080808088,
+      "balancing efficiency" : 0.3703703703703705
     }
   }
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "Random"
+      "type" : "Random",
+      "seed" : 1
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -1745,17 +1761,17 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 3.4625031250000027,
-      "min-max slowdown" : 12.337,
-      "average utilization" : 0.49330949004131464,
-      "makespan" : 32434.0
+      "average slowdown" : 3.4042656249999985,
+      "min-max slowdown" : 9.8475,
+      "average utilization" : 0.5941329372447085,
+      "makespan" : 26930.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.25,
-      "coefficient of variation" : 0.36443449342783135,
-      "standard deviation" : 0.17977899410634832,
-      "Jain index" : 0.8827586206896549,
-      "balancing efficiency" : 0.49999999999999994
+      "min-max utilization" : 0.38461538461538464,
+      "coefficient of variation" : 0.3377314021526574,
+      "standard deviation" : 0.2006573499607322,
+      "Jain index" : 0.8976157082748945,
+      "balancing efficiency" : 0.6153846153846154
     }
   }
 }, {
