@@ -1,6 +1,8 @@
 package ru.vasily.di
 
 sealed trait SDComponent {
+
+  // todo ? move methods to ScopeDrivenDI
   def instance = ScopeDrivenDI(DIScope.empty).instantiate(this)._1
 
   def config = ScopeDrivenDI(DIScope.empty).instantiate(this)._2

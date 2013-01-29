@@ -5,33 +5,49 @@ import collection.immutable.ListMap
 trait ScopeDrivenDI {
   protected def accept[T](injector: Injector[T]): (T, Map[String, Any]) = {
     val env = new Environment {
-      def getValueWithConfig[A](key: String, clazz: Class[A]) = {
-        val valueAndConfig = getInstance(key).getOrElse(throw new RuntimeException("no value for key = " + key + " in " + scopePath))
-        valueAndConfig.asInstanceOf[(A, Any)]
-      }
+      def getValueWithConfig[A](key: String, clazz: Class[A]) =
+        getInstance(key, clazz).getOrElse {
+          throw new RuntimeException("no value for key = " + key + " in " + scopePath)
+        }
     }
-
     injector.create(env)
   }
 
-  def getInstance(key: String): Option[(Any, Any)]
+  def getInstance[A](key: String, clazz: Class[A]): Option[(A, Any)]
 
   protected[di] def scopePath: String
 }
 
 object EmptyScopeDrivenDI extends ScopeDrivenDI {
-  def getInstance(key: String) = None
+
+  def getInstance[A](key: String, clazz: Class[A]): Option[(A, Any)] = None
 
   protected[di] def scopePath = ""
 }
 
 class ScopeDrivenDIImpl private[di](scope: DIScope, name: String, parent: ScopeDrivenDI) extends ScopeDrivenDI {
-  def getInstance(key: String): Option[(Any, Any)] = {
-    val thisScopeInstanceOption =
-      for (component <- scope.getComponent(key))
-      yield instantiate(component, key)
-    thisScopeInstanceOption
-      .orElse(parent.getInstance(key))
+  def getInstance[A](key: String, clazz: Class[A]): Option[(A, Any)] = {
+    scope.getComponent(key).map {
+      case Primitive(value) => Primitive(castPrimitive(value, clazz))
+      case x => x
+    }.map(component => instantiate(component, key).asInstanceOf[(A, Any)])
+      .orElse(parent.getInstance(key, clazz))
+  }
+
+  def castNumber[A](number: BigDecimal, clazz: Class[A]): A = {
+    val DoubleClass = classOf[Double]
+    val IntClass = classOf[Int]
+    // without explicit type annotation ([AnyVal]) the scala compiler will implicitly convert Int to Double
+    val castedNumber: AnyVal = clazz match {
+      case IntClass => number.intValue()
+      case DoubleClass => number.doubleValue()
+    }
+    castedNumber.asInstanceOf[A]
+  }
+
+  def castPrimitive[A](value: Any, clazz: Class[A]) = value match {
+    case number: BigDecimal => castNumber(number, clazz)
+    case x => x
   }
 
   // todo: add runtime type checking  (scala.reflect.Manifest?)

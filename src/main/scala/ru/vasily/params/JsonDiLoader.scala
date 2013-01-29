@@ -15,9 +15,7 @@ object JsonDiLoader {
   def createSDComponent(json: String, injectors: Seq[Injector[_]], defaultRootType: String): SDComponent = {
     val injectorsMap = injectors.map(inj => (inj.typeName, inj)).toMap
     def toSDComponent(parsedJson: Any, defaultTypeKey: Option[String] = None): SDComponent = parsedJson match {
-      case number: BigDecimal => {
-        Primitive(number.intValue())
-      }
+      case number: BigDecimal => Primitive(number)
       case str: String => Primitive(str)
       case map: Map[String, Any] => {
         val typeKeyOption = map.get(TYPE_RESERVED_WORD).orElse(defaultTypeKey)

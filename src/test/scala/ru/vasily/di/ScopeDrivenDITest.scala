@@ -119,4 +119,28 @@ class ScopeDrivenDITest extends FlatSpec with ShouldMatchers {
     ComplexComponent(injector, scope).config should equal(expectedConfig)
   }
 
+  it should "convert BigDecimal primitives to required number types" in {
+    // without explicit type annotation the scala compiler will implicitly convert Int to Double
+    val injector = Injector("Stub") {
+      env =>
+        for {
+          iNumber <- env("int", classOf[Int])
+          dNumber <- env("double", classOf[Double])
+        } yield Map(
+          "double" -> dNumber,
+          "int" -> iNumber
+        )
+    }
+    val scope = DIScope(
+      "double" -> Primitive(BigDecimal(2.5)),
+      "int" -> Primitive(BigDecimal(10))
+    )
+    val expectedInstance = Map(
+      "double" -> 2.5,
+      "int" -> 10
+    )
+    ComplexComponent(injector, scope).instance should equal(expectedInstance)
+  }
+
+
 }
