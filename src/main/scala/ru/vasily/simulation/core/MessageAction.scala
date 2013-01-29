@@ -11,6 +11,10 @@ object SendMessage {
     new SendMessage(Message(contents, receiverId), 0, tags)
 }
 
-case class CancelMessages(tags: MessageTag*) extends MessageAction
+case class CancelMessages(tags: Seq[MessageTag]) extends MessageAction
+
+object CancelMessages {
+  def apply(tags: MessageTag*): CancelMessages = CancelMessages(tags)
+}
 
 

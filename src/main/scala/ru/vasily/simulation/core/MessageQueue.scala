@@ -7,14 +7,13 @@ private case class TimestampedAction(action: MessageAction,
                                      creationTime: Long,
                                      creator: AgentId)
 
-private case class MessageTagRecord(creator: AgentId, tag: MessageTag)
+private case class MessageTagRecord(tag: MessageTag, creator: AgentId)
 
-private case class
 
-private class TimeInterval(val start: Long, val end: Long)
+private case class TimeInterval(val start: Long, val end: Long)
 
 class MessageQueue private(queue: PriorityQueue[TimestampedAction],
-                           tagsMap: Map[MessageTagRecord, TimeInterval],
+                           tagsTimeIntervals: Map[MessageTagRecord, TimeInterval],
                            lastMessageArrivalTime: Map[AgentId, Long],
                            val currentTime: Long) {
 
@@ -22,11 +21,18 @@ class MessageQueue private(queue: PriorityQueue[TimestampedAction],
 
   def timeOfNextEventOption: Option[Long] = sys.error("not implemented")
 
-  def enqueue(action: MessageAction) = action match {
+  def enqueue(action: MessageAction, agent: AgentId) = action match {
     case SendMessage(msg, delay, tags) => {
 
     }
-    case CancelMessages(tags) =>
+    case CancelMessages(tags) => {
+      tags.foldLeft(tagsTimeIntervals) {
+        case (tagsIntervals, tag) =>
+          val updatedTimeInterval =
+            tagsTimeIntervals.get(TimeInterval(tag, agent))
+
+      }
+    }
   }
 
   def ++(timestampedMessages: Seq[MessageAction]): MessageQueue = {
