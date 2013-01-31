@@ -2,18 +2,19 @@ package ru.vasily.simulation.core
 
 import ru.vasily.core.PriorityQueue
 
-private case class TimestampedAction(action: MessageAction,
-                                     actionTime: Long,
-                                     creationTime: Long,
-                                     creator: AgentId)
+private case class TimestampedAction(action: MessageQueueAction, actionTime: Long)
+
+private trait MessageQueueAction
+
+private case class MessageWrapper(message: Message) extends MessageQueueAction
+
+private case class ReleaseTags(tags: Seq[MessageTag]) extends MessageQueueAction
 
 private case class MessageTagRecord(tag: MessageTag, creator: AgentId)
 
 
-private case class TimeInterval(val start: Long, val end: Long)
-
 class MessageQueue private(queue: PriorityQueue[TimestampedAction],
-                           tagsTimeIntervals: Map[MessageTagRecord, TimeInterval],
+                           tagCancellingCount: Map[MessageTagRecord, Int],
                            lastMessageArrivalTime: Map[AgentId, Long],
                            val currentTime: Long) {
 
@@ -23,13 +24,22 @@ class MessageQueue private(queue: PriorityQueue[TimestampedAction],
 
   def enqueue(action: MessageAction, agent: AgentId) = action match {
     case SendMessage(msg, delay, tags) => {
-
+      val updatedQueue = queue.enqueue(TimestampedAction(msg, delay + currentTime))
+      val
+      new MessageQueue(
+        queue = queue.enqueue(TimestampedAction(msg, delay + currentTime)),
+        updatedTagCancellingCount,
+        updatedLastMessageArrivalTime,
+        updatedCurrentTime)
     }
     case CancelMessages(tags) => {
       tags.foldLeft(tagsTimeIntervals) {
         case (tagsIntervals, tag) =>
-          val updatedTimeInterval =
-            tagsTimeIntervals.get(TimeInterval(tag, agent))
+          val currentIntervalOption =
+            for {interval <- tagsTimeIntervals.get(MessageTagRecord(tag, agent))
+                 if interval.end > currentTime
+            } yield TimeInterval()
+
 
       }
     }
