@@ -2,36 +2,34 @@ package ru.vasily.simulation.core
 
 import org.scalatest.FlatSpec
 import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.OptionValues._
 
 class MessageQueueTest extends FlatSpec with ShouldMatchers {
-  "A MessageQueue" should "correctly display simple-case emptyness" in {
+  "A MessageQueue" should "dequeue message having the earliest timestamp" in {
+    messageQueue(
+      message(arrivalTime = 100),
+      message(arrivalTime = 20),
+      message(msg = "the msg", arrivalTime = 10)
+    ).dequeueOption.value._1._1 should equal(10)
   }
 
-  it should "correctly display complex-case emptyness" in {
+  it should "cancell messages" in {
+    messageQueue(
+      message(arrivalTime = 100),
+      message(arrivalTime = 20),
+      message(msg = "the msg", arrivalTime = 10, tags = Set("tag"))
+    ).cancelMessages(Set("tag"))
+      .dequeueOption.value._1._1 should equal(20)
   }
 
-  it should "dequeueOption message having the earliest timestamp" in {
-  }
-
-  it should "convert to sequence correctly" in {
-  }
-
-  case class DummyAgent(id: Int) extends AgentId
-
-  case class StringTag(tag: String) extends MessageTag
-
-  def message(senderId: Int = 0,
-              receiverId: Int = 0,
-              message: AnyRef = "",
+  def message(msg: String = "",
               tags: Set[String] = Set.empty,
               arrivalTime: Long = 0)
-  = (
-    Message(message, DummyAgent(receiverId)),
-    tags.map(tag => MessageTagRecord(StringTag(tag), DummyAgent(senderId))),
-    arrivalTime
-    )
+  = (msg, tags, arrivalTime)
 
-  def messageQueue(messages: (Message, Set[MessageTagRecord], Long)*) = messages.foldLeft(MessageQueue()) {
+  def messageQueue(messages: (String, Set[String], Long)*) = messages.foldLeft(MessageQueue[String, String, Long](0)) {
     case (queue, (message, tags, arrivalTime)) => queue.enqueue(message, tags, arrivalTime)
   }
+
+
 }

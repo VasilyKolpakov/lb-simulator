@@ -3,7 +3,7 @@ package ru.vasily.simulation.core
 import collection.immutable
 
 class ModelState(agentIdToAgentStateMap: immutable.Map[AgentId, AgentState],
-                 messageQueue: MessageQueue, val timeOfLastEvent: Long = 0) {
+                 messageQueue: MessageQueue[Message, MessageTagRecord, Long], val timeOfLastEvent: Long = 0) {
 
   def nextState = messageQueue.dequeueOption.map {
     case ((nextEventTime, message), remainingMessages) =>
@@ -36,7 +36,7 @@ class ModelState(agentIdToAgentStateMap: immutable.Map[AgentId, AgentState],
 
 object ModelState {
   def apply(agents: Seq[Agent]) = {
-    val messageQueue = agents.foldLeft(MessageQueue()) {
+    val messageQueue = agents.foldLeft(MessageQueue[Message, MessageTagRecord, Long](0)) {
       case (queue, Agent(agentId, _, initialActions)) =>
         enqueueActions(queue, initialActions, agentId, 0)
     }
@@ -44,7 +44,7 @@ object ModelState {
     new ModelState(agentsMap, messageQueue)
   }
 
-  def enqueueActions(queue: MessageQueue, messageActions: Seq[MessageAction], agentId: AgentId, currentTime: Long): MessageQueue = {
+  def enqueueActions(queue: MessageQueue[Message, MessageTagRecord, Long], messageActions: Seq[MessageAction], agentId: AgentId, currentTime: Long): MessageQueue[Message, MessageTagRecord, Long] = {
     messageActions.foldLeft(queue) {
       case (queue, action) => action match {
         case SendMessage(sentMessage, delay, tags) =>
