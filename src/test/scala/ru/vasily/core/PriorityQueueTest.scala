@@ -13,7 +13,7 @@ class PriorityQueueTest extends FunSuite with ShouldMatchers {
     PriorityQueue[Int]().isEmpty should equal(true)
   }
   test("the queue works as scala standart PriorityQueue") {
-    val randomNumbers = Seq.fill(1000)(math.random)
+    val randomNumbers = Seq.fill(10000)(math.random)
     val scalaQueue = ScalaPriorityQueue(randomNumbers: _*)
     val buffer = ArrayBuffer[Double]()
     while (!scalaQueue.isEmpty) {
@@ -29,9 +29,10 @@ class PriorityQueueTest extends FunSuite with ShouldMatchers {
       def compare(x: TestElem, y: TestElem) = x.order - y.order
     })
 
-    val queue = _queue.enqueue(TestElem(100, 100)).enqueue(TestElem(100, 1000)).dequeue._2.dequeue._2
+    val queue = _queue.enqueue(TestElem(100, 100)).enqueue(TestElem(100, 1000)).dequeueOption.get._2.dequeueOption.get._2
 
     queue.toSeq.toList should equal(testElems.toList)
   }
+  test(""){}
 
 }

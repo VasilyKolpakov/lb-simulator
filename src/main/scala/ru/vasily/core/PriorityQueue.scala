@@ -17,7 +17,9 @@ class PriorityQueue[A] private(sortedMap: SortedMap[A, Queue[A]]) {
     queue.head
   }
 
-  def dequeue: (A, PriorityQueue[A]) = {
+  def dequeueOption: Option[(A, PriorityQueue[A])] = if (isEmpty) {
+    None
+  } else {
     val (key, queue) = sortedMap.head
     val newQueue = queue.tail
     val newMap = if (newQueue.isEmpty) {
@@ -25,7 +27,7 @@ class PriorityQueue[A] private(sortedMap: SortedMap[A, Queue[A]]) {
     } else {
       sortedMap.updated(key, newQueue)
     }
-    (queue.head, new PriorityQueue(newMap))
+    Some((queue.head, new PriorityQueue(newMap)))
   }
 
   def ++(elems: Seq[A]): PriorityQueue[A] =

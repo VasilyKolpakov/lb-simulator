@@ -15,9 +15,10 @@ class ModelState(agentIdToAgentStateMap: immutable.Map[AgentId, AgentState],
       val agentState = agentIdToAgentStateMap(agentId)
       val StateTransition(newAgentState, messageActions) = agentState.changeState(nextEventTime, message.contents)
       val nextAgentStates = agentIdToAgentStateMap.updated(agentId, newAgentState)
-      val nextMessages = remainingMessages ++ messageActions
+      val nextMessages = ModelState.enqueueActions(remainingMessages, messageActions, agentId, nextEventTime)
       new ModelState(nextAgentStates, nextMessages, nextEventTime)
   }
+
 
   def agents = agentIdToAgentStateMap
 
@@ -34,15 +35,24 @@ class ModelState(agentIdToAgentStateMap: immutable.Map[AgentId, AgentState],
 }
 
 object ModelState {
-  def apply(agents: Seq[Agent[AgentId, AgentState]], initialMessages: Seq[SendMessage] = Nil) = {
-    val agentMessages = for {
-      agent <- agents
-      message <- agent.messageActions.asInstanceOf[Seq[SendMessage]]
-    } yield message
-
-    val queueElements = initialMessages ++ agentMessages
+  def apply(agents: Seq[Agent]) = {
+    val messageQueue = agents.foldLeft(MessageQueue()) {
+      case (queue, Agent(agentId, _, initialActions)) =>
+        enqueueActions(queue, initialActions, agentId, 0)
+    }
     val agentsMap = agents.map(agent => (agent.id, agent.initialState)).toMap
-    new ModelState(agentsMap, MessageQueue(queueElements: _*))
+    new ModelState(agentsMap, messageQueue)
+  }
+
+  def enqueueActions(queue: MessageQueue, messageActions: Seq[MessageAction], agentId: AgentId, currentTime: Long): MessageQueue = {
+    messageActions.foldLeft(queue) {
+      case (queue, action) => action match {
+        // TODO MessageWrapper shouldn't be here
+        case SendMessage(sentMessage, delay, tags) =>
+          queue.enqueue(MessageWrapper(sentMessage, agentId, tags), currentTime + delay)
+        case CancelMessages(tags) => queue.cancelMessages(tags, agentId)
+      }
+    }
   }
 
   def prettyToString(modelState: ModelState) = {

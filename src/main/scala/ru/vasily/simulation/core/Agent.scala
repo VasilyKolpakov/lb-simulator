@@ -1,8 +1,8 @@
 package ru.vasily.simulation.core
 
-case class Agent[+I <: AgentId, +S <: AgentState](id: I, initialState: S, messageActions: List[MessageAction] = Nil)
+case class Agent(id: AgentId, initialState: AgentState, messageActions: List[MessageAction] = Nil)
 
 object Agent {
-  def apply[I <: AgentId, S <: AgentState](id: I, initialState: S, messageActions: MessageAction*): Agent[I, S] =
+  def apply(id: AgentId, initialState: AgentState, messageActions: MessageAction*): Agent =
     Agent(id, initialState, messageActions.toList)
 }

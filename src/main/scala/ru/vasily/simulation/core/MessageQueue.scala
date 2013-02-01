@@ -4,51 +4,77 @@ import ru.vasily.core.PriorityQueue
 
 private case class TimestampedAction(action: MessageQueueAction, actionTime: Long)
 
-private trait MessageQueueAction
+trait MessageQueueAction
 
-private case class MessageWrapper(message: Message) extends MessageQueueAction
+case class MessageWrapper(message: Message, agent: AgentId, tags: Set[MessageTag]) extends MessageQueueAction
 
-private case class ReleaseTags(tags: Seq[MessageTag]) extends MessageQueueAction
+private case class ReleaseTags(tagRecords: Set[MessageTagRecord]) extends MessageQueueAction
 
 private case class MessageTagRecord(tag: MessageTag, creator: AgentId)
 
 
 class MessageQueue private(queue: PriorityQueue[TimestampedAction],
                            tagCancellingCount: Map[MessageTagRecord, Int],
-                           lastMessageArrivalTime: Map[AgentId, Long],
-                           val currentTime: Long) {
+                           lastMessageArrivalTime: Long) {
 
-  def dequeueOption: Option[((Long, Message), MessageQueue)] = sys.error("not implemented")
+  private def copy(queue: PriorityQueue[TimestampedAction] = queue,
+                   tagCancellingCount: Map[MessageTagRecord, Int] = tagCancellingCount,
+                   lastMessageArrivalTime: Long = lastMessageArrivalTime) =
+    new MessageQueue(queue, tagCancellingCount, lastMessageArrivalTime)
 
-  def timeOfNextEventOption: Option[Long] = sys.error("not implemented")
-
-  def enqueue(action: MessageAction, agent: AgentId) = action match {
-    case SendMessage(msg, delay, tags) => {
-      val updatedQueue = queue.enqueue(TimestampedAction(msg, delay + currentTime))
-      val
-      new MessageQueue(
-        queue = queue.enqueue(TimestampedAction(msg, delay + currentTime)),
-        updatedTagCancellingCount,
-        updatedLastMessageArrivalTime,
-        updatedCurrentTime)
-    }
-    case CancelMessages(tags) => {
-      tags.foldLeft(tagsTimeIntervals) {
-        case (tagsIntervals, tag) =>
-          val currentIntervalOption =
-            for {interval <- tagsTimeIntervals.get(MessageTagRecord(tag, agent))
-                 if interval.end > currentTime
-            } yield TimeInterval()
-
-
+  def dequeueOption: Option[((Long, Message), MessageQueue)] = queue.dequeueOption.flatMap {
+    case (head, tail) => head.action match {
+      case MessageWrapper(message, agent, tags) => {
+        val messageWasCancelled = tags
+          .map(MessageTagRecord(_, agent))
+          .exists(tagCancellingCount.contains(_))
+        val messageQueueTail = copy(queue = tail)
+        if (messageWasCancelled) {
+          messageQueueTail.dequeueOption
+        } else {
+          Some((head.actionTime, message), messageQueueTail)
+        }
       }
+      case ReleaseTags(tagRecords) => copy(
+        queue = tail,
+        tagCancellingCount = tagRecords.foldLeft(tagCancellingCount) {
+          case (cancellingCounts, tagRecord) => {
+            val count = tagCancellingCount.get(tagRecord)
+              .getOrElse(throw new RuntimeException("Tag is already released. Critical internal MessageQueue error"))
+            val tagIsExpired = count == 1
+            if (tagIsExpired) {
+              cancellingCounts - tagRecord
+            } else {
+              cancellingCounts.updated(tagRecord, count - 1)
+            }
+          }
+        }
+      ).dequeueOption
     }
   }
 
-  def ++(timestampedMessages: Seq[MessageAction]): MessageQueue = {
+  def timeOfNextEventOption: Option[Long] = queue.dequeueOption.map(_._1.actionTime)
+
+  def enqueue(messageWrapper: MessageWrapper, messageArrivalTime: Long) =
+    copy(
+      queue = queue.enqueue(TimestampedAction(messageWrapper, messageArrivalTime)),
+      lastMessageArrivalTime = math.max(lastMessageArrivalTime, messageArrivalTime)
+    )
+
+  def cancelMessages(tags: Set[MessageTag], agent: AgentId) = {
+    val tagRecords = tags.map(MessageTagRecord(_, agent))
+    copy(
+      queue = queue.enqueue(TimestampedAction(ReleaseTags(tagRecords), lastMessageArrivalTime)),
+      tagCancellingCount = tagRecords.foldLeft(tagCancellingCount) {
+        case (cancellingCounts, tagRecord) =>
+          cancellingCounts.updated(tagRecord, 1 + tagCancellingCount.get(tagRecord).getOrElse(0))
+      }
+    )
   }
 
-  def messagesSeq: Seq[(Long, Message)] = sys.error("not implemented")
+  def messagesSeq: Stream[(Long, Message)] = dequeueOption.map {
+    case (timeAndMessage, queue) => Stream.cons(timeAndMessage, queue.messagesSeq)
+  }.getOrElse(Stream.empty)
 }
 
 
@@ -61,10 +87,9 @@ object MessageQueue {
       reversedLongOrdering.compare(x.actionTime, y.actionTime)
   }
 
-  def apply[M](initialActions: MessageAction*) = new MessageQueue(
+  def apply() = new MessageQueue(
     PriorityQueue.apply()(earliestFirst),
     Map(),
-    Map(),
     0
-  ) ++ initialActions
+  )
 }

@@ -5,40 +5,34 @@ import org.scalatest.matchers.ShouldMatchers
 
 class MessageQueueTest extends FlatSpec with ShouldMatchers {
   "A MessageQueue" should "correctly display simple-case emptyness" in {
-    MessageQueue[AnyRef]().isEmpty should be(true)
   }
 
   it should "correctly display complex-case emptyness" in {
-    val ((_, _), emptyQueue) = MessageQueue[Int]((1, 4)).dequeue
-    emptyQueue.isEmpty should be(true)
   }
 
-  it should "correctly display non-emptyness" in {
-    MessageQueue((1, 2)).isEmpty should be(false)
-  }
-
-  it should "dequeue messages having equal timestamps in FIFO order" in {
-    val queue = MessageQueue((0, "1"), (0, "2"))
-    val ((_, firstElement), tail) = queue.dequeue
-    val ((_, secondElement), _) = tail.dequeue
-    firstElement should equal("1")
-    secondElement should equal("2")
-  }
-
-  it should "dequeue message having the earliest timestamp" in {
-    val queue = MessageQueue((1, "1"), (0, "2"))
-    val ((_, firstElement), tail) = queue.dequeue
-    firstElement should equal("2")
+  it should "dequeueOption message having the earliest timestamp" in {
   }
 
   it should "convert to sequence correctly" in {
-    val seq: Seq[(Long, String)] = Seq((0, "1"), (1, "2"))
-    val queue = MessageQueue(seq: _*)
-    queue.toSeq should equal(seq)
   }
 
-  it should "return head" in {
-    val queue = MessageQueue((0, "1"), (1, "2"))
-    queue.head should equal(0, "1")
+  case class DummyAgent(id: Int) extends AgentId
+
+  case class StringTag(tag: String) extends MessageTag
+
+  def message(senderId: Int = 0,
+              receiverId: Int = 0,
+              message: AnyRef = "",
+              tags: Set[String] = Set.empty,
+              arrivalTime: Long = 0)
+  =
+    (MessageWrapper(
+      Message(message, DummyAgent(receiverId)),
+      DummyAgent(senderId),
+      tags.map(StringTag(_))),
+      arrivalTime)
+
+  def messageQueue(messages: (MessageWrapper, Long)*) = messages.foldLeft(MessageQueue()) {
+    case (queue, (messageWrapper, arrivalTime)) => queue.enqueue(messageWrapper, arrivalTime)
   }
 }
