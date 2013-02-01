@@ -43,6 +43,12 @@ class PriorityQueueTest extends FunSuite with ShouldMatchers {
     toStreamViaDequeue(pQueue).toSeq should equal(pQueue.toSeq)
   }
 
+  test("toSeq method is \"stable\"") {
+    val randomNumbers = Seq.fill(10)(math.random)
+    val queue = PriorityQueue(randomNumbers: _*)
+    PriorityQueue(queue.toSeq: _*) should equal(queue)
+  }
+
   def toStreamViaDequeue[A](queue: PriorityQueue[A]): Stream[A] = queue.dequeueOption.map {
     pair => {
       val (number: A, queueTail: PriorityQueue[A]) = pair

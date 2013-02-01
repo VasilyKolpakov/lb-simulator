@@ -3,7 +3,7 @@ package ru.vasily.core
 import collection.immutable.{Queue, SortedMap}
 import Orderings.reversedOrdering
 
-class PriorityQueue[A] private(sortedMap: SortedMap[A, Queue[A]]) {
+class PriorityQueue[A] private(private val sortedMap: SortedMap[A, Queue[A]]) {
 
   def enqueue(elem: A): PriorityQueue[A] = {
     val queue = sortedMap.get(elem)
@@ -39,6 +39,14 @@ class PriorityQueue[A] private(sortedMap: SortedMap[A, Queue[A]]) {
   def isEmpty: Boolean = sortedMap.isEmpty
 
   def toSeq: Seq[A] = sortedMap.values.toSeq.flatten
+
+  override def toString: String = toSeq.mkString("PriorityQueue(", ", ", ")")
+
+  override def hashCode(): Int = sortedMap.hashCode()
+
+  override def equals(obj: Any): Boolean = Option(obj).collect {
+    case q: PriorityQueue[A] => sortedMap == q.sortedMap
+  }.getOrElse(false)
 }
 
 
