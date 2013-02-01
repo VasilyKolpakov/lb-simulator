@@ -4,13 +4,13 @@ import ru.vasily.core.PriorityQueue
 
 private case class TimestampedAction(action: MessageQueueAction, actionTime: Long)
 
-trait MessageQueueAction
+private trait MessageQueueAction
 
-case class MessageWrapper(message: Message, agent: AgentId, tags: Set[MessageTag]) extends MessageQueueAction
+private case class MessageWrapper(message: Message, complexTags: Set[MessageTagRecord]) extends MessageQueueAction
 
 private case class ReleaseTags(tagRecords: Set[MessageTagRecord]) extends MessageQueueAction
 
-private case class MessageTagRecord(tag: MessageTag, creator: AgentId)
+case class MessageTagRecord(tag: MessageTag, creator: AgentId)
 
 
 class MessageQueue private(queue: PriorityQueue[TimestampedAction],
@@ -24,9 +24,8 @@ class MessageQueue private(queue: PriorityQueue[TimestampedAction],
 
   def dequeueOption: Option[((Long, Message), MessageQueue)] = queue.dequeueOption.flatMap {
     case (head, tail) => head.action match {
-      case MessageWrapper(message, agent, tags) => {
+      case MessageWrapper(message, tags) => {
         val messageWasCancelled = tags
-          .map(MessageTagRecord(_, agent))
           .exists(tagCancellingCount.contains(_))
         val messageQueueTail = copy(queue = tail)
         if (messageWasCancelled) {
@@ -55,22 +54,20 @@ class MessageQueue private(queue: PriorityQueue[TimestampedAction],
 
   def timeOfNextEventOption: Option[Long] = queue.dequeueOption.map(_._1.actionTime)
 
-  def enqueue(messageWrapper: MessageWrapper, messageArrivalTime: Long) =
+  def enqueue(message: Message, complexTags: Set[MessageTagRecord], messageArrivalTime: Long) =
     copy(
-      queue = queue.enqueue(TimestampedAction(messageWrapper, messageArrivalTime)),
+      queue = queue.enqueue(TimestampedAction(MessageWrapper(message, complexTags), messageArrivalTime)),
       lastMessageArrivalTime = math.max(lastMessageArrivalTime, messageArrivalTime)
     )
 
-  def cancelMessages(tags: Set[MessageTag], agent: AgentId) = {
-    val tagRecords = tags.map(MessageTagRecord(_, agent))
+  def cancelMessages(complexTags: Set[MessageTagRecord]) =
     copy(
-      queue = queue.enqueue(TimestampedAction(ReleaseTags(tagRecords), lastMessageArrivalTime)),
-      tagCancellingCount = tagRecords.foldLeft(tagCancellingCount) {
+      queue = queue.enqueue(TimestampedAction(ReleaseTags(complexTags), lastMessageArrivalTime)),
+      tagCancellingCount = complexTags.foldLeft(tagCancellingCount) {
         case (cancellingCounts, tagRecord) =>
           cancellingCounts.updated(tagRecord, 1 + tagCancellingCount.get(tagRecord).getOrElse(0))
       }
     )
-  }
 
   def messagesSeq: Stream[(Long, Message)] = dequeueOption.map {
     case (timeAndMessage, queue) => Stream.cons(timeAndMessage, queue.messagesSeq)

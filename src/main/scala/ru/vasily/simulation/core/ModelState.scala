@@ -47,10 +47,9 @@ object ModelState {
   def enqueueActions(queue: MessageQueue, messageActions: Seq[MessageAction], agentId: AgentId, currentTime: Long): MessageQueue = {
     messageActions.foldLeft(queue) {
       case (queue, action) => action match {
-        // TODO MessageWrapper shouldn't be here
         case SendMessage(sentMessage, delay, tags) =>
-          queue.enqueue(MessageWrapper(sentMessage, agentId, tags), currentTime + delay)
-        case CancelMessages(tags) => queue.cancelMessages(tags, agentId)
+          queue.enqueue(sentMessage, tags.map(MessageTagRecord(_, agentId)), currentTime + delay)
+        case CancelMessages(tags) => queue.cancelMessages(tags.map(MessageTagRecord(_, agentId)))
       }
     }
   }

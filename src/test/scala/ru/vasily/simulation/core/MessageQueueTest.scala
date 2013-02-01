@@ -25,14 +25,13 @@ class MessageQueueTest extends FlatSpec with ShouldMatchers {
               message: AnyRef = "",
               tags: Set[String] = Set.empty,
               arrivalTime: Long = 0)
-  =
-    (MessageWrapper(
-      Message(message, DummyAgent(receiverId)),
-      DummyAgent(senderId),
-      tags.map(StringTag(_))),
-      arrivalTime)
+  = (
+    Message(message, DummyAgent(receiverId)),
+    tags.map(tag => MessageTagRecord(StringTag(tag), DummyAgent(senderId))),
+    arrivalTime
+    )
 
-  def messageQueue(messages: (MessageWrapper, Long)*) = messages.foldLeft(MessageQueue()) {
-    case (queue, (messageWrapper, arrivalTime)) => queue.enqueue(messageWrapper, arrivalTime)
+  def messageQueue(messages: (Message, Set[MessageTagRecord], Long)*) = messages.foldLeft(MessageQueue()) {
+    case (queue, (message, tags, arrivalTime)) => queue.enqueue(message, tags, arrivalTime)
   }
 }
