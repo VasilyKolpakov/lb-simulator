@@ -26,12 +26,23 @@ class MessageQueueTest extends FlatSpec with ShouldMatchers {
   }
 
   it should "cancell more messages" in {
-    val numberOfActions = 10000
+    val actions = randomQueueActions(numberOfActions = 10000)
+    val expectedDequeuedMessages = applyActions(TestTaggedMessageQueue(), actions)
+    val actual = applyActions(ActualTaggedMessageQueue(), actions)
+    actual should equal(expectedDequeuedMessages)
   }
+
+  def applyActions(queue: TaggedMessageQueue, actions: Seq[QueueAction]): Seq[(Long, String)] =
+    actions.foldLeft(List[(Long, String)](), queue) {
+      case ((dequeuedMessages, queue), action) => {
+        val (messageOption, updatedQueue) = action.perform(queue)
+        (messageOption.map(_ :: dequeuedMessages).getOrElse(dequeuedMessages), updatedQueue)
+      }
+    }._1
 
   def randomQueueActions(numberOfActions: Int) = {
     val rnd = new Random(0)
-    def randomTags = Set(List.fill(rnd.nextInt(5)(rnd.nextInt(10).toString)): _*)
+    def randomTags = Set(List.fill(rnd.nextInt(5))((rnd.nextInt(10).toString)): _*)
     def randomAction = {
       val randomDouble = rnd.nextDouble()
       if (randomDouble < 0.45) {
@@ -80,33 +91,33 @@ class MessageQueueTest extends FlatSpec with ShouldMatchers {
     def cancelMessages(tags: Set[String]): TaggedMessageQueue
   }
 
-  case class MessageTaggedMessageQueue(queue: MessageQueue[String, String, Long])
+  case class ActualTaggedMessageQueue(queue: MessageQueue[String, String, Long] = MessageQueue(0))
     extends TaggedMessageQueue {
     def enqueue(msg: String, tags: Set[String], messageArrivalTime: Long) =
-      MessageTaggedMessageQueue(queue.enqueue(msg, tags, messageArrivalTime))
+      ActualTaggedMessageQueue(queue.enqueue(msg, tags, messageArrivalTime))
 
     def dequeueOption = queue.dequeueOption.map {
-      case (timeAndMessage, queueTail) => (timeAndMessage, MessageTaggedMessageQueue(queueTail))
+      case (timeAndMessage, queueTail) => (timeAndMessage, ActualTaggedMessageQueue(queueTail))
     }
 
     def cancelMessages(tags: Set[String]) =
-      MessageTaggedMessageQueue(queue.cancelMessages(tags))
+      ActualTaggedMessageQueue(queue.cancelMessages(tags))
   }
 
-  case class TestMessageTaggedMessageQueue(queue: PriorityQueue[(String, Set[String], Long)] = PriorityQueue())
+  case class TestTaggedMessageQueue(queue: PriorityQueue[(String, Set[String], Long)] = PriorityQueue())
     extends TaggedMessageQueue {
     def enqueue(message: String, complexTags: Set[String], messageArrivalTime: Long) =
-      new TestMessageTaggedMessageQueue(queue)
+      new TestTaggedMessageQueue(queue)
 
     def dequeueOption = queue.dequeueOption.map {
-      case ((message, _, time), queueTail) => ((time, message), new TestMessageTaggedMessageQueue(queueTail))
+      case ((message, _, time), queueTail) => ((time, message), new TestTaggedMessageQueue(queueTail))
     }
 
     def cancelMessages(tags: Set[String]) = {
       val messages = queue.toSeq.filterNot {
         case (_, messageTags, _) => tags.exists(messageTags.contains(_))
       }
-      new TestMessageTaggedMessageQueue(PriorityQueue(messages: _*))
+      new TestTaggedMessageQueue(PriorityQueue(messages: _*))
     }
   }
 
