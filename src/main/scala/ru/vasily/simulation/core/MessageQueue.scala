@@ -2,74 +2,78 @@ package ru.vasily.simulation.core
 
 import ru.vasily.core.{Orderings, PriorityQueue}
 
-private case class TimestampedAction[Msg, Tag, Time](action: MessageQueueAction[Msg, Tag], actionTime: Time)
+private case class TimestampedMessage[Msg, Tag, Time](message: Msg, tags: Set[Tag], timestamp: Time, orderNumber: Long)
 
-private trait MessageQueueAction[Msg, Tag]
-
-private case class MessageWrapper[Msg, Tag](message: Msg, tags: Set[Tag]) extends MessageQueueAction[Msg, Tag]
-
-private case class ReleaseTags[Msg, Tag](tagRecords: Set[Tag]) extends MessageQueueAction[Msg, Tag]
 
 case class MessageTagRecord(tag: MessageTag, creator: AgentId)
 
 
-class MessageQueue[Msg, Tag, Time] private(queue: PriorityQueue[TimestampedAction[Msg, Tag, Time]],
-                                           tagCancellingCount: Map[Tag, Int],
-                                           lastMessageArrivalTime: Time,
+class MessageQueue[Msg, Tag, Time] private(queue: PriorityQueue[TimestampedMessage[Msg, Tag, Time]],
+                                           tagToMessagesMap: Map[Tag, Set[Long]],
+                                           notCancelledMessages: Set[Long],
+                                           numberOfEnqueuedMessages: Long,
                                            timeOrdering: Ordering[Time]) {
 
-  private def copy(queue: PriorityQueue[TimestampedAction[Msg, Tag, Time]] = queue,
-                   tagCancellingCount: Map[Tag, Int] = tagCancellingCount,
-                   lastMessageArrivalTime: Time = lastMessageArrivalTime,
-                   timeOrdering: Ordering[Time] = timeOrdering) =
-    new MessageQueue(queue, tagCancellingCount, lastMessageArrivalTime, timeOrdering)
+  private def copy(queue: PriorityQueue[TimestampedMessage[Msg, Tag, Time]] = queue,
+                   tagToMessagesMap: Map[Tag, Set[Long]] = tagToMessagesMap,
+                   notCancelledMessages: Set[Long] = notCancelledMessages,
+                   numberOfEnqueuedMessages: Long = numberOfEnqueuedMessages) =
+    new MessageQueue(queue, tagToMessagesMap, notCancelledMessages, numberOfEnqueuedMessages, timeOrdering)
 
   def dequeueOption: Option[((Time, Msg), MessageQueue[Msg, Tag, Time])] = queue.dequeueOption.flatMap {
-    case (head, tail) => head.action match {
-      case MessageWrapper(message: Msg, tags: Set[Tag]) => {
-        val messageWasCancelled = tags
-          .exists(tagCancellingCount.contains(_))
-        val messageQueueTail = copy(queue = tail)
-        if (messageWasCancelled) {
-          messageQueueTail.dequeueOption
-        } else {
-          Some((head.actionTime, message), messageQueueTail)
-        }
-      }
-      case ReleaseTags(tag) => copy(
-        queue = tail,
-        tagCancellingCount = tag.foldLeft(tagCancellingCount) {
-          case (cancellingCounts, tag) => {
-            val count = tagCancellingCount.get(tag)
-              .getOrElse(throw new RuntimeException("Tag is already released. Critical internal MessageQueue error"))
-            val tagIsExpired = count == 1
-            if (tagIsExpired) {
-              cancellingCounts - tag
-            } else {
-              cancellingCounts.updated(tag, count - 1)
-            }
+    headAndTail =>
+      val (head, tail) = headAndTail
+      val messageOrderNumber: Long = head.orderNumber
+      val messageWasNotCancelled = notCancelledMessages.contains(messageOrderNumber)
+      val updatedNotCancelledMessages = notCancelledMessages - messageOrderNumber
+      val updatedTagToMessageMap = head.tags.foldLeft(tagToMessagesMap) {
+        case (tagMap, tag) => {
+          val messagesWithGivenTag = tagMap.get(tag).map(_ - messageOrderNumber).getOrElse(Set())
+          if (messagesWithGivenTag.isEmpty) {
+            tagMap - tag
+          } else {
+            tagMap.updated(tag, messagesWithGivenTag)
           }
         }
-      ).dequeueOption
-    }
+      }
+      val updatedQueue = copy(
+        queue = tail,
+        tagToMessagesMap = updatedTagToMessageMap,
+        notCancelledMessages = updatedNotCancelledMessages
+      )
+      if (messageWasNotCancelled) {
+        Some((head.timestamp, head.message), updatedQueue)
+      } else {
+        updatedQueue.dequeueOption
+      }
+
   }
 
-  def timeOfNextEventOption: Option[Time] = queue.dequeueOption.map(_._1.actionTime)
 
-  def enqueue(message: Msg, complexTags: Set[Tag], messageArrivalTime: Time) =
-    copy(
-      queue = queue.enqueue(TimestampedAction[Msg, Tag, Time](MessageWrapper(message, complexTags), messageArrivalTime)),
-      lastMessageArrivalTime = timeOrdering.max(lastMessageArrivalTime, messageArrivalTime)
-    )
+  def timeOfNextEventOption: Option[Time] = dequeueOption.map(_._1._1)
 
-  def cancelMessages(complexTags: Set[Tag]) =
+  def enqueue(message: Msg, tags: Set[Tag], messageArrivalTime: Time) = {
+    val messageOrderNumber = numberOfEnqueuedMessages
+    val updatedNotCancelledMessages = notCancelledMessages + messageOrderNumber
+    val updatedTagToMessagesMap = tags.foldLeft(tagToMessagesMap) {
+      case (tagMap, tag) =>
+        tagToMessagesMap.updated(
+          tag,
+          tagToMessagesMap
+            .get(tag).map(_ + messageOrderNumber)
+            .getOrElse(Set(messageOrderNumber)))
+    }
     copy(
-      queue = queue.enqueue(TimestampedAction[Msg, Tag, Time](ReleaseTags(complexTags), lastMessageArrivalTime)),
-      tagCancellingCount = complexTags.foldLeft(tagCancellingCount) {
-        case (cancellingCounts, tagRecord) =>
-          cancellingCounts.updated(tagRecord, 1 + tagCancellingCount.get(tagRecord).getOrElse(0))
-      }
+      queue = queue.enqueue(TimestampedMessage[Msg, Tag, Time](message, tags, messageArrivalTime, numberOfEnqueuedMessages)),
+      tagToMessagesMap = updatedTagToMessagesMap,
+      notCancelledMessages = updatedNotCancelledMessages,
+      numberOfEnqueuedMessages = numberOfEnqueuedMessages + 1
     )
+  }
+
+  def cancelMessages(tags: Set[Tag]) = copy(
+    notCancelledMessages = notCancelledMessages -- tags.map(tagToMessagesMap.getOrElse(_, Set())).reduceLeft(_ ++ _)
+  )
 
   def messagesSeq: Stream[(Time, Msg)] = dequeueOption.map {
     case (timeAndMessage, queue) => Stream.cons(timeAndMessage, queue.messagesSeq)
@@ -79,17 +83,18 @@ class MessageQueue[Msg, Tag, Time] private(queue: PriorityQueue[TimestampedActio
 
 object MessageQueue {
 
-  private def earliestFirst[Msg, Tag, Time](timeOrdering: Ordering[Time]) = new Ordering[TimestampedAction[Msg, Tag, Time]] {
+  private def earliestFirst[Msg, Tag, Time](timeOrdering: Ordering[Time]) = new Ordering[TimestampedMessage[Msg, Tag, Time]] {
     val reversedTimeOrdering: Ordering[Time] = timeOrdering.reverse
 
-    def compare(x: TimestampedAction[Msg, Tag, Time], y: TimestampedAction[Msg, Tag, Time]) =
-      reversedTimeOrdering.compare(x.actionTime, y.actionTime)
+    def compare(x: TimestampedMessage[Msg, Tag, Time], y: TimestampedMessage[Msg, Tag, Time]) =
+      reversedTimeOrdering.compare(x.timestamp, y.timestamp)
   }
 
   def apply[Msg, Tag, Time](startTime: Time)(implicit timeOrdering: Ordering[Time]) = new MessageQueue[Msg, Tag, Time](
     PriorityQueue.apply()(earliestFirst[Msg, Tag, Time](timeOrdering)),
     Map(),
-    startTime,
+    Set(),
+    0,
     timeOrdering
   )
 }
