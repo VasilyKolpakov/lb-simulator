@@ -1,6 +1,6 @@
 package ru.vasily.simulation.core
 
-import ru.vasily.core.{Orderings, PriorityQueue}
+import ru.vasily.core.PriorityQueue
 
 private case class TimestampedMessage[Msg, Tag, Time](message: Msg, tags: Set[Tag], timestamp: Time, orderNumber: Long)
 
@@ -49,7 +49,6 @@ class MessageQueue[Msg, Tag, Time] private(queue: PriorityQueue[TimestampedMessa
 
   }
 
-
   def timeOfNextEventOption: Option[Time] = dequeueOption.map(_._1._1)
 
   def enqueue(message: Msg, tags: Set[Tag], messageArrivalTime: Time) = {
@@ -57,14 +56,14 @@ class MessageQueue[Msg, Tag, Time] private(queue: PriorityQueue[TimestampedMessa
     val updatedNotCancelledMessages = notCancelledMessages + messageOrderNumber
     val updatedTagToMessagesMap = tags.foldLeft(tagToMessagesMap) {
       case (tagMap, tag) =>
-        tagToMessagesMap.updated(
+        tagMap.updated(
           tag,
-          tagToMessagesMap
+          tagMap
             .get(tag).map(_ + messageOrderNumber)
             .getOrElse(Set(messageOrderNumber)))
     }
     copy(
-      queue = queue.enqueue(TimestampedMessage[Msg, Tag, Time](message, tags, messageArrivalTime, numberOfEnqueuedMessages)),
+      queue = queue.enqueue(TimestampedMessage[Msg, Tag, Time](message, tags, messageArrivalTime, messageOrderNumber)),
       tagToMessagesMap = updatedTagToMessagesMap,
       notCancelledMessages = updatedNotCancelledMessages,
       numberOfEnqueuedMessages = numberOfEnqueuedMessages + 1
@@ -72,12 +71,14 @@ class MessageQueue[Msg, Tag, Time] private(queue: PriorityQueue[TimestampedMessa
   }
 
   def cancelMessages(tags: Set[Tag]) = copy(
-    notCancelledMessages = notCancelledMessages -- tags.map(tagToMessagesMap.getOrElse(_, Set())).reduceLeft(_ ++ _)
+    notCancelledMessages = notCancelledMessages -- tags.map(tagToMessagesMap.getOrElse(_, Set())).flatten.toSet
   )
 
   def messagesSeq: Stream[(Time, Msg)] = dequeueOption.map {
     case (timeAndMessage, queue) => Stream.cons(timeAndMessage, queue.messagesSeq)
   }.getOrElse(Stream.empty)
+
+  private[core] def isCompletelyEmpty = queue.isEmpty && tagToMessagesMap.isEmpty && notCancelledMessages.isEmpty
 }
 
 
