@@ -56,7 +56,7 @@ class MessageQueue[Msg, Tag, Time] private(queue: PriorityQueue[TimestampedMessa
     val updatedNotCancelledMessages = notCancelledMessages + messageOrderNumber
     val updatedTagToMessagesMap = tags.foldLeft(tagToMessagesMap) {
       (tagMap, tag) =>
-        tagToMessagesMap.updated(
+        tagMap.updated(
           tag,
           tagMap
             .get(tag).map(_ + messageOrderNumber)
@@ -75,7 +75,7 @@ class MessageQueue[Msg, Tag, Time] private(queue: PriorityQueue[TimestampedMessa
   )
 
   def messagesSeq: Stream[(Time, Msg)] = dequeueOption.map {
-    case (timeAndMessage, queue) => Stream.cons(timeAndMessage, queue.messagesSeq)
+    case (timeAndMessage, queueTail) => Stream.cons(timeAndMessage, queueTail.messagesSeq)
   }.getOrElse(Stream.empty)
 
   private[core] def isCompletelyEmpty = queue.isEmpty && tagToMessagesMap.isEmpty && notCancelledMessages.isEmpty

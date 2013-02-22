@@ -16,7 +16,7 @@ libraryDependencies += "com.fasterxml.jackson.core" % "jackson-core" % "2.1.0"
 
 libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind" % "2.1.0"
 
-libraryDependencies += "com.fasterxml.jackson.module" % "jackson-module-scala" % "2.1.0"
+libraryDependencies += "com.fasterxml.jackson.module" % "jackson-module-scala_2.10" % "2.1.3"
 
 
 scalacOptions ++= Seq("-unchecked", "-deprecation")
