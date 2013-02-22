@@ -3,7 +3,8 @@ package ru.vasily.simulation.core
 import collection.immutable
 
 class ModelState(agentIdToAgentStateMap: immutable.Map[AgentId, AgentState],
-                 messageQueue: MessageQueue[Message, MessageTagRecord, Long], val timeOfLastEvent: Long = 0) {
+                 messageQueue: MessageQueue[Message, MessageTagRecord, Long],
+                 val timeOfLastEvent: Long = 0) {
 
   def nextState = messageQueue.dequeueOption.map {
     case ((nextEventTime, message), remainingMessages) =>
@@ -35,6 +36,9 @@ class ModelState(agentIdToAgentStateMap: immutable.Map[AgentId, AgentState],
 }
 
 object ModelState {
+
+  type MQueue = MessageQueue[Message, MessageTagRecord, Long]
+
   def apply(agents: Seq[Agent]) = {
     val messageQueue = agents.foldLeft(MessageQueue[Message, MessageTagRecord, Long](0)) {
       case (queue, Agent(agentId, _, initialActions)) =>
@@ -44,14 +48,14 @@ object ModelState {
     new ModelState(agentsMap, messageQueue)
   }
 
-  def enqueueActions(queue: MessageQueue[Message, MessageTagRecord, Long], messageActions: Seq[MessageAction], agentId: AgentId, currentTime: Long): MessageQueue[Message, MessageTagRecord, Long] = {
-    messageActions.foldLeft(queue) {
-      case (queue, action) => action match {
-        case SendMessage(sentMessage, delay, tags) =>
-          queue.enqueue(sentMessage, tags.map(MessageTagRecord(_, agentId)), currentTime + delay)
-        case CancelMessages(tags) => queue.cancelMessages(tags.map(MessageTagRecord(_, agentId)))
-      }
-    }
+  def enqueueActions(queue: MQueue, messageActions: Seq[MessageAction], agentId: AgentId, currentTime: Long): MQueue =
+    messageActions.foldLeft(queue)(addActionToQueue(agentId, currentTime))
+
+  private def addActionToQueue(agentId: AgentId, currentTime: Long)
+                              (queue: MQueue, action: MessageAction) = action match {
+    case SendMessage(message, delay, tags) =>
+      queue.enqueue(message, tags.map(MessageTagRecord(_, agentId)), currentTime + delay)
+    case CancelMessages(tags) => queue.cancelMessages(tags.map(MessageTagRecord(_, agentId)))
   }
 
   def prettyToString(modelState: ModelState) = {
@@ -68,7 +72,5 @@ object ModelState {
         Seq("======================")
     lines.mkString("\n")
   }
-
-  private def delayedMessageToQueueElement(sm: SendMessage, currentTime: Long) = (sm.delay + currentTime, sm.message)
 }
 
