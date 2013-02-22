@@ -8,9 +8,9 @@ name := "lb_simulator"
 
 version := "1.0"
 
-scalaVersion := "2.9.1"
+scalaVersion := "2.10.0"
 
-libraryDependencies += "org.scalatest" % "scalatest_2.9.0" % "1.8" % "test"
+libraryDependencies += "org.scalatest" % "scalatest_2.10" % "1.9.1" % "test"
 
 libraryDependencies += "com.fasterxml.jackson.core" % "jackson-core" % "2.1.0"
 
