@@ -27,7 +27,7 @@ class MessageQueue[Msg, Tag, Time] private(queue: PriorityQueue[TimestampedMessa
       val messageWasNotCancelled = notCancelledMessages.contains(messageOrderNumber)
       val updatedNotCancelledMessages = notCancelledMessages - messageOrderNumber
       val updatedTagToMessageMap = head.tags.foldLeft(tagToMessagesMap) {
-        case (tagMap, tag) => {
+        (tagMap, tag) => {
           val messagesWithGivenTag = tagMap.get(tag).map(_ - messageOrderNumber).getOrElse(Set())
           if (messagesWithGivenTag.isEmpty) {
             tagMap - tag
@@ -55,8 +55,8 @@ class MessageQueue[Msg, Tag, Time] private(queue: PriorityQueue[TimestampedMessa
     val messageOrderNumber = numberOfEnqueuedMessages
     val updatedNotCancelledMessages = notCancelledMessages + messageOrderNumber
     val updatedTagToMessagesMap = tags.foldLeft(tagToMessagesMap) {
-      case (tagMap, tag) =>
-        tagMap.updated(
+      (tagMap, tag) =>
+        tagToMessagesMap.updated(
           tag,
           tagMap
             .get(tag).map(_ + messageOrderNumber)
