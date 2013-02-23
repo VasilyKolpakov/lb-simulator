@@ -2,7 +2,7 @@ package ru.vasily.simulation
 
 import core._
 
-case class RoundRobinClusterModel(serversPerformance: Seq[Double]) extends ClusterModel {
+case class RoundRobinClusterModel(serversPerformance: Seq[Double], masterAgentId: AgentId) extends ClusterModel {
   val numberOfServers = serversPerformance.size
   val (servers, monitoringAgents) = SimpleServer.generateAgents(serversPerformance)
   val serverIds = servers.map(_.id)
@@ -16,7 +16,7 @@ case class RoundRobinClusterModel(serversPerformance: Seq[Double]) extends Clust
           val message = SendMessage.withoutDelay(TaskMessage(thisAgent, task), serverIds(currentServerIndex))
           newState(nextState, message)
         }
-        case msg: ServerFinishedTask => noChanges
+        case msg: TaskFinished => newActions(msg.forward(masterAgentId))
       }
     }
 

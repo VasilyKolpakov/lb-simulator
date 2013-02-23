@@ -5,6 +5,7 @@ import params.JsonDiLoader
 import RichFile.enrichFile
 import java.io.File
 import simulation._
+import simulation.core.AgentId
 import simulation.DynamicRoundRobin
 import simulation.MasterWorkerClusterModel
 import simulation.RandomClusterModel
@@ -12,33 +13,36 @@ import simulation.RoundRobinClusterModel
 import utils.TestConfigPrinter
 
 object Main {
+  // TODO: refactor to separate trait?
+  type ModelFactory = (Seq[Double], AgentId) => ClusterModel
+
   val injectors = List[Injector[_]](
     // Runner
     ClassInjector("TestConfigPrinter", classOf[TestConfigPrinter],
       "testName", "servers", "taskGenerator"),
     Injector("MultiRunner") {
       env => for {
-        modelFactories <- env.seqWithConfig("clusterModels", classOf[Seq[Double] => ClusterModel])
+        modelFactories <- env.seqWithConfig("clusterModels", classOf[ModelFactory])
         serversPerformances <- env.seqWithConfig("servers", classOf[Seq[Double]])
         taskGenerators <- env.seqWithConfig("taskGenerators", classOf[TasksGenerator])
       } yield new SimulationMultiRunner(modelFactories, serversPerformances, taskGenerators)
     },
     Injector("Runner") {
       env => for {
-        model <- env("clusterModel", classOf[(Seq[Double]) => ClusterModel])
+        model <- env("clusterModel", classOf[ModelFactory])
         serversPerformance <- env("servers", classOf[Seq[Double]])
         taskGenerator <- env("taskGenerator", classOf[TasksGenerator])
         outputFormat <- env("outputFormat", classOf[SimulationResultOutputFormat])
-      } yield new SimulationRunner(model(serversPerformance), taskGenerator, outputFormat)
+      } yield new SimulationRunner(model(serversPerformance, _), taskGenerator, outputFormat)
     },
     Injector("ComparingRunner") {
       env => for {
-        modelFactories <- env("clusterModels", classOf[Map[String, Seq[Double] => ClusterModel]])
+        modelFactories <- env("clusterModels", classOf[Map[String, ModelFactory]])
         serversPerformance <- env("servers", classOf[Seq[Double]])
         taskGenerator <- env("taskGenerator", classOf[TasksGenerator])
         metricPath <- env("metricPath", classOf[Seq[String]])
       } yield {
-        val models = modelFactories.mapValues(factory => factory(serversPerformance))
+        val models = modelFactories.mapValues(factory => factory(serversPerformance, _:AgentId))
         new ComparingRunner(models, taskGenerator, metricPath)
       }
     },
@@ -53,16 +57,16 @@ object Main {
         maxWeigh <- env("maxWeight", classOf[Int])
         refreshTime <- env("refreshTime", classOf[Int])
       } yield {
-        (servers: Seq[Double]) => DynamicRoundRobin(servers, maxWeigh, refreshTime)
+        (servers: Seq[Double], masterAgentId: AgentId) => DynamicRoundRobin(servers, maxWeigh, refreshTime, masterAgentId)
       }
     },
-    Injector("MasterSlave", (servers: Seq[Double]) => MasterWorkerClusterModel(servers)),
+    Injector("MasterSlave", (servers: Seq[Double], masterAgentId: AgentId) => MasterWorkerClusterModel(servers, masterAgentId)),
     Injector("Random") {
       env => for {
         seed <- env("seed", classOf[Int])
-      } yield (servers: Seq[Double]) => RandomClusterModel(servers, seed)
+      } yield (servers: Seq[Double], masterAgentId: AgentId) => RandomClusterModel(servers, seed, masterAgentId)
     },
-    Injector("RoundRobin", (servers: Seq[Double]) => RoundRobinClusterModel(servers)),
+    Injector("RoundRobin", (servers: Seq[Double], masterAgentId: AgentId) => RoundRobinClusterModel(servers, masterAgentId)),
 
     // TasksGenerator
     ClassInjector("RandomTaskGen", classOf[UniformRandomTaskGenerator],

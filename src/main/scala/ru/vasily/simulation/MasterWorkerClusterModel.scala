@@ -3,7 +3,7 @@ package ru.vasily.simulation
 import collection.immutable.Queue
 import core._
 
-case class MasterWorkerClusterModel(serversPerformance: Seq[Double]) extends ClusterModel {
+case class MasterWorkerClusterModel(serversPerformance: Seq[Double], masterAgentId: AgentId) extends ClusterModel {
   val numberOfServers = serversPerformance.size
   val (servers, monitoringAgents) = SimpleServer.generateAgents(serversPerformance)
   val serverIds = servers.map(_.id)
@@ -18,7 +18,7 @@ case class MasterWorkerClusterModel(serversPerformance: Seq[Double]) extends Clu
 
       def changeState(currentTime: Long, message: AnyRef) = message match {
         case task: Task => processTask(task)
-        case ServerFinishedTask(serverId) => newState(EmptyQueueState(serverId +: freeServers))
+        case msg: TaskFinished => newState(EmptyQueueState(msg.agentId +: freeServers), msg.forward(masterAgentId))
       }
 
       def processTask(task: Task) = {
@@ -37,7 +37,7 @@ case class MasterWorkerClusterModel(serversPerformance: Seq[Double]) extends Clu
         case task: Task => {
           newState(AllServersAreBusyState(taskQueue.enqueue(task)))
         }
-        case ServerFinishedTask(serverId) => processIdleServer(serverId)
+        case msg: TaskFinished => processIdleServer(msg.agentId).addActions(msg.forward(masterAgentId))
       }
 
       def processIdleServer(serverId: AgentId) = {

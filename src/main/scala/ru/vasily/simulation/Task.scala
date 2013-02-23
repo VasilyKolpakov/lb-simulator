@@ -1,3 +1,3 @@
 package ru.vasily.simulation
 
-case class Task(executionTime: Long, arrivalTime: Long)
+case class Task(id: Any, executionTime: Long, arrivalTime: Long)

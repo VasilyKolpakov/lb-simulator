@@ -1,8 +1,9 @@
 package ru.vasily.simulation
 
+import core.AgentId
 import ru.vasily.{FileContents, Serializer, Runner}
 
-class SimulationMultiRunner(clusterModelFactoriesAndConfig: (Seq[(Seq[Double]) => ClusterModel], Seq[Any]),
+class SimulationMultiRunner(clusterModelFactoriesAndConfig: (Seq[(Seq[Double], AgentId) => ClusterModel], Seq[Any]),
                             serverPerformancesAndConfig: (Seq[Seq[Double]], Seq[Any]),
                             taskGeneratorsAndConfig: (Seq[TasksGenerator], Seq[Any])
                              ) extends Runner {
@@ -21,7 +22,7 @@ class SimulationMultiRunner(clusterModelFactoriesAndConfig: (Seq[(Seq[Double]) =
         "servers" -> serversConfig,
         "taskGenerator" -> tasksConfig
       )
-      val (totalSimulationTime, history) = HistoryGetter.getHistory(model(servers), tasks)
+      val (totalSimulationTime, history) = ClusterModelRunner.getHistory(model(servers, _), tasks)
       val metricsMap = new AlgorithmMetrics(history, totalSimulationTime).metricsMap
       Map(
         "config" -> resultConfig,

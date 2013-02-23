@@ -3,7 +3,7 @@ package ru.vasily.simulation
 import core._
 import util.Random
 
-case class RandomClusterModel(serversPerformance: Seq[Double], seed: Int) extends ClusterModel {
+case class RandomClusterModel(serversPerformance: Seq[Double], seed: Int, masterAgentId: AgentId) extends ClusterModel {
   val numberOfServers = serversPerformance.size
   val (servers, monitoringAgents) = SimpleServer.generateAgents(serversPerformance)
   val serverIds = servers.map(_.id)
@@ -15,7 +15,7 @@ case class RandomClusterModel(serversPerformance: Seq[Double], seed: Int) extend
 
       def changeState(currentTime: Long, message: AnyRef) = message match {
         case task: Task => sendTaskToRandomServer(currentTime, task)
-        case msg: ServerFinishedTask => noChanges
+        case msg: TaskFinished => newActions(msg.forward(masterAgentId))
       }
 
       def sendTaskToRandomServer(currentTime: Long, task: Task) = {

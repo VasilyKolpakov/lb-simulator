@@ -5,7 +5,7 @@ import core._
 import ru.vasily.simulation.MonitoringService.ServersLoad
 import ru.vasily.simulation.MonitoringService.GetServersLoad
 
-case class DynamicRoundRobin(serversPerformance: Seq[Double], maxWeight: Int, refreshTime: Int) extends ClusterModel {
+case class DynamicRoundRobin(serversPerformance: Seq[Double], maxWeight: Int, refreshTime: Int, masterAgentId: AgentId) extends ClusterModel {
   val numberOfServers = serversPerformance.size
   val (servers, monitoringAgents) = SimpleServer.generateAgents(serversPerformance, Some(refreshTime))
   val serverIds = servers.map(_.id)
@@ -63,7 +63,7 @@ case class DynamicRoundRobin(serversPerformance: Seq[Double], maxWeight: Int, re
   }
 
 
-  case class MainServer() extends AgentId {
+  case object MainServer extends AgentId {
 
     val monitoringServiceMessage = SendMessage.withoutDelay(GetServersLoad(thisAgent), MonitoringService)
 
@@ -85,19 +85,19 @@ case class DynamicRoundRobin(serversPerformance: Seq[Double], maxWeight: Int, re
           val freshLoadData = serverIds.map(freshLoadDataMap.get(_).getOrElse(0))
           newState(RoundRobinState(Vector(freshLoadData: _*), algorithmState))
         }
-        case ServerFinishedTask(server: SimpleServer) => noChanges
+        case msg: TaskFinished => newActions(msg.forward(masterAgentId))
       }
     }
 
   }
 
   def agents = {
-    val mainServerId = MainServer()
+    val mainServerId = MainServer
     val zeroLoad = Vector.iterate(0, numberOfServers)(x => 0)
     val mainServerAgent = Agent(mainServerId, mainServerId.RoundRobinState(zeroLoad))
 
     servers ++ monitoringAgents :+ mainServerAgent :+ MonitoringService.agent
   }
 
-  def initialMessagesReceiver = MainServer()
+  def initialMessagesReceiver = MainServer
 }

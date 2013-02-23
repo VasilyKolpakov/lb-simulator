@@ -1,15 +1,16 @@
 package ru.vasily.simulation
 
+import core.AgentId
 import ru.vasily.{FileContents, Serializer, Runner}
 import ru.vasily.graphics._
 
-class SimulationRunner(clusterModel: ClusterModel,
+class SimulationRunner(clusterModelFactory: AgentId => ClusterModel,
                        taskGenerator: TasksGenerator,
                        outputFormat: SimulationResultOutputFormat)
   extends Runner {
 
   def getResult = {
-    val (totalSimulationTime, history) = HistoryGetter.getHistory(clusterModel, taskGenerator)
+    val (totalSimulationTime, history) = ClusterModelRunner.getHistory(clusterModelFactory, taskGenerator)
     outputFormat.format(history, totalSimulationTime)
   }
 
@@ -30,7 +31,7 @@ class JsonOutputFormat extends SimulationResultOutputFormat {
   private def prettyHistory(history: Map[SimpleServer, Seq[TaskRecord]]) = history.mapValues {
     taskRecords =>
       taskRecords.map {
-        case TaskRecord(Task(executionTime, arrivalTime), completionTime) =>
+        case TaskRecord(Task(_, executionTime, arrivalTime), completionTime) =>
           Map("executionTime" -> executionTime, "arrivalTime " -> arrivalTime, "completionTime" -> completionTime)
       }
   }
@@ -64,8 +65,8 @@ class SvgOutputFormat(imageWidth: Int, expectedMakespan: Int) extends Simulation
     }
     def serverHistoryToShape(serverId: SimpleServer, records: Seq[TaskRecord], taskIndexes: Map[TaskRecord, Int]) = {
       val taskShapes = records.zipWithIndex.map {
-        case (record@TaskRecord(Task(execTime, _), completionTime), taskIndex) => {
-          val startTime = (completionTime - execTime / serverId.serverPerformance).toInt
+        case (record@TaskRecord(task, completionTime), taskIndex) => {
+          val startTime = (completionTime - task.executionTime / serverId.serverPerformance).toInt
           taskShape(taskIndexes(record), taskIndex, startTime, completionTime)
         }
       }

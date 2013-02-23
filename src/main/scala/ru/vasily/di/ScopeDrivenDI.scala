@@ -51,7 +51,7 @@ class ScopeDrivenDIImpl private[di](scope: DIScope, name: String, parent: ScopeD
   }
 
   // todo: add runtime type checking  (scala.reflect.Manifest?)
-  def instantiate(component: SDComponent, key: String = ""): (Any, Any) = component match {
+  def instantiate(component: SDComponent, key: String): (Any, Any) = component match {
     case Primitive(value) => (value, value)
     case MapComponent(map) => {
       val instancesWithConfigs = map.map {

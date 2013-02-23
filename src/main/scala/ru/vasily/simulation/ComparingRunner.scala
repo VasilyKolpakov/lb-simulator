@@ -1,16 +1,17 @@
 package ru.vasily.simulation
 
+import core.AgentId
 import ru.vasily.{ExecScript, Runner}
 
-class ComparingRunner(clusterModels: Map[String, ClusterModel],
+class ComparingRunner(clusterModels: Map[String, AgentId => ClusterModel],
                       taskGenerator: TasksGenerator,
                       metricPath: Seq[String]) extends Runner {
 
   def getResult = {
     val Seq(metricType, metricKey) = metricPath
     val metrics = clusterModels.mapValues {
-      model =>
-        val (totalSimulationTime, history) = HistoryGetter.getHistory(model, taskGenerator)
+      modelFactory =>
+        val (totalSimulationTime, history) = ClusterModelRunner.getHistory(modelFactory, taskGenerator)
         new AlgorithmMetrics(history, totalSimulationTime).metricsMap(metricType)(metricKey)
     }
     val (modelKeys, metricValues) = metrics.toList.unzip
