@@ -15,13 +15,13 @@ case class RandomClusterModel(serversPerformance: Seq[Double], seed: Int) extend
 
       def changeState(currentTime: Long, message: AnyRef) = message match {
         case task: Task => sendTaskToRandomServer(currentTime, task)
-        case msg: ServerFinishedTask => StateTransition(this)
+        case msg: ServerFinishedTask => noChanges
       }
 
       def sendTaskToRandomServer(currentTime: Long, task: Task) = {
         val randomServerId = serverIds(random.nextInt(numberOfServers))
-        val message = DelayedMessage(TaskMessage(thisAgent, task), randomServerId, 0)
-        StateTransition(this, message)
+        val message = SendMessage.withoutDelay(TaskMessage(thisAgent, task), randomServerId)
+        newActions(message)
       }
     }
 

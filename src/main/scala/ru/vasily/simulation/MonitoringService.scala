@@ -1,6 +1,6 @@
 package ru.vasily.simulation
 
-import core.{DelayedMessage, Agent, AgentState, AgentId}
+import core._
 
 object MonitoringService extends AgentId {
 
@@ -15,9 +15,10 @@ object MonitoringService extends AgentId {
       }
       case PostServerLoad(serverId, load) =>
         newState(State(serversHistory, serversLoad.updated(serverId, load)))
-      case GetServersLoad(requester) => sendMessages(
-        DelayedMessage(ServersLoad(serversLoad), requester, 0)
-      )
+      case GetServersLoad(requester) =>
+        newActions(
+          SendMessage.withoutDelay(ServersLoad(serversLoad), requester)
+        )
     }
   }
 

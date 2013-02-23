@@ -13,10 +13,10 @@ case class RoundRobinClusterModel(serversPerformance: Seq[Double]) extends Clust
       def changeState(currentTime: Long, message: AnyRef) = message match {
         case task: Task => {
           val nextState = RoundRobinState((currentServerIndex + 1) % numberOfServers)
-          val message = DelayedMessage(TaskMessage(thisAgent, task), serverIds(currentServerIndex), 0)
-          StateTransition(nextState, message)
+          val message = SendMessage.withoutDelay(TaskMessage(thisAgent, task), serverIds(currentServerIndex))
+          newState(nextState, message)
         }
-        case msg: ServerFinishedTask => StateTransition(this)
+        case msg: ServerFinishedTask => noChanges
       }
     }
 

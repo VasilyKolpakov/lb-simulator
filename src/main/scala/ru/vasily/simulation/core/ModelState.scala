@@ -3,38 +3,29 @@ package ru.vasily.simulation.core
 import collection.immutable
 
 class ModelState(agentIdToAgentStateMap: immutable.Map[AgentId, AgentState],
-                 messageQueue: ImmutableMessageQueue[Message], val timeOfLastEvent: Long = 0) {
+                 messageQueue: MessageQueue[Message, MessageTagRecord, Long],
+                 val timeOfLastEvent: Long = 0) {
 
-  def nextState = {
-    if (messageQueue.isEmpty) {
-      None
-    } else {
-      val ((nextEventTime, message), remainingMessages) = messageQueue.dequeue
+  def nextState = messageQueue.dequeueOption.map {
+    case ((nextEventTime, message), remainingMessages) =>
       if (nextEventTime < timeOfLastEvent) {
         throw new RuntimeException("time consistency violated for message: " + message
           + " current time: " + timeOfLastEvent + " message timestamp: " + nextEventTime)
       }
       val agentId = message.receiverId
       val agentState = agentIdToAgentStateMap(agentId)
-      val StateTransition(newAgentState, newMessages) = agentState.changeState(nextEventTime, message.contents)
+      val StateTransition(newAgentState, messageActions) = agentState.changeState(nextEventTime, message.contents)
       val nextAgentStates = agentIdToAgentStateMap.updated(agentId, newAgentState)
-      val prioritizedMessages = newMessages map {
-        ModelState.delayedMessageToQueueElement(_, nextEventTime)
-      }
-      val nextMessages = remainingMessages ++ prioritizedMessages
-      Some(new ModelState(nextAgentStates, nextMessages, nextEventTime))
-    }
+      val nextMessages = ModelState.enqueueActions(remainingMessages, messageActions, agentId, nextEventTime)
+      new ModelState(nextAgentStates, nextMessages, nextEventTime)
   }
+
 
   def agents = agentIdToAgentStateMap
 
-  def messages = messageQueue.toSeq
+  def messages = messageQueue.messagesSeq
 
-  def timeOfNextEvent = if (messageQueue.isEmpty) {
-    None
-  } else {
-    Some(messageQueue.head._1)
-  }
+  def timeOfNextEvent = messageQueue.timeOfNextEventOption
 
   def nextStates: Stream[ModelState] = nextState match {
     case Some(state) => Stream.cons(state, state.nextStates)
@@ -45,12 +36,26 @@ class ModelState(agentIdToAgentStateMap: immutable.Map[AgentId, AgentState],
 }
 
 object ModelState {
-  def apply(agents: Seq[Agent[AgentId, AgentState]], initialMessages: Seq[DelayedMessage] = Nil) = {
-    val queueElements = (initialMessages ++ agents.flatMap(_.initialMessages)) map {
-      delayedMessageToQueueElement(_, currentTime = 0)
+
+  type MQueue = MessageQueue[Message, MessageTagRecord, Long]
+
+  def apply(agents: Seq[Agent]) = {
+    val messageQueue = agents.foldLeft(MessageQueue[Message, MessageTagRecord, Long](0)) {
+      case (queue, Agent(agentId, _, initialActions)) =>
+        enqueueActions(queue, initialActions, agentId, 0)
     }
     val agentsMap = agents.map(agent => (agent.id, agent.initialState)).toMap
-    new ModelState(agentsMap, ImmutableMessageQueue(queueElements: _*))
+    new ModelState(agentsMap, messageQueue)
+  }
+
+  def enqueueActions(queue: MQueue, messageActions: Seq[MessageAction], agentId: AgentId, currentTime: Long): MQueue =
+    messageActions.foldLeft(queue)(addActionToQueue(agentId, currentTime))
+
+  private def addActionToQueue(agentId: AgentId, currentTime: Long)
+                              (queue: MQueue, action: MessageAction) = action match {
+    case SendMessage(message, delay, tags) =>
+      queue.enqueue(message, tags.map(MessageTagRecord(_, agentId)), currentTime + delay)
+    case CancelMessages(tags) => queue.cancelMessages(tags.map(MessageTagRecord(_, agentId)))
   }
 
   def prettyToString(modelState: ModelState) = {
@@ -67,7 +72,5 @@ object ModelState {
         Seq("======================")
     lines.mkString("\n")
   }
-
-  private def delayedMessageToQueueElement(dm: DelayedMessage, currentTime: Long) = (dm.delay + currentTime, dm.message)
 }
 

@@ -65,26 +65,27 @@ case class DynamicRoundRobin(serversPerformance: Seq[Double], maxWeight: Int, re
 
   case class MainServer() extends AgentId {
 
-    val monitoringServiceMessage = DelayedMessage(GetServersLoad(thisAgent), MonitoringService, 0)
+    val monitoringServiceMessage = SendMessage.withoutDelay(GetServersLoad(thisAgent), MonitoringService)
 
     case class RoundRobinState(serversLoad: Vector[Int],
                                algorithmState: RoundRobinAlgorithmState = RoundRobinAlgorithmState())
       extends AgentState {
 
-      def serverMessage(serverId: AgentId, task: Task) = DelayedMessage(TaskMessage(thisAgent, task), serverId, 0)
+      def serverMessage(serverId: AgentId, task: Task) =
+        SendMessage.withoutDelay(TaskMessage(thisAgent, task), serverId)
 
       def changeState(currentTime: Long, message: AnyRef) = message match {
         case task: Task => {
           val srvMessage = serverMessage(serverIds(algorithmState.currentServerIndex), task)
           val nextAlgState = algorithmState.nextState(serversLoad)
-          val newState = RoundRobinState(serversLoad, nextAlgState)
-          StateTransition(newState, srvMessage, monitoringServiceMessage)
+          val nextState = RoundRobinState(serversLoad, nextAlgState)
+          newState(nextState, srvMessage, monitoringServiceMessage)
         }
         case ServersLoad(freshLoadDataMap) => {
           val freshLoadData = serverIds.map(freshLoadDataMap.get(_).getOrElse(0))
           newState(RoundRobinState(Vector(freshLoadData: _*), algorithmState))
         }
-        case ServerFinishedTask(server: SimpleServer) => StateTransition(this)
+        case ServerFinishedTask(server: SimpleServer) => noChanges
       }
     }
 

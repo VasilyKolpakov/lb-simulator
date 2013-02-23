@@ -1,18 +1,22 @@
 package ru.vasily.simulation
 
-import core.{DelayedMessage, ModelState, Message}
+import core._
+import core.Message
 
 object HistoryGetter {
   def getHistory(clusterModel: ClusterModel, taskGenerator: TasksGenerator) = {
     val initialMessagesReceiver = clusterModel.initialMessagesReceiver
-    val agents = clusterModel.agents
     val tasks = taskGenerator.generateTasks
-    val taskMessages = for (task <- tasks) yield {
+    val messageActions = for (task <- tasks) yield {
       val taskMessage = Message(task, initialMessagesReceiver)
-      DelayedMessage(taskMessage, task.arrivalTime)
+      SendMessage(taskMessage, task.arrivalTime)
     }
-
-    val initialModelState = ModelState(agents, taskMessages)
+    case class SinkAgent() extends AgentId
+    case class DummyState() extends AgentState {
+      def changeState(currentTime: Long, message: AnyRef): StateTransition[AgentState] = noChanges
+    }
+    val sinkAgent = Agent(SinkAgent(), DummyState(), messageActions.toList)
+    val initialModelState = ModelState(sinkAgent +: clusterModel.agents)
 
     //    for (state <- initialModelState.nextStates) {
     //      println(ModelState.prettyToString(state))

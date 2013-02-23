@@ -11,21 +11,22 @@ case class MasterWorkerClusterModel(serversPerformance: Seq[Double]) extends Clu
   object MainServer extends AgentId {
     override def toString = "MainServer"
 
-    def serverMessage(serverId: AgentId, task: Task) = DelayedMessage(TaskMessage(this, task), serverId, 0)
+    def serverMessage(serverId: AgentId, task: Task) =
+      SendMessage.withoutDelay(TaskMessage(this, task), serverId)
 
     case class EmptyQueueState(freeServers: Seq[AgentId] = serverIds) extends AgentState {
 
       def changeState(currentTime: Long, message: AnyRef) = message match {
         case task: Task => processTask(task)
-        case ServerFinishedTask(serverId) => StateTransition(EmptyQueueState(serverId +: freeServers))
+        case ServerFinishedTask(serverId) => newState(EmptyQueueState(serverId +: freeServers))
       }
 
       def processTask(task: Task) = {
-        val message: DelayedMessage = serverMessage(freeServers.head, task)
+        val message = serverMessage(freeServers.head, task)
         if (freeServers.tail.isEmpty) {
-          StateTransition(AllServersAreBusyState(), message)
+          newState(AllServersAreBusyState(), message)
         } else {
-          StateTransition(EmptyQueueState(freeServers.tail), message)
+          newState(EmptyQueueState(freeServers.tail), message)
         }
       }
     }
@@ -34,20 +35,21 @@ case class MasterWorkerClusterModel(serversPerformance: Seq[Double]) extends Clu
 
       def changeState(currentTime: Long, message: AnyRef) = message match {
         case task: Task => {
-          StateTransition(AllServersAreBusyState(taskQueue.enqueue(task)))
+          newState(AllServersAreBusyState(taskQueue.enqueue(task)))
         }
         case ServerFinishedTask(serverId) => processIdleServer(serverId)
       }
 
-      def processIdleServer(serverId: AgentId): StateTransition[AgentState with Product] = {
+      def processIdleServer(serverId: AgentId) = {
         if (taskQueue.isEmpty) {
-          StateTransition(EmptyQueueState(Seq(serverId)))
+          newState(EmptyQueueState(Seq(serverId)))
         } else {
           val message = serverMessage(serverId, taskQueue.head)
-          StateTransition(AllServersAreBusyState(taskQueue.tail), message)
+          newState(AllServersAreBusyState(taskQueue.tail), message)
         }
       }
     }
+
   }
 
   def agents = {
