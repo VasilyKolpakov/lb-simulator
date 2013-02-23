@@ -6,61 +6,61 @@
      xmlns:xlink="http://www.w3.org/1999/xlink"
      xmlns:ev="http://www.w3.org/2001/xml-events"
      width="100%" height="100%">
-      <text font-size="20" x="55" text-anchor="middle" y="50">
+      <text x="55" y="50" font-size="20" text-anchor="middle">
           server # 0
-        </text><rect width="32" x="126" style="fill:rgb(200,200,200)" y="30" height="30"></rect><line y1="20" x1="126" style="stroke:rgb(0,0,0);stroke-width:2" x2="126" y2="70"></line><line y1="20" x1="158" style="stroke:rgb(0,0,0);stroke-width:2" x2="158" y2="70"></line><text font-size="20" x="144" text-anchor="middle" y="50">
+        </text><rect x="126" y="30" width="32" height="30" style="fill:rgb(200,200,200)"></rect><line x1="126" y1="20" x2="126" y2="70" style="stroke:rgb(0,0,0);stroke-width:2"></line><line x1="158" y1="20" x2="158" y2="70" style="stroke:rgb(0,0,0);stroke-width:2"></line><text x="144" y="50" font-size="20" text-anchor="middle">
           0
-        </text><rect width="41" x="222" style="fill:rgb(100,100,100)" y="30" height="30"></rect><line y1="20" x1="222" style="stroke:rgb(0,0,0);stroke-width:2" x2="222" y2="70"></line><line y1="20" x1="263" style="stroke:rgb(0,0,0);stroke-width:2" x2="263" y2="70"></line><text font-size="20" x="244" text-anchor="middle" y="50">
+        </text><rect x="222" y="30" width="41" height="30" style="fill:rgb(100,100,100)"></rect><line x1="222" y1="20" x2="222" y2="70" style="stroke:rgb(0,0,0);stroke-width:2"></line><line x1="263" y1="20" x2="263" y2="70" style="stroke:rgb(0,0,0);stroke-width:2"></line><text x="244" y="50" font-size="20" text-anchor="middle">
           3
-        </text><rect width="43" x="263" style="fill:rgb(200,200,200)" y="30" height="30"></rect><line y1="20" x1="263" style="stroke:rgb(0,0,0);stroke-width:2" x2="263" y2="70"></line><line y1="20" x1="306" style="stroke:rgb(0,0,0);stroke-width:2" x2="306" y2="70"></line><text font-size="20" x="286" text-anchor="middle" y="50">
+        </text><rect x="263" y="30" width="43" height="30" style="fill:rgb(200,200,200)"></rect><line x1="263" y1="20" x2="263" y2="70" style="stroke:rgb(0,0,0);stroke-width:2"></line><line x1="306" y1="20" x2="306" y2="70" style="stroke:rgb(0,0,0);stroke-width:2"></line><text x="286" y="50" font-size="20" text-anchor="middle">
           6
-        </text><rect width="41" x="318" style="fill:rgb(100,100,100)" y="30" height="30"></rect><line y1="20" x1="318" style="stroke:rgb(0,0,0);stroke-width:2" x2="318" y2="70"></line><line y1="20" x1="359" style="stroke:rgb(0,0,0);stroke-width:2" x2="359" y2="70"></line><text font-size="20" x="340" text-anchor="middle" y="50">
+        </text><rect x="318" y="30" width="41" height="30" style="fill:rgb(100,100,100)"></rect><line x1="318" y1="20" x2="318" y2="70" style="stroke:rgb(0,0,0);stroke-width:2"></line><line x1="359" y1="20" x2="359" y2="70" style="stroke:rgb(0,0,0);stroke-width:2"></line><text x="340" y="50" font-size="20" text-anchor="middle">
           9
-        </text><rect width="53" x="374" style="fill:rgb(200,200,200)" y="30" height="30"></rect><line y1="20" x1="374" style="stroke:rgb(0,0,0);stroke-width:2" x2="374" y2="70"></line><line y1="20" x1="427" style="stroke:rgb(0,0,0);stroke-width:2" x2="427" y2="70"></line><text font-size="20" x="402" text-anchor="middle" y="50">
+        </text><rect x="374" y="30" width="53" height="30" style="fill:rgb(200,200,200)"></rect><line x1="374" y1="20" x2="374" y2="70" style="stroke:rgb(0,0,0);stroke-width:2"></line><line x1="427" y1="20" x2="427" y2="70" style="stroke:rgb(0,0,0);stroke-width:2"></line><text x="402" y="50" font-size="20" text-anchor="middle">
           12
-        </text><rect width="67" x="465" style="fill:rgb(100,100,100)" y="30" height="30"></rect><line y1="20" x1="465" style="stroke:rgb(0,0,0);stroke-width:2" x2="465" y2="70"></line><line y1="20" x1="532" style="stroke:rgb(0,0,0);stroke-width:2" x2="532" y2="70"></line><text font-size="20" x="500" text-anchor="middle" y="50">
+        </text><rect x="465" y="30" width="67" height="30" style="fill:rgb(100,100,100)"></rect><line x1="465" y1="20" x2="465" y2="70" style="stroke:rgb(0,0,0);stroke-width:2"></line><line x1="532" y1="20" x2="532" y2="70" style="stroke:rgb(0,0,0);stroke-width:2"></line><text x="500" y="50" font-size="20" text-anchor="middle">
           15
-        </text><rect width="54" x="532" style="fill:rgb(200,200,200)" y="30" height="30"></rect><line y1="20" x1="532" style="stroke:rgb(0,0,0);stroke-width:2" x2="532" y2="70"></line><line y1="20" x1="586" style="stroke:rgb(0,0,0);stroke-width:2" x2="586" y2="70"></line><text font-size="20" x="561" text-anchor="middle" y="50">
+        </text><rect x="532" y="30" width="54" height="30" style="fill:rgb(200,200,200)"></rect><line x1="532" y1="20" x2="532" y2="70" style="stroke:rgb(0,0,0);stroke-width:2"></line><line x1="586" y1="20" x2="586" y2="70" style="stroke:rgb(0,0,0);stroke-width:2"></line><text x="561" y="50" font-size="20" text-anchor="middle">
           18
-        </text><rect width="48" x="586" style="fill:rgb(100,100,100)" y="30" height="30"></rect><line y1="20" x1="586" style="stroke:rgb(0,0,0);stroke-width:2" x2="586" y2="70"></line><line y1="20" x1="634" style="stroke:rgb(0,0,0);stroke-width:2" x2="634" y2="70"></line><text font-size="20" x="612" text-anchor="middle" y="50">
+        </text><rect x="586" y="30" width="48" height="30" style="fill:rgb(100,100,100)"></rect><line x1="586" y1="20" x2="586" y2="70" style="stroke:rgb(0,0,0);stroke-width:2"></line><line x1="634" y1="20" x2="634" y2="70" style="stroke:rgb(0,0,0);stroke-width:2"></line><text x="612" y="50" font-size="20" text-anchor="middle">
           21
-        </text><rect width="30" x="634" style="fill:rgb(200,200,200)" y="30" height="30"></rect><line y1="20" x1="634" style="stroke:rgb(0,0,0);stroke-width:2" x2="634" y2="70"></line><line y1="20" x1="664" style="stroke:rgb(0,0,0);stroke-width:2" x2="664" y2="70"></line><text font-size="20" x="651" text-anchor="middle" y="50">
+        </text><rect x="634" y="30" width="30" height="30" style="fill:rgb(200,200,200)"></rect><line x1="634" y1="20" x2="634" y2="70" style="stroke:rgb(0,0,0);stroke-width:2"></line><line x1="664" y1="20" x2="664" y2="70" style="stroke:rgb(0,0,0);stroke-width:2"></line><text x="651" y="50" font-size="20" text-anchor="middle">
           24
-        </text><text font-size="20" x="55" text-anchor="middle" y="110">
+        </text><text x="55" y="110" font-size="20" text-anchor="middle">
           server # 1
-        </text><rect width="82" x="166" style="fill:rgb(200,200,200)" y="90" height="30"></rect><line y1="80" x1="166" style="stroke:rgb(0,0,0);stroke-width:2" x2="166" y2="130"></line><line y1="80" x1="248" style="stroke:rgb(0,0,0);stroke-width:2" x2="248" y2="130"></line><text font-size="20" x="209" text-anchor="middle" y="110">
+        </text><rect x="166" y="90" width="82" height="30" style="fill:rgb(200,200,200)"></rect><line x1="166" y1="80" x2="166" y2="130" style="stroke:rgb(0,0,0);stroke-width:2"></line><line x1="248" y1="80" x2="248" y2="130" style="stroke:rgb(0,0,0);stroke-width:2"></line><text x="209" y="110" font-size="20" text-anchor="middle">
           1
-        </text><rect width="20" x="248" style="fill:rgb(100,100,100)" y="90" height="30"></rect><line y1="80" x1="248" style="stroke:rgb(0,0,0);stroke-width:2" x2="248" y2="130"></line><line y1="80" x1="268" style="stroke:rgb(0,0,0);stroke-width:2" x2="268" y2="130"></line><text font-size="20" x="260" text-anchor="middle" y="110">
+        </text><rect x="248" y="90" width="20" height="30" style="fill:rgb(100,100,100)"></rect><line x1="248" y1="80" x2="248" y2="130" style="stroke:rgb(0,0,0);stroke-width:2"></line><line x1="268" y1="80" x2="268" y2="130" style="stroke:rgb(0,0,0);stroke-width:2"></line><text x="260" y="110" font-size="20" text-anchor="middle">
           4
-        </text><rect width="45" x="293" style="fill:rgb(200,200,200)" y="90" height="30"></rect><line y1="80" x1="293" style="stroke:rgb(0,0,0);stroke-width:2" x2="293" y2="130"></line><line y1="80" x1="338" style="stroke:rgb(0,0,0);stroke-width:2" x2="338" y2="130"></line><text font-size="20" x="317" text-anchor="middle" y="110">
+        </text><rect x="293" y="90" width="45" height="30" style="fill:rgb(200,200,200)"></rect><line x1="293" y1="80" x2="293" y2="130" style="stroke:rgb(0,0,0);stroke-width:2"></line><line x1="338" y1="80" x2="338" y2="130" style="stroke:rgb(0,0,0);stroke-width:2"></line><text x="317" y="110" font-size="20" text-anchor="middle">
           7
-        </text><rect width="42" x="338" style="fill:rgb(100,100,100)" y="90" height="30"></rect><line y1="80" x1="338" style="stroke:rgb(0,0,0);stroke-width:2" x2="338" y2="130"></line><line y1="80" x1="380" style="stroke:rgb(0,0,0);stroke-width:2" x2="380" y2="130"></line><text font-size="20" x="361" text-anchor="middle" y="110">
+        </text><rect x="338" y="90" width="42" height="30" style="fill:rgb(100,100,100)"></rect><line x1="338" y1="80" x2="338" y2="130" style="stroke:rgb(0,0,0);stroke-width:2"></line><line x1="380" y1="80" x2="380" y2="130" style="stroke:rgb(0,0,0);stroke-width:2"></line><text x="361" y="110" font-size="20" text-anchor="middle">
           10
-        </text><rect width="76" x="403" style="fill:rgb(200,200,200)" y="90" height="30"></rect><line y1="80" x1="403" style="stroke:rgb(0,0,0);stroke-width:2" x2="403" y2="130"></line><line y1="80" x1="479" style="stroke:rgb(0,0,0);stroke-width:2" x2="479" y2="130"></line><text font-size="20" x="443" text-anchor="middle" y="110">
+        </text><rect x="403" y="90" width="76" height="30" style="fill:rgb(200,200,200)"></rect><line x1="403" y1="80" x2="403" y2="130" style="stroke:rgb(0,0,0);stroke-width:2"></line><line x1="479" y1="80" x2="479" y2="130" style="stroke:rgb(0,0,0);stroke-width:2"></line><text x="443" y="110" font-size="20" text-anchor="middle">
           13
-        </text><rect width="56" x="479" style="fill:rgb(100,100,100)" y="90" height="30"></rect><line y1="80" x1="479" style="stroke:rgb(0,0,0);stroke-width:2" x2="479" y2="130"></line><line y1="80" x1="535" style="stroke:rgb(0,0,0);stroke-width:2" x2="535" y2="130"></line><text font-size="20" x="509" text-anchor="middle" y="110">
+        </text><rect x="479" y="90" width="56" height="30" style="fill:rgb(100,100,100)"></rect><line x1="479" y1="80" x2="479" y2="130" style="stroke:rgb(0,0,0);stroke-width:2"></line><line x1="535" y1="80" x2="535" y2="130" style="stroke:rgb(0,0,0);stroke-width:2"></line><text x="509" y="110" font-size="20" text-anchor="middle">
           16
-        </text><rect width="75" x="535" style="fill:rgb(200,200,200)" y="90" height="30"></rect><line y1="80" x1="535" style="stroke:rgb(0,0,0);stroke-width:2" x2="535" y2="130"></line><line y1="80" x1="610" style="stroke:rgb(0,0,0);stroke-width:2" x2="610" y2="130"></line><text font-size="20" x="574" text-anchor="middle" y="110">
+        </text><rect x="535" y="90" width="75" height="30" style="fill:rgb(200,200,200)"></rect><line x1="535" y1="80" x2="535" y2="130" style="stroke:rgb(0,0,0);stroke-width:2"></line><line x1="610" y1="80" x2="610" y2="130" style="stroke:rgb(0,0,0);stroke-width:2"></line><text x="574" y="110" font-size="20" text-anchor="middle">
           19
-        </text><rect width="32" x="610" style="fill:rgb(100,100,100)" y="90" height="30"></rect><line y1="80" x1="610" style="stroke:rgb(0,0,0);stroke-width:2" x2="610" y2="130"></line><line y1="80" x1="642" style="stroke:rgb(0,0,0);stroke-width:2" x2="642" y2="130"></line><text font-size="20" x="628" text-anchor="middle" y="110">
+        </text><rect x="610" y="90" width="32" height="30" style="fill:rgb(100,100,100)"></rect><line x1="610" y1="80" x2="610" y2="130" style="stroke:rgb(0,0,0);stroke-width:2"></line><line x1="642" y1="80" x2="642" y2="130" style="stroke:rgb(0,0,0);stroke-width:2"></line><text x="628" y="110" font-size="20" text-anchor="middle">
           22
-        </text><text font-size="20" x="55" text-anchor="middle" y="170">
+        </text><text x="55" y="170" font-size="20" text-anchor="middle">
           server # 2
-        </text><rect width="50" x="187" style="fill:rgb(200,200,200)" y="150" height="30"></rect><line y1="140" x1="187" style="stroke:rgb(0,0,0);stroke-width:2" x2="187" y2="190"></line><line y1="140" x1="237" style="stroke:rgb(0,0,0);stroke-width:2" x2="237" y2="190"></line><text font-size="20" x="214" text-anchor="middle" y="170">
+        </text><rect x="187" y="150" width="50" height="30" style="fill:rgb(200,200,200)"></rect><line x1="187" y1="140" x2="187" y2="190" style="stroke:rgb(0,0,0);stroke-width:2"></line><line x1="237" y1="140" x2="237" y2="190" style="stroke:rgb(0,0,0);stroke-width:2"></line><text x="214" y="170" font-size="20" text-anchor="middle">
           2
-        </text><rect width="45" x="237" style="fill:rgb(100,100,100)" y="150" height="30"></rect><line y1="140" x1="237" style="stroke:rgb(0,0,0);stroke-width:2" x2="237" y2="190"></line><line y1="140" x1="282" style="stroke:rgb(0,0,0);stroke-width:2" x2="282" y2="190"></line><text font-size="20" x="261" text-anchor="middle" y="170">
+        </text><rect x="237" y="150" width="45" height="30" style="fill:rgb(100,100,100)"></rect><line x1="237" y1="140" x2="237" y2="190" style="stroke:rgb(0,0,0);stroke-width:2"></line><line x1="282" y1="140" x2="282" y2="190" style="stroke:rgb(0,0,0);stroke-width:2"></line><text x="261" y="170" font-size="20" text-anchor="middle">
           5
-        </text><rect width="15" x="306" style="fill:rgb(200,200,200)" y="150" height="30"></rect><line y1="140" x1="306" style="stroke:rgb(0,0,0);stroke-width:2" x2="306" y2="190"></line><line y1="140" x1="321" style="stroke:rgb(0,0,0);stroke-width:2" x2="321" y2="190"></line><text font-size="20" x="315" text-anchor="middle" y="170">
+        </text><rect x="306" y="150" width="15" height="30" style="fill:rgb(200,200,200)"></rect><line x1="306" y1="140" x2="306" y2="190" style="stroke:rgb(0,0,0);stroke-width:2"></line><line x1="321" y1="140" x2="321" y2="190" style="stroke:rgb(0,0,0);stroke-width:2"></line><text x="315" y="170" font-size="20" text-anchor="middle">
           8
-        </text><rect width="65" x="373" style="fill:rgb(100,100,100)" y="150" height="30"></rect><line y1="140" x1="373" style="stroke:rgb(0,0,0);stroke-width:2" x2="373" y2="190"></line><line y1="140" x1="438" style="stroke:rgb(0,0,0);stroke-width:2" x2="438" y2="190"></line><text font-size="20" x="407" text-anchor="middle" y="170">
+        </text><rect x="373" y="150" width="65" height="30" style="fill:rgb(100,100,100)"></rect><line x1="373" y1="140" x2="373" y2="190" style="stroke:rgb(0,0,0);stroke-width:2"></line><line x1="438" y1="140" x2="438" y2="190" style="stroke:rgb(0,0,0);stroke-width:2"></line><text x="407" y="170" font-size="20" text-anchor="middle">
           11
-        </text><rect width="38" x="438" style="fill:rgb(200,200,200)" y="150" height="30"></rect><line y1="140" x1="438" style="stroke:rgb(0,0,0);stroke-width:2" x2="438" y2="190"></line><line y1="140" x1="476" style="stroke:rgb(0,0,0);stroke-width:2" x2="476" y2="190"></line><text font-size="20" x="459" text-anchor="middle" y="170">
+        </text><rect x="438" y="150" width="38" height="30" style="fill:rgb(200,200,200)"></rect><line x1="438" y1="140" x2="438" y2="190" style="stroke:rgb(0,0,0);stroke-width:2"></line><line x1="476" y1="140" x2="476" y2="190" style="stroke:rgb(0,0,0);stroke-width:2"></line><text x="459" y="170" font-size="20" text-anchor="middle">
           14
-        </text><rect width="29" x="499" style="fill:rgb(100,100,100)" y="150" height="30"></rect><line y1="140" x1="499" style="stroke:rgb(0,0,0);stroke-width:2" x2="499" y2="190"></line><line y1="140" x1="528" style="stroke:rgb(0,0,0);stroke-width:2" x2="528" y2="190"></line><text font-size="20" x="515" text-anchor="middle" y="170">
+        </text><rect x="499" y="150" width="29" height="30" style="fill:rgb(100,100,100)"></rect><line x1="499" y1="140" x2="499" y2="190" style="stroke:rgb(0,0,0);stroke-width:2"></line><line x1="528" y1="140" x2="528" y2="190" style="stroke:rgb(0,0,0);stroke-width:2"></line><text x="515" y="170" font-size="20" text-anchor="middle">
           17
-        </text><rect width="32" x="528" style="fill:rgb(200,200,200)" y="150" height="30"></rect><line y1="140" x1="528" style="stroke:rgb(0,0,0);stroke-width:2" x2="528" y2="190"></line><line y1="140" x1="560" style="stroke:rgb(0,0,0);stroke-width:2" x2="560" y2="190"></line><text font-size="20" x="546" text-anchor="middle" y="170">
+        </text><rect x="528" y="150" width="32" height="30" style="fill:rgb(200,200,200)"></rect><line x1="528" y1="140" x2="528" y2="190" style="stroke:rgb(0,0,0);stroke-width:2"></line><line x1="560" y1="140" x2="560" y2="190" style="stroke:rgb(0,0,0);stroke-width:2"></line><text x="546" y="170" font-size="20" text-anchor="middle">
           20
-        </text><rect width="24" x="560" style="fill:rgb(100,100,100)" y="150" height="30"></rect><line y1="140" x1="560" style="stroke:rgb(0,0,0);stroke-width:2" x2="560" y2="190"></line><line y1="140" x1="584" style="stroke:rgb(0,0,0);stroke-width:2" x2="584" y2="190"></line><text font-size="20" x="574" text-anchor="middle" y="170">
+        </text><rect x="560" y="150" width="24" height="30" style="fill:rgb(100,100,100)"></rect><line x1="560" y1="140" x2="560" y2="190" style="stroke:rgb(0,0,0);stroke-width:2"></line><line x1="584" y1="140" x2="584" y2="190" style="stroke:rgb(0,0,0);stroke-width:2"></line><text x="574" y="170" font-size="20" text-anchor="middle">
           23
         </text>
 </svg>
