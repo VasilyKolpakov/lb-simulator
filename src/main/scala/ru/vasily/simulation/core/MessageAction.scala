@@ -4,7 +4,11 @@ sealed trait MessageAction
 
 trait MessageTag
 
-case class SendMessage(message: Message, delay: Long, tags: Set[MessageTag] = Set.empty) extends MessageAction
+case class SendMessage(message: Message, delay: Long, tags: Set[MessageTag] = Set.empty) extends MessageAction {
+  def withDelay(delayVal: Long) = copy(delay = delayVal)
+
+  def withTags(tagsVal: Set[MessageTag]) = copy(tags = tagsVal)
+}
 
 object SendMessage {
   def withoutDelay(contents: AnyRef, receiverId: AgentId, tags: Set[MessageTag] = Set.empty) =

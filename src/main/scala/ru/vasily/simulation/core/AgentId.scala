@@ -5,4 +5,6 @@ package ru.vasily.simulation.core
  */
 trait AgentId {
   def thisAgent: this.type = this
+
+  def !(message: AnyRef) = SendMessage.withoutDelay(message, this)
 }

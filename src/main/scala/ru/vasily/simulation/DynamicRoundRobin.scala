@@ -65,21 +65,19 @@ case class DynamicRoundRobin(serversPerformance: Seq[Double], maxWeight: Int, re
 
   case object MainServer extends AgentId {
 
-    val monitoringServiceMessage = SendMessage.withoutDelay(GetServersLoad(thisAgent), MonitoringService)
+    val monitoringServiceMessage = MonitoringService ! GetServersLoad(thisAgent)
 
     case class RoundRobinState(serversLoad: Vector[Int],
                                algorithmState: RoundRobinAlgorithmState = RoundRobinAlgorithmState())
       extends AgentState {
 
-      def serverMessage(serverId: AgentId, task: Task) =
-        SendMessage.withoutDelay(TaskMessage(thisAgent, task), serverId)
-
       def changeState(currentTime: Long, message: AnyRef) = message match {
         case task: Task => {
-          val srvMessage = serverMessage(serverIds(algorithmState.currentServerIndex), task)
+          val serverId = serverIds(algorithmState.currentServerIndex)
+          val srvMessageAction = serverId ! TaskMessage(thisAgent, task)
           val nextAlgState = algorithmState.nextState(serversLoad)
           val nextState = RoundRobinState(serversLoad, nextAlgState)
-          newState(nextState, srvMessage, monitoringServiceMessage)
+          newState(nextState, srvMessageAction, monitoringServiceMessage)
         }
         case ServersLoad(freshLoadDataMap) => {
           val freshLoadData = serverIds.map(freshLoadDataMap.get(_).getOrElse(0))
