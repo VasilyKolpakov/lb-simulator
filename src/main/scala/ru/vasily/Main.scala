@@ -6,10 +6,6 @@ import RichFile.enrichFile
 import java.io.File
 import simulation._
 import simulation.core.AgentId
-import simulation.DynamicRoundRobin
-import simulation.MasterWorkerClusterModel
-import simulation.RandomClusterModel
-import simulation.RoundRobinClusterModel
 import utils.TestConfigPrinter
 
 object Main {
@@ -42,7 +38,7 @@ object Main {
         taskGenerator <- env("taskGenerator", classOf[TasksGenerator])
         metricPath <- env("metricPath", classOf[Seq[String]])
       } yield {
-        val models = modelFactories.mapValues(factory => factory(serversPerformance, _:AgentId))
+        val models = modelFactories.mapValues(factory => factory(serversPerformance, _: AgentId))
         new ComparingRunner(models, taskGenerator, metricPath)
       }
     },
@@ -52,21 +48,32 @@ object Main {
     ClassInjector("SVG", classOf[SvgOutputFormat], "imageWidth", "makespan"),
 
     // ClusterModel
-    Injector("DynamicWRR") {
+    Injector("RandomScheduler") {
+      env => for {
+        seed <- env("seed", classOf[Int])
+      } yield (servers: Seq[Double], masterAgentId: AgentId) =>
+          new SimpleClusterModel(servers, new RandomSchedulerModel(seed), MonitoringServiceModel(None), masterAgentId)
+    },
+
+    Injector("RoundRobinScheduler", (servers: Seq[Double], masterAgentId: AgentId) =>
+      new SimpleClusterModel(servers, RoundRobinSchedulerModel, MonitoringServiceModel(None), masterAgentId)),
+
+    Injector("MasterSlaveScheduler",
+      (servers: Seq[Double], masterAgentId: AgentId) =>
+        new SimpleClusterModel(servers, MasterWorkerSchedulerModel, MonitoringServiceModel(None), masterAgentId)),
+
+    Injector("DynamicWRRScheduler") {
       env => for {
         maxWeigh <- env("maxWeight", classOf[Int])
         refreshTime <- env("refreshTime", classOf[Int])
       } yield {
-        (servers: Seq[Double], masterAgentId: AgentId) => DynamicRoundRobin(servers, maxWeigh, refreshTime, masterAgentId)
+        (servers: Seq[Double], masterAgentId: AgentId) =>
+          new SimpleClusterModel(servers,
+            DynamicRoundRobinSchedulerModel(maxWeigh, refreshTime),
+            MonitoringServiceModel(Some(refreshTime)),
+            masterAgentId)
       }
     },
-    Injector("MasterSlave", (servers: Seq[Double], masterAgentId: AgentId) => MasterWorkerClusterModel(servers, masterAgentId)),
-    Injector("Random") {
-      env => for {
-        seed <- env("seed", classOf[Int])
-      } yield (servers: Seq[Double], masterAgentId: AgentId) => RandomClusterModel(servers, seed, masterAgentId)
-    },
-    Injector("RoundRobin", (servers: Seq[Double], masterAgentId: AgentId) => RoundRobinClusterModel(servers, masterAgentId)),
 
     // TasksGenerator
     ClassInjector("RandomTaskGen", classOf[UniformRandomTaskGenerator],

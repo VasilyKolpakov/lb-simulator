@@ -2,7 +2,7 @@
     seed: 0,
     clusterModel :
     {
-        type : "DynamicWRR",
+        type : "DynamicWRRScheduler",
         maxWeight : 3,
         refreshTime : 1000
     },

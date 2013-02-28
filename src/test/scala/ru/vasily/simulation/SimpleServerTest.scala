@@ -27,8 +27,8 @@ class SimpleServerTest extends FunSuite with ShouldMatchers {
 
     val refreshTime: Int = 5
     val numberOfTasks: Int = 10
-    val (serverSeq, monitoringAgentSeq) =
-      SimpleServer.generateAgents(serversPerformance = Seq(1.0), refreshTime = Some(refreshTime))
+    val serverSeq = SimpleServer.generateServers(serversPerformance = Seq(1.0))
+    val monitoringAgentSeq = MonitoringServiceModel(Some(refreshTime)).agents(serverSeq.map(_.id))
     def taskMessage(messageIndex: Int) = TaskMessage(DummyAgent, Task(messageIndex, 10, 0))
     val taskMessages = (1 to numberOfTasks).map(i => SendMessage.withoutDelay(taskMessage(i), serverSeq.head.id)).toList
     val checkMessage = SendMessage(Message(CheckMessage, DummyAgent), 5)

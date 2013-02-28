@@ -1,7 +1,7 @@
 [ {
   "config" : {
     "clusterModel" : {
-      "type" : "RoundRobin"
+      "type" : "RoundRobinScheduler"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -37,7 +37,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "RoundRobin"
+      "type" : "RoundRobinScheduler"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -73,7 +73,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "RoundRobin"
+      "type" : "RoundRobinScheduler"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -109,7 +109,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "RoundRobin"
+      "type" : "RoundRobinScheduler"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -145,7 +145,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "RoundRobin"
+      "type" : "RoundRobinScheduler"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -181,7 +181,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "RoundRobin"
+      "type" : "RoundRobinScheduler"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -217,7 +217,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "RoundRobin"
+      "type" : "RoundRobinScheduler"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -253,7 +253,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "RoundRobin"
+      "type" : "RoundRobinScheduler"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -289,7 +289,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "RoundRobin"
+      "type" : "RoundRobinScheduler"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -325,7 +325,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "RoundRobin"
+      "type" : "RoundRobinScheduler"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -361,7 +361,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "RoundRobin"
+      "type" : "RoundRobinScheduler"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -397,7 +397,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "RoundRobin"
+      "type" : "RoundRobinScheduler"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -433,7 +433,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "RoundRobin"
+      "type" : "RoundRobinScheduler"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -469,7 +469,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "RoundRobin"
+      "type" : "RoundRobinScheduler"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -505,7 +505,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "RoundRobin"
+      "type" : "RoundRobinScheduler"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -541,7 +541,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "RoundRobin"
+      "type" : "RoundRobinScheduler"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -577,7 +577,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "DynamicWRR",
+      "type" : "DynamicWRRScheduler",
       "maxWeight" : 5,
       "refreshTime" : 100
     },
@@ -615,7 +615,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "DynamicWRR",
+      "type" : "DynamicWRRScheduler",
       "maxWeight" : 5,
       "refreshTime" : 100
     },
@@ -653,7 +653,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "DynamicWRR",
+      "type" : "DynamicWRRScheduler",
       "maxWeight" : 5,
       "refreshTime" : 100
     },
@@ -691,7 +691,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "DynamicWRR",
+      "type" : "DynamicWRRScheduler",
       "maxWeight" : 5,
       "refreshTime" : 100
     },
@@ -729,7 +729,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "DynamicWRR",
+      "type" : "DynamicWRRScheduler",
       "maxWeight" : 5,
       "refreshTime" : 100
     },
@@ -767,7 +767,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "DynamicWRR",
+      "type" : "DynamicWRRScheduler",
       "maxWeight" : 5,
       "refreshTime" : 100
     },
@@ -805,7 +805,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "DynamicWRR",
+      "type" : "DynamicWRRScheduler",
       "maxWeight" : 5,
       "refreshTime" : 100
     },
@@ -843,7 +843,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "DynamicWRR",
+      "type" : "DynamicWRRScheduler",
       "maxWeight" : 5,
       "refreshTime" : 100
     },
@@ -881,7 +881,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "DynamicWRR",
+      "type" : "DynamicWRRScheduler",
       "maxWeight" : 5,
       "refreshTime" : 100
     },
@@ -919,7 +919,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "DynamicWRR",
+      "type" : "DynamicWRRScheduler",
       "maxWeight" : 5,
       "refreshTime" : 100
     },
@@ -957,7 +957,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "DynamicWRR",
+      "type" : "DynamicWRRScheduler",
       "maxWeight" : 5,
       "refreshTime" : 100
     },
@@ -995,7 +995,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "DynamicWRR",
+      "type" : "DynamicWRRScheduler",
       "maxWeight" : 5,
       "refreshTime" : 100
     },
@@ -1033,7 +1033,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "DynamicWRR",
+      "type" : "DynamicWRRScheduler",
       "maxWeight" : 5,
       "refreshTime" : 100
     },
@@ -1071,7 +1071,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "DynamicWRR",
+      "type" : "DynamicWRRScheduler",
       "maxWeight" : 5,
       "refreshTime" : 100
     },
@@ -1109,7 +1109,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "DynamicWRR",
+      "type" : "DynamicWRRScheduler",
       "maxWeight" : 5,
       "refreshTime" : 100
     },
@@ -1147,7 +1147,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "DynamicWRR",
+      "type" : "DynamicWRRScheduler",
       "maxWeight" : 5,
       "refreshTime" : 100
     },
@@ -1185,7 +1185,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "Random",
+      "type" : "RandomScheduler",
       "seed" : 1
     },
     "servers" : {
@@ -1222,7 +1222,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "Random",
+      "type" : "RandomScheduler",
       "seed" : 1
     },
     "servers" : {
@@ -1259,7 +1259,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "Random",
+      "type" : "RandomScheduler",
       "seed" : 1
     },
     "servers" : {
@@ -1296,7 +1296,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "Random",
+      "type" : "RandomScheduler",
       "seed" : 1
     },
     "servers" : {
@@ -1333,7 +1333,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "Random",
+      "type" : "RandomScheduler",
       "seed" : 1
     },
     "servers" : {
@@ -1370,7 +1370,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "Random",
+      "type" : "RandomScheduler",
       "seed" : 1
     },
     "servers" : {
@@ -1407,7 +1407,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "Random",
+      "type" : "RandomScheduler",
       "seed" : 1
     },
     "servers" : {
@@ -1444,7 +1444,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "Random",
+      "type" : "RandomScheduler",
       "seed" : 1
     },
     "servers" : {
@@ -1481,7 +1481,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "Random",
+      "type" : "RandomScheduler",
       "seed" : 1
     },
     "servers" : {
@@ -1518,7 +1518,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "Random",
+      "type" : "RandomScheduler",
       "seed" : 1
     },
     "servers" : {
@@ -1555,7 +1555,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "Random",
+      "type" : "RandomScheduler",
       "seed" : 1
     },
     "servers" : {
@@ -1592,7 +1592,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "Random",
+      "type" : "RandomScheduler",
       "seed" : 1
     },
     "servers" : {
@@ -1629,7 +1629,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "Random",
+      "type" : "RandomScheduler",
       "seed" : 1
     },
     "servers" : {
@@ -1666,7 +1666,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "Random",
+      "type" : "RandomScheduler",
       "seed" : 1
     },
     "servers" : {
@@ -1703,7 +1703,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "Random",
+      "type" : "RandomScheduler",
       "seed" : 1
     },
     "servers" : {
@@ -1740,7 +1740,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "Random",
+      "type" : "RandomScheduler",
       "seed" : 1
     },
     "servers" : {
@@ -1777,7 +1777,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "MasterSlave"
+      "type" : "MasterSlaveScheduler"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -1813,7 +1813,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "MasterSlave"
+      "type" : "MasterSlaveScheduler"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -1849,7 +1849,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "MasterSlave"
+      "type" : "MasterSlaveScheduler"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -1885,7 +1885,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "MasterSlave"
+      "type" : "MasterSlaveScheduler"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -1921,7 +1921,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "MasterSlave"
+      "type" : "MasterSlaveScheduler"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -1957,7 +1957,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "MasterSlave"
+      "type" : "MasterSlaveScheduler"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -1993,7 +1993,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "MasterSlave"
+      "type" : "MasterSlaveScheduler"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -2029,7 +2029,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "MasterSlave"
+      "type" : "MasterSlaveScheduler"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -2065,7 +2065,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "MasterSlave"
+      "type" : "MasterSlaveScheduler"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -2101,7 +2101,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "MasterSlave"
+      "type" : "MasterSlaveScheduler"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -2137,7 +2137,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "MasterSlave"
+      "type" : "MasterSlaveScheduler"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -2173,7 +2173,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "MasterSlave"
+      "type" : "MasterSlaveScheduler"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -2209,7 +2209,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "MasterSlave"
+      "type" : "MasterSlaveScheduler"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -2245,7 +2245,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "MasterSlave"
+      "type" : "MasterSlaveScheduler"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -2281,7 +2281,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "MasterSlave"
+      "type" : "MasterSlaveScheduler"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -2317,7 +2317,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "MasterSlave"
+      "type" : "MasterSlaveScheduler"
     },
     "servers" : {
       "type" : "RandomPerformance",

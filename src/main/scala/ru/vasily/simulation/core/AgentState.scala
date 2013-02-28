@@ -12,7 +12,7 @@ trait AgentState {
 
   def newActions(messages: MessageAction*) = newState(this, messages: _*)
 
-  def newState(state: AgentState, messageActions: MessageAction*) = StateTransition(state, messageActions)
+  def newState(state: AgentState, actions: MessageAction*) = StateTransition(state, actions)
 
   def noChanges = StateTransition(this, Nil)
 }

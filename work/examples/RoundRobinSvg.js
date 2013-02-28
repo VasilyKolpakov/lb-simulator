@@ -2,7 +2,7 @@
     seed : 0,
     clusterModel :
     { 
-        type : "RoundRobin"
+        type : "RoundRobinScheduler"
     },
     servers :
     {

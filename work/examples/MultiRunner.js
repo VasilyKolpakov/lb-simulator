@@ -7,17 +7,17 @@
     clusterModels :
     [
         {
-            type : "RoundRobin"
+            type : "RoundRobinScheduler"
         },
         {
-            type : "DynamicWRR",
+            type : "DynamicWRRScheduler",
             maxWeight : 5
         },
         {
-            type : "Random"
+            type : "RandomScheduler"
         },
         {
-            type : "MasterSlave"
+            type : "MasterSlaveScheduler"
         }
     ],
     servers :

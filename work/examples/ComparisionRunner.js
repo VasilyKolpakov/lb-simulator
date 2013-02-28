@@ -5,16 +5,16 @@
     clusterModels :
     {
         "Master-Slave" : {
-            type : "MasterSlave"
+            type : "MasterSlaveScheduler"
         },
         "Random" :{
-            type : "Random"
+            type : "RandomScheduler"
         },
         "Round Robin" :{
-            type : "RoundRobin"
+            type : "RoundRobinScheduler"
         },
         "Weighted RR" : {
-            type : "DynamicWRR",
+            type : "DynamicWRRScheduler",
             maxWeight : 3,
             refreshTime: 100
         }
