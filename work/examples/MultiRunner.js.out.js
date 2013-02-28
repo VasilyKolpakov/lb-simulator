@@ -1777,7 +1777,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "RoundRobin"
+      "type" : "MasterSlave"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -1797,23 +1797,23 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 0.9994172692025327,
-      "min-max slowdown" : 1.0016406976846235,
-      "average utilization" : 0.43400637159993066,
-      "makespan" : 9492.0
+      "average slowdown" : 0.9993620727901191,
+      "min-max slowdown" : 1.001695611260586,
+      "average utilization" : 0.6146954237548667,
+      "makespan" : 9321.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.43633243940457295,
-      "coefficient of variation" : 0.25714002851115264,
-      "standard deviation" : 0.11160041076722808,
-      "Jain index" : 0.9379798403571982,
-      "balancing efficiency" : 0.68149033446874
+      "min-max utilization" : 0.49098211996255525,
+      "coefficient of variation" : 0.20861795954169404,
+      "standard deviation" : 0.12823650504335726,
+      "Jain index" : 0.9582936671628423,
+      "balancing efficiency" : 0.758166600508652
     }
   }
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "RoundRobin"
+      "type" : "MasterSlave"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -1833,23 +1833,23 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 4.590983999650627,
-      "min-max slowdown" : 12.52424245092906,
-      "average utilization" : 0.6800722975475342,
-      "makespan" : 24068.0
+      "average slowdown" : 4.689580901629657,
+      "min-max slowdown" : 13.36308871234024,
+      "average utilization" : 0.9400804402557625,
+      "makespan" : 16722.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.5092099351001045,
-      "coefficient of variation" : 0.19713638131100739,
-      "standard deviation" : 0.13406699176838358,
-      "Jain index" : 0.9625910614946079,
-      "balancing efficiency" : 0.6840192716540614
+      "min-max utilization" : 0.9193956564354187,
+      "coefficient of variation" : 0.021061815419059552,
+      "standard deviation" : 0.01979980071173511,
+      "Jain index" : 0.9995565966250209,
+      "balancing efficiency" : 0.9588713431800402
     }
   }
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "RoundRobin"
+      "type" : "MasterSlave"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -1869,23 +1869,23 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 0.9997324728126357,
-      "min-max slowdown" : 1.0006839522511033,
-      "average utilization" : 0.3949516827455636,
-      "makespan" : 10577.0
+      "average slowdown" : 0.9997095747790918,
+      "min-max slowdown" : 1.0008322032924715,
+      "average utilization" : 0.6090546171836465,
+      "makespan" : 10641.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.40589274495031424,
-      "coefficient of variation" : 0.24970358774420237,
-      "standard deviation" : 0.09862085216717721,
-      "Jain index" : 0.9413076939905707,
-      "balancing efficiency" : 0.7037866338429504
+      "min-max utilization" : 0.5044387432292843,
+      "coefficient of variation" : 0.22374428391018908,
+      "standard deviation" : 0.13627248918394932,
+      "Jain index" : 0.9523251691791247,
+      "balancing efficiency" : 0.7288772923194461
     }
   }
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "RoundRobin"
+      "type" : "MasterSlave"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -1905,23 +1905,23 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 2.6598413023224667,
-      "min-max slowdown" : 7.016559937167942,
-      "average utilization" : 0.6469029478897607,
-      "makespan" : 25765.0
+      "average slowdown" : 2.72648104089956,
+      "min-max slowdown" : 7.008423451086213,
+      "average utilization" : 0.8796363501790493,
+      "makespan" : 18128.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.39468633758758537,
-      "coefficient of variation" : 0.23072450486299295,
-      "standard deviation" : 0.14925636234627557,
-      "Jain index" : 0.9494568088409139,
-      "balancing efficiency" : 0.6537272847797896
+      "min-max utilization" : 0.8257580940605063,
+      "coefficient of variation" : 0.05071268083566816,
+      "standard deviation" : 0.04460871747808216,
+      "Jain index" : 0.9974348210680664,
+      "balancing efficiency" : 0.8928235419231515
     }
   }
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "RoundRobin"
+      "type" : "MasterSlave"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -1941,23 +1941,23 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 0.9995605040172878,
+      "average slowdown" : 0.9994901144746576,
       "min-max slowdown" : 1.0011179771876737,
-      "average utilization" : 0.44982499762634304,
-      "makespan" : 9235.0
+      "average utilization" : 0.6615673625987591,
+      "makespan" : 9046.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.5113018222672797,
-      "coefficient of variation" : 0.21152715898186164,
-      "standard deviation" : 0.095150203786923,
-      "Jain index" : 0.9571725224883142,
-      "balancing efficiency" : 0.6965909078358221
+      "min-max utilization" : 0.4086221018332414,
+      "coefficient of variation" : 0.24051985968379924,
+      "standard deviation" : 0.1591200892236347,
+      "Jain index" : 0.9453137839194204,
+      "balancing efficiency" : 0.7032235591659655
     }
   }
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "RoundRobin"
+      "type" : "MasterSlave"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -1977,23 +1977,23 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 4.491912319884017,
-      "min-max slowdown" : 10.907219954169411,
-      "average utilization" : 0.692730871401889,
-      "makespan" : 23987.0
+      "average slowdown" : 4.6489698608048045,
+      "min-max slowdown" : 10.936108458009105,
+      "average utilization" : 0.9610474770306316,
+      "makespan" : 16537.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.5113018222672797,
-      "coefficient of variation" : 0.2115271589818616,
-      "standard deviation" : 0.1465313931666709,
-      "Jain index" : 0.9571725224883142,
-      "balancing efficiency" : 0.6965909078358222
+      "min-max utilization" : 0.9253969215339504,
+      "coefficient of variation" : 0.022800803857406345,
+      "standard deviation" : 0.021912655021430662,
+      "Jain index" : 0.9994803934747593,
+      "balancing efficiency" : 0.9652131167385785
     }
   }
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "RoundRobin"
+      "type" : "MasterSlave"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -2013,23 +2013,23 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 0.9997799006107242,
+      "average slowdown" : 0.9997332948297991,
       "min-max slowdown" : 1.0004623662006484,
-      "average utilization" : 0.39371944394647695,
-      "makespan" : 10551.0
+      "average utilization" : 0.6106662572202818,
+      "makespan" : 10502.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.5113018222672798,
-      "coefficient of variation" : 0.21152715898186158,
-      "standard deviation" : 0.08328235541391657,
-      "Jain index" : 0.9571725224883144,
-      "balancing efficiency" : 0.6965909078358223
+      "min-max utilization" : 0.4977631272019689,
+      "coefficient of variation" : 0.20503234873925033,
+      "standard deviation" : 0.12520633701368156,
+      "Jain index" : 0.9596576579952328,
+      "balancing efficiency" : 0.7169386500922386
     }
   }
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "RoundRobin"
+      "type" : "MasterSlave"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -2049,23 +2049,23 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 2.6674417880599166,
-      "min-max slowdown" : 5.585593258440779,
-      "average utilization" : 0.688911086746149,
-      "makespan" : 24120.0
+      "average slowdown" : 2.7236268627743936,
+      "min-max slowdown" : 5.276531436303107,
+      "average utilization" : 0.8803128710565767,
+      "makespan" : 18158.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.5113018222672798,
-      "coefficient of variation" : 0.21152715898186167,
-      "standard deviation" : 0.14572340497051975,
-      "Jain index" : 0.9571725224883142,
-      "balancing efficiency" : 0.6965909078358222
+      "min-max utilization" : 0.8516917989601552,
+      "coefficient of variation" : 0.04812246124471501,
+      "standard deviation" : 0.04236282202064392,
+      "Jain index" : 0.9976895791300373,
+      "balancing efficiency" : 0.8934723647310409
     }
   }
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "RoundRobin"
+      "type" : "MasterSlave"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -2087,21 +2087,21 @@
     "performanceMetrics" : {
       "average slowdown" : 0.999631535928015,
       "min-max slowdown" : 1.0009620009620008,
-      "average utilization" : 0.4368601437258155,
+      "average utilization" : 0.6240859196083077,
       "makespan" : 9045.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.6566321058276725,
-      "coefficient of variation" : 0.09734311947740137,
-      "standard deviation" : 0.04252532916561679,
-      "Jain index" : 0.990613262835337,
-      "balancing efficiency" : 0.847636753664641
+      "min-max utilization" : 0.29322173435784854,
+      "coefficient of variation" : 0.24162061867652423,
+      "standard deviation" : 0.15079202600306688,
+      "Jain index" : 0.9448397602936259,
+      "balancing efficiency" : 0.77454132037008
     }
   }
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "RoundRobin"
+      "type" : "MasterSlave"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -2121,23 +2121,23 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 4.591176890328759,
-      "min-max slowdown" : 11.609569516777638,
-      "average utilization" : 0.8685843621399176,
-      "makespan" : 18225.0
+      "average slowdown" : 4.572518405846833,
+      "min-max slowdown" : 11.500393811533053,
+      "average utilization" : 0.9582294188861985,
+      "makespan" : 16520.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.835621247113164,
-      "coefficient of variation" : 0.04477764172027807,
-      "standard deviation" : 0.03889315937173749,
-      "Jain index" : 0.9979989749316662,
-      "balancing efficiency" : 0.877410623556582
+      "min-max utilization" : 0.9295700128202519,
+      "coefficient of variation" : 0.019216541389333614,
+      "standard deviation" : 0.01841385528850373,
+      "Jain index" : 0.9996308608510622,
+      "balancing efficiency" : 0.9663997476648826
     }
   }
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "RoundRobin"
+      "type" : "MasterSlave"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -2157,23 +2157,23 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 0.9998479258372915,
+      "average slowdown" : 0.9998479258372918,
       "min-max slowdown" : 1.0004198152812762,
-      "average utilization" : 0.3890918462678393,
+      "average utilization" : 0.6484864104463989,
       "makespan" : 10347.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.5864540765056608,
-      "coefficient of variation" : 0.1500827287312034,
-      "standard deviation" : 0.05839596601493923,
-      "Jain index" : 0.9779713656798545,
-      "balancing efficiency" : 0.809124405439807
+      "min-max utilization" : 0.377254338538319,
+      "coefficient of variation" : 0.2439666625700277,
+      "standard deviation" : 0.15820906527862508,
+      "Jain index" : 0.9438238565805892,
+      "balancing efficiency" : 0.7610747728332514
     }
   }
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "RoundRobin"
+      "type" : "MasterSlave"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -2193,23 +2193,23 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 2.679234261312429,
-      "min-max slowdown" : 6.278953020371697,
-      "average utilization" : 0.908995265151515,
-      "makespan" : 17600.0
+      "average slowdown" : 2.66017575272253,
+      "min-max slowdown" : 5.872065384180517,
+      "average utilization" : 0.9165988694091135,
+      "makespan" : 17454.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 0.763858568532668,
-      "coefficient of variation" : 0.057863978915575064,
-      "standard deviation" : 0.052598082857084824,
-      "Jain index" : 0.9966629332446368,
-      "balancing efficiency" : 0.9355011305161389
+      "min-max utilization" : 0.8576506955177743,
+      "coefficient of variation" : 0.04325636802602556,
+      "standard deviation" : 0.03964873802739956,
+      "Jain index" : 0.9981323811518032,
+      "balancing efficiency" : 0.9272594667697063
     }
   }
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "RoundRobin"
+      "type" : "MasterSlave"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -2231,21 +2231,21 @@
     "performanceMetrics" : {
       "average slowdown" : 1.0,
       "min-max slowdown" : 1.0,
-      "average utilization" : 0.44848077138692677,
+      "average utilization" : 0.6406868162670383,
       "makespan" : 8919.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 1.0,
-      "coefficient of variation" : 0.0,
-      "standard deviation" : 0.0,
-      "Jain index" : 0.9999999999999997,
-      "balancing efficiency" : 1.0
+      "min-max utilization" : 0.2857142857142857,
+      "coefficient of variation" : 0.25124689052802224,
+      "standard deviation" : 0.16097057038939167,
+      "Jain index" : 0.9406231628453853,
+      "balancing efficiency" : 0.8163265306122449
     }
   }
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "RoundRobin"
+      "type" : "MasterSlave"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -2281,7 +2281,7 @@
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "RoundRobin"
+      "type" : "MasterSlave"
     },
     "servers" : {
       "type" : "RandomPerformance",
@@ -2303,21 +2303,21 @@
     "performanceMetrics" : {
       "average slowdown" : 1.0,
       "min-max slowdown" : 1.0,
-      "average utilization" : 0.4032664583123299,
+      "average utilization" : 0.6204099358651227,
       "makespan" : 9919.0
     },
     "uniformityMetrics" : {
-      "min-max utilization" : 1.0,
-      "coefficient of variation" : 0.0,
-      "standard deviation" : 0.0,
-      "Jain index" : 0.9999999999999994,
-      "balancing efficiency" : 1.0
+      "min-max utilization" : 0.25,
+      "coefficient of variation" : 0.29790938219532476,
+      "standard deviation" : 0.18482594070141975,
+      "Jain index" : 0.9184845005740523,
+      "balancing efficiency" : 0.769230769230769
     }
   }
 }, {
   "config" : {
     "clusterModel" : {
-      "type" : "RoundRobin"
+      "type" : "MasterSlave"
     },
     "servers" : {
       "type" : "RandomPerformance",

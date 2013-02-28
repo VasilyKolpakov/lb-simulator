@@ -17,7 +17,7 @@
             type : "Random"
         },
         {
-            type : "RoundRobin"
+            type : "MasterSlave"
         }
     ],
     servers :
