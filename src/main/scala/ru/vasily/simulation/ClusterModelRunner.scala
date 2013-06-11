@@ -15,7 +15,7 @@ object ClusterModelRunner {
     def isAllTasksAreFinished = taskIdsSet.isEmpty
   }
 
-  def isNotFinalModelState(state: ModelState) = !state.agents(SinkAgent).asInstanceOf[State].isAllTasksAreFinished
+  def isFinalModelState(state: ModelState) = state.agents(SinkAgent).asInstanceOf[State].isAllTasksAreFinished
 
   def getHistory(clusterModelFactory: AgentId => ClusterModel, taskGenerator: TasksGenerator) = {
 
@@ -33,17 +33,11 @@ object ClusterModelRunner {
     //      println(ModelState.prettyToString(state))
     //    }
 
-    val lastModelState = initialModelState.nextStates.dropWhile(isNotFinalModelState).head
-    val history = lastModelState.agents.get(MonitoringService).collect {
-      case serviceState: MonitoringService.State => serviceState.serversHistory.toList.collect {
-        case (server: SimpleServer, taskRecords) => (server, taskRecords)
-      }.toMap
-    }.getOrElse {
-      throw new RuntimeException("MonitoringService is not present in cluster model " + clusterModel)
-    }
-
-    val totalSimulationTime = lastModelState.timeOfLastEvent
-
-    (totalSimulationTime, history)
+    initialModelState
+      .logsUntil(isFinalModelState)
+      .collect {case Log(serverId: SimpleServer, time, record: TaskRecord) => (serverId, record)}
+      .toList
+      .groupBy {case (serverId, record) => serverId}
+      .mapValues(_.map {case (serverId, record) => record})
   }
 }

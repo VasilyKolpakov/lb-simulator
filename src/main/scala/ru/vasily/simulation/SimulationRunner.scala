@@ -10,19 +10,19 @@ class SimulationRunner(clusterModelFactory: AgentId => ClusterModel,
   extends Runner {
 
   def getResult = {
-    val (totalSimulationTime, history) = ClusterModelRunner.getHistory(clusterModelFactory, taskGenerator)
-    outputFormat.format(history, totalSimulationTime)
+    val history = ClusterModelRunner.getHistory(clusterModelFactory, taskGenerator)
+    outputFormat.format(history)
   }
 
 }
 
 trait SimulationResultOutputFormat {
-  def format(history: Map[SimpleServer, Seq[TaskRecord]], makespan: Long): FileContents
+  def format(history: Map[SimpleServer, Seq[TaskRecord]]): FileContents
 }
 
 class JsonOutputFormat extends SimulationResultOutputFormat {
-  def format(history: Map[SimpleServer, Seq[TaskRecord]], makespan: Long) = {
-    val metrics = new AlgorithmMetrics(history, makespan)
+  def format(history: Map[SimpleServer, Seq[TaskRecord]]) = {
+    val metrics = new AlgorithmMetrics(history)
     val result = metrics.metricsMap + ("history" -> prettyHistory(history))
     val output = Serializer.marshal(result)
     FileContents(output, "js")
@@ -38,7 +38,7 @@ class JsonOutputFormat extends SimulationResultOutputFormat {
 }
 
 class SvgOutputFormat(imageWidth: Int, expectedMakespan: Int) extends SimulationResultOutputFormat {
-  def format(history: Map[SimpleServer, Seq[TaskRecord]], makespan: Long) = {
+  def format(history: Map[SimpleServer, Seq[TaskRecord]]) = {
     val sortedHistory = history.mapValues(_.sortBy(_.completionTime)).toList.
       sortBy(_._1.indexNumber)
 

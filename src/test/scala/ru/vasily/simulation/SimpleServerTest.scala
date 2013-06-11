@@ -36,7 +36,7 @@ class SimpleServerTest extends FunSuite with ShouldMatchers {
     val dummyAgent = Agent(DummyAgent, TestDummyState(None), checkMessage :: taskMessages)
 
     val allTasksAreSubmittedState = ModelState(serverSeq ++ monitoringAgentSeq :+ dummyAgent :+ MonitoringService.agent)
-      .nextStates.find(isFinalState)
+      .nextStates.find {case (state, logs) => isFinalState(state)}.map(_._1)
 
     readServerLoad(allTasksAreSubmittedState.value).value should equal(numberOfTasks)
   }

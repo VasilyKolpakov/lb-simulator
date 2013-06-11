@@ -4,20 +4,15 @@ import core._
 
 object MonitoringService extends AgentId {
 
-  val agent = Agent(MonitoringService, State(Map(), Map()))
+  val agent = Agent(MonitoringService, State(Map()))
 
-  case class State(serversHistory: Map[AgentId, Seq[TaskRecord]], serversLoad: Map[AgentId, Int]) extends AgentState {
+  case class State(serversLoad: Map[AgentId, Int]) extends AgentState {
     def changeState(currentTime: Long, message: AnyRef) = message match {
-      case Report(serverId, taskRecord) => {
-        val taskRecords = taskRecord +: serversHistory.get(serverId).getOrElse(Nil)
-        val history = serversHistory.updated(serverId, taskRecords)
-        newState(State(history, serversLoad))
-      }
       case PostServerLoad(serverId, load) =>
-        newState(State(serversHistory, serversLoad.updated(serverId, load)))
+        newState(State(serversLoad.updated(serverId, load)))
       case GetServersLoad(requester) =>
         newActions(
-          SendMessage.withoutDelay(ServersLoad(serversLoad), requester)
+            requester ! ServersLoad(serversLoad)
         )
     }
   }

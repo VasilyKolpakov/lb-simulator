@@ -11,8 +11,8 @@ class ComparingRunner(clusterModels: Map[String, AgentId => ClusterModel],
     val Seq(metricType, metricKey) = metricPath
     val metrics = clusterModels.mapValues {
       modelFactory =>
-        val (totalSimulationTime, history) = ClusterModelRunner.getHistory(modelFactory, taskGenerator)
-        new AlgorithmMetrics(history, totalSimulationTime).metricsMap(metricType)(metricKey)
+        val history = ClusterModelRunner.getHistory(modelFactory, taskGenerator)
+        new AlgorithmMetrics(history).metricsMap(metricType)(metricKey)
     }
     val (modelKeys, metricValues) = metrics.toList.unzip
     def argString(args: Seq[Any]) = args.mkString(", ")

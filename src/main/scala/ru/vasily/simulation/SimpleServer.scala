@@ -17,12 +17,6 @@ case class SimpleServer(indexNumber: Int, serverPerformance: Double) extends Age
     )
   }
 
-  // TODO: move to simple cluster model
-  def monitoringMessage(task: Task, time: Long) = {
-    val report = Report(this, TaskRecord(task, time))
-    SendMessage.withoutDelay(report, MonitoringService)
-  }
-
   def serverLoadInfo(agentId: AgentId, load: Int) = SendMessage.withoutDelay(LoadLevelResponse(load), agentId)
 
   object BusyState {
@@ -40,14 +34,17 @@ case class SimpleServer(indexNumber: Int, serverPerformance: Double) extends Age
 
     def completeCurrentTask(currentTime: Long) = {
       val (TaskMessage(messageSender, completedTask), queueTail) = taskQueue.dequeue
-      val monitoringMsg = monitoringMessage(completedTask, currentTime)
+      val log = LogAction(TaskRecord(completedTask, currentTime))
       val callbackMessage = SendMessage.withoutDelay(TaskFinished(thisAgent, completedTask), messageSender)
-      val messages = List(monitoringMsg, callbackMessage)
       if (queueTail.isEmpty) {
-        StateTransition(IdleState(), messages)
+        newState(IdleState(),
+          callbackMessage,
+          log)
       } else {
-        StateTransition(BusyState(queueTail),
-          taskCompletedMessage(queueTail.head.task) :: messages)
+        newState(BusyState(queueTail),
+          taskCompletedMessage(queueTail.head.task),
+          callbackMessage,
+          log)
       }
     }
   }

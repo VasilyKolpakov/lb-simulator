@@ -1,6 +1,6 @@
 package ru.vasily.simulation
 
-class AlgorithmMetrics(history: Map[SimpleServer, Seq[TaskRecord]], makespan: Long) {
+class AlgorithmMetrics(history: Map[SimpleServer, Seq[TaskRecord]]) {
 
   def performanceMetrics = Map(
     "average slowdown" -> averageSlowdownMetric,
@@ -27,6 +27,8 @@ class AlgorithmMetrics(history: Map[SimpleServer, Seq[TaskRecord]], makespan: Lo
                        task = taskRecord.task)
   yield (taskRecord.completionTime - task.arrivalTime).toDouble /
       (task.executionTime / server.serverPerformance)
+
+  val makespan = history.values.flatten.map(_.completionTime).max
 
   val serversUtilization = for ((server, taskRecords) <- history) yield {
     taskRecords.map(_.task.executionTime).sum.toDouble / (makespan * server.serverPerformance)

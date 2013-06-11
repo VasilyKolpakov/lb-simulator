@@ -21,7 +21,7 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 0.9994172692025327,
+      "average slowdown" : 0.9994172692025323,
       "min-max slowdown" : 1.0016406976846235,
       "average utilization" : 0.43400637159993066,
       "makespan" : 9492.0
@@ -129,7 +129,7 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 2.6598413023224667,
+      "average slowdown" : 2.659841302322467,
       "min-max slowdown" : 7.016559937167942,
       "average utilization" : 0.6469029478897607,
       "makespan" : 25765.0
@@ -201,7 +201,7 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 4.491912319884017,
+      "average slowdown" : 4.491912319884018,
       "min-max slowdown" : 10.907219954169411,
       "average utilization" : 0.692730871401889,
       "makespan" : 23987.0
@@ -273,7 +273,7 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 2.6674417880599166,
+      "average slowdown" : 2.667441788059916,
       "min-max slowdown" : 5.585593258440779,
       "average utilization" : 0.688911086746149,
       "makespan" : 24120.0
@@ -345,7 +345,7 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 4.591176890328759,
+      "average slowdown" : 4.591176890328758,
       "min-max slowdown" : 11.609569516777638,
       "average utilization" : 0.8685843621399176,
       "makespan" : 18225.0
@@ -417,7 +417,7 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 2.679234261312429,
+      "average slowdown" : 2.6792342613124296,
       "min-max slowdown" : 6.278953020371697,
       "average utilization" : 0.908995265151515,
       "makespan" : 17600.0
@@ -561,7 +561,7 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 2.6812781249999995,
+      "average slowdown" : 2.681278125,
       "min-max slowdown" : 4.528,
       "average utilization" : 0.9425625920471281,
       "makespan" : 16975.0
@@ -713,7 +713,7 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 2.672001065092403,
+      "average slowdown" : 2.6720010650924033,
       "min-max slowdown" : 6.900460562040995,
       "average utilization" : 0.6629770965636812,
       "makespan" : 24585.0
@@ -751,7 +751,7 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 1.0902301369442828,
+      "average slowdown" : 1.090230136944283,
       "min-max slowdown" : 2.0154797539303395,
       "average utilization" : 0.392201523863133,
       "makespan" : 10537.0
@@ -789,7 +789,7 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 4.496140998650152,
+      "average slowdown" : 4.496140998650154,
       "min-max slowdown" : 9.313071336436735,
       "average utilization" : 0.8199254828228495,
       "makespan" : 19837.0
@@ -979,7 +979,7 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 0.9998479258372918,
+      "average slowdown" : 0.9998479258372915,
       "min-max slowdown" : 1.0004198152812762,
       "average utilization" : 0.3890918462678393,
       "makespan" : 10347.0
@@ -1017,7 +1017,7 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 2.699736576051664,
+      "average slowdown" : 2.6997365760516643,
       "min-max slowdown" : 6.920636455186304,
       "average utilization" : 0.8053519590569678,
       "makespan" : 19865.0
@@ -1093,7 +1093,7 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 4.560021874999995,
+      "average slowdown" : 4.560021874999996,
       "min-max slowdown" : 10.111,
       "average utilization" : 0.8887407654279842,
       "makespan" : 18003.0
@@ -1169,7 +1169,7 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 2.7358468750000005,
+      "average slowdown" : 2.735846875000001,
       "min-max slowdown" : 8.396,
       "average utilization" : 0.6649488820546919,
       "makespan" : 24062.0
@@ -1206,7 +1206,7 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 1.4033488214869294,
+      "average slowdown" : 1.4033488214869292,
       "min-max slowdown" : 3.602690258198085,
       "average utilization" : 0.347587987244636,
       "makespan" : 11985.0
@@ -1317,7 +1317,7 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 3.5582903242428885,
+      "average slowdown" : 3.558290324242889,
       "min-max slowdown" : 14.583467472607596,
       "average utilization" : 0.4835148632989936,
       "makespan" : 35024.0
@@ -1391,7 +1391,7 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 5.249876513497021,
+      "average slowdown" : 5.249876513497023,
       "min-max slowdown" : 15.764111181895478,
       "average utilization" : 0.6772791573679895,
       "makespan" : 24323.0
@@ -1428,7 +1428,7 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 1.298033673856062,
+      "average slowdown" : 1.2980336738560618,
       "min-max slowdown" : 3.248632928324939,
       "average utilization" : 0.2867673486453457,
       "makespan" : 16648.0
@@ -1502,7 +1502,7 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 1.378488852753014,
+      "average slowdown" : 1.3784888527530137,
       "min-max slowdown" : 3.5145885504629892,
       "average utilization" : 0.38652059082461115,
       "makespan" : 10223.0
@@ -1539,7 +1539,7 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 5.441932184990955,
+      "average slowdown" : 5.441932184990956,
       "min-max slowdown" : 21.8198439826118,
       "average utilization" : 0.6054212720388572,
       "makespan" : 26147.0
@@ -1613,7 +1613,7 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 3.498934340916211,
+      "average slowdown" : 3.49893434091621,
       "min-max slowdown" : 13.212396748312678,
       "average utilization" : 0.5566568081651588,
       "makespan" : 28740.0
@@ -1761,7 +1761,7 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 3.4042656249999985,
+      "average slowdown" : 3.404265625,
       "min-max slowdown" : 9.8475,
       "average utilization" : 0.5941329372447085,
       "makespan" : 26930.0
@@ -1833,7 +1833,7 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 4.689580901629657,
+      "average slowdown" : 4.689580901629658,
       "min-max slowdown" : 13.36308871234024,
       "average utilization" : 0.9400804402557625,
       "makespan" : 16722.0
@@ -1977,7 +1977,7 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 4.6489698608048045,
+      "average slowdown" : 4.648969860804804,
       "min-max slowdown" : 10.936108458009105,
       "average utilization" : 0.9610474770306316,
       "makespan" : 16537.0
@@ -2121,7 +2121,7 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 4.572518405846833,
+      "average slowdown" : 4.572518405846834,
       "min-max slowdown" : 11.500393811533053,
       "average utilization" : 0.9582294188861985,
       "makespan" : 16520.0
@@ -2193,7 +2193,7 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 2.66017575272253,
+      "average slowdown" : 2.6601757527225294,
       "min-max slowdown" : 5.872065384180517,
       "average utilization" : 0.9165988694091135,
       "makespan" : 17454.0
@@ -2337,7 +2337,7 @@
   },
   "result" : {
     "performanceMetrics" : {
-      "average slowdown" : 2.6812781249999995,
+      "average slowdown" : 2.681278125,
       "min-max slowdown" : 4.528,
       "average utilization" : 0.9425625920471281,
       "makespan" : 16975.0

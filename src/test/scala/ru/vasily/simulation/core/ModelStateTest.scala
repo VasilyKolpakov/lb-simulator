@@ -25,7 +25,7 @@ class ModelStateTest extends FunSuite with ShouldMatchers {
     val initialTic = SendMessage.withoutDelay(Tic, Clock)
     val clockAgent = Agent(Clock, ClockState(0), initialTic)
     val initialState = ModelState(Seq(clockAgent))
-    val clockState = initialState.nextStates(9).agents(Clock)
+    val clockState = initialState.nextStates(9)._1.agents(Clock)
     clockState.asInstanceOf[ClockState].currentClockTime should equal(10)
   }
 
@@ -52,7 +52,34 @@ class ModelStateTest extends FunSuite with ShouldMatchers {
     }
     val clockAgent = Agent(Clock, ClockState(0), List.fill(10)(sendTicMessageAction))
     val initialState = ModelState(Seq(clockAgent))
-    val clockState = initialState.nextStates.last.agents(Clock)
+    val clockState = initialState.nextStates.last._1.agents(Clock)
     clockState.asInstanceOf[ClockState].currentClockTime should equal(5)
   }
+
+  test("logging works") {
+    case class Tic()
+
+    case object Clock extends AgentId
+    case object TicTag extends MessageTag
+
+    val sendTicMessageAction = SendMessage(
+      message = Message(Tic(), Clock),
+      delay = 1,
+      tags = Set(TicTag)
+    )
+
+    case class ClockState(currentClockTime: Long) extends AgentState {
+      def changeState(currentTime: Long, message: AnyRef) = message match {
+        case Tic() => {
+          val actions = Seq(sendTicMessageAction, LogAction(currentClockTime))
+          StateTransition(ClockState(currentClockTime + 1), actions)
+        }
+      }
+    }
+    val clockAgent = Agent(Clock, ClockState(0), List.fill(10)(sendTicMessageAction))
+    val initialState = ModelState(Seq(clockAgent))
+    val logs = initialState.logsUntil(_.agents(Clock).asInstanceOf[ClockState].currentClockTime == 10)
+    logs.map(log => log.record) should equal((0 until 9).toStream)
+  }
+
 }

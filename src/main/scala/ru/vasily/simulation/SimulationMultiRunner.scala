@@ -22,8 +22,8 @@ class SimulationMultiRunner(clusterModelFactoriesAndConfig: (Seq[(Seq[Double], A
         "servers" -> serversConfig,
         "taskGenerator" -> tasksConfig
       )
-      val (totalSimulationTime, history) = ClusterModelRunner.getHistory(model(servers, _), tasks)
-      val metricsMap = new AlgorithmMetrics(history, totalSimulationTime).metricsMap
+      val  history = ClusterModelRunner.getHistory(model(servers, _), tasks)
+      val metricsMap = new AlgorithmMetrics(history).metricsMap
       Map(
         "config" -> resultConfig,
         "result" -> metricsMap

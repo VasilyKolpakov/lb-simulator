@@ -10,9 +10,9 @@ package ru.vasily.simulation.core
 trait AgentState {
   def changeState(currentTime: Long, message: AnyRef): StateTransition[AgentState]
 
-  def newActions(messages: MessageAction*) = newState(this, messages: _*)
+  def newActions(messages: AgentAction*) = newState(this, messages: _*)
 
-  def newState(state: AgentState, actions: MessageAction*) = StateTransition(state, actions)
+  def newState(state: AgentState, actions: AgentAction*) = StateTransition(state, actions)
 
   def noChanges = StateTransition(this, Nil)
 }
