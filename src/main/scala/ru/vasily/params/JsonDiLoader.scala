@@ -4,7 +4,6 @@ import ru.vasily.di._
 import ru.vasily.di.Primitive
 import com.fasterxml.jackson.databind.{JsonNode, ObjectMapper}
 import com.fasterxml.jackson.core.JsonParser
-import scala.None
 
 object JsonDiLoader {
   private val TYPE_RESERVED_WORD: String = "type"
@@ -12,13 +11,13 @@ object JsonDiLoader {
   mapper.getFactory.enable(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES)
   mapper.getFactory.enable(JsonParser.Feature.ALLOW_COMMENTS)
 
-  def createSDComponent(json: String, injectors: Seq[Injector[_]], defaultRootType: String): SDComponent = {
+  def createDIScope(json: String, injectors: Seq[Injector[_]]): DIScope = {
     val injectorsMap = injectors.map(inj => (inj.typeName, inj)).toMap
-    def toSDComponent(parsedJson: Any, defaultTypeKey: Option[String] = None): SDComponent = parsedJson match {
+    def toSDComponent(parsedJson: Any): SDComponent[Any] = parsedJson match {
       case number: BigDecimal => Primitive(number)
       case str: String => Primitive(str)
       case map: Map[String, Any] => {
-        val typeKeyOption = map.get(TYPE_RESERVED_WORD).orElse(defaultTypeKey)
+        val typeKeyOption = map.get(TYPE_RESERVED_WORD)
           .asInstanceOf[Option[String]]
         typeKeyOption match {
           case Some(typeKey) => toComplexComponent(map, typeKey)
@@ -45,11 +44,11 @@ object JsonDiLoader {
       val scope = parsedJson.asInstanceOf[Map[String, Any]].map {
         case (key, obj) => (key, toSDComponent(obj))
       }
-      DIScope(scope)
+      DIScope.fromMap(scope)
     }
 
     val parsedJson: Any = toScalaCollections(mapper.readTree(json))
-    toSDComponent(parsedJson, Some(defaultRootType))
+    toDIScope(parsedJson)
   }
 
 

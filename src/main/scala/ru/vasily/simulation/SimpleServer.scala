@@ -3,6 +3,7 @@ package ru.vasily.simulation
 import collection.immutable.Queue
 import core._
 import ru.vasily.simulation.MonitoringService.Report
+import util.Random
 
 case class SimpleServer(indexNumber: Int, serverPerformance: Double) extends AgentId {
 
@@ -65,7 +66,6 @@ case class SimpleServer(indexNumber: Int, serverPerformance: Double) extends Age
 
 object SimpleServer {
 
-
   def generateServers(serversPerformance: Seq[Double]): Seq[Agent] =
     serversPerformance.zipWithIndex.map {
       case (performance, index) => {
@@ -73,6 +73,15 @@ object SimpleServer {
         Agent(agentId, agentId.IdleState())
       }
     }
+
+  def generateRandomServers(numberOfServers: Int, maxPerf: Double, minPerf: Double, seed: Int) = {
+    val random = new Random(seed)
+    val performance = List.fill(numberOfServers) {
+      random.nextDouble() * (maxPerf - minPerf) + minPerf
+    }
+    generateServers(performance)
+  }
+
 }
 
 case class LoadLevelRequest(requester: AgentId)

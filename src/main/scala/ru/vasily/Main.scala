@@ -6,24 +6,39 @@ import RichFile.enrichFile
 import java.io.File
 import simulation._
 import simulation.core.AgentId
+import simulation.DynamicRoundRobinSchedulerModel
+import simulation.MonitoringServiceModel
 import utils.TestConfigPrinter
 
 object Main {
   // TODO: refactor to separate trait?
   type ModelFactory = (Seq[Double], AgentId) => ClusterModel
+  val defaultMonitoringServiceModelInjector = Injector("DefaultMonitoring", MonitoringServiceModel(None))
+  val monitoringServiceModelInjector = Injector("MonitoringAgents") {
+    env => for {
+      refreshTime <- env("refreshTime", classOf[Int])
+    } yield MonitoringServiceModel(Some(refreshTime))
+  }
+  val simpleClusterModelInjector = Injector[ModelFactory]("SimpleCluster") {
+    env => for {
+      schedulerModel <- env("scheduler", classOf[SchedulerModel])
+      monitoringServiceModel <- env("monitoring", classOf[MonitoringServiceModel])
+    } yield (servers: Seq[Double], masterAgentId: AgentId) =>
+        new SimpleClusterModel(servers, schedulerModel, monitoringServiceModel, masterAgentId)
+  }
 
   val injectors = List[Injector[_]](
     // Runner
     ClassInjector("TestConfigPrinter", classOf[TestConfigPrinter],
       "testName", "servers", "taskGenerator"),
-    Injector("MultiRunner") {
+    Injector("MultiSimulation") {
       env => for {
         modelFactories <- env.seqWithConfig("clusterModels", classOf[ModelFactory])
         serversPerformances <- env.seqWithConfig("servers", classOf[Seq[Double]])
         taskGenerators <- env.seqWithConfig("taskGenerators", classOf[TasksGenerator])
       } yield new SimulationMultiRunner(modelFactories, serversPerformances, taskGenerators)
     },
-    Injector("Runner") {
+    Injector("SingleSimulation") {
       env => for {
         model <- env("clusterModel", classOf[ModelFactory])
         serversPerformance <- env("servers", classOf[Seq[Double]])
@@ -31,7 +46,7 @@ object Main {
         outputFormat <- env("outputFormat", classOf[SimulationResultOutputFormat])
       } yield new SimulationRunner(model(serversPerformance, _), taskGenerator, outputFormat)
     },
-    Injector("ComparingRunner") {
+    Injector("ComparingSimulation") {
       env => for {
         modelFactories <- env("clusterModels", classOf[Map[String, ModelFactory]])
         serversPerformance <- env("servers", classOf[Seq[Double]])
@@ -91,28 +106,31 @@ object Main {
 
   )
 
-  def main(args: Array[String]) {
-    for (inputFilePath <- args) {
-      val inputFile = new File(inputFilePath)
-      val sdComponent = JsonDiLoader.createSDComponent(
-        inputFile.text,
-        injectors,
-        defaultRootType = "Runner")
-      val runner = sdComponent.instance.asInstanceOf[Runner]
-      runner.getResult match {
+  case class Main(simulation: Runner) {
+    def run(outputDir: File, outputFileName: String) {
+      simulation.getResult match {
         case FileContents(contents, ext) => {
-          val outputFile = new File(inputFilePath + ".out." + ext)
+          val outputFile = new File(outputDir, s"$outputFileName.$ext")
           outputFile.text = contents
         }
         case ExecScript(script, ext, command) => {
-          val inputFileDir: File = inputFile.getParentFile
-          val inputFileName = inputFile.getName
-          val scriptFile = new File(inputFileDir, inputFileName + ".out." + ext)
-          scriptFile.text = script(inputFileName + ".out")
+          val scriptFile = new File(outputDir, s"$outputFileName.$ext")
+          scriptFile.text = script(outputFileName)
           import scala.sys.process.Process
-          Process(command(scriptFile.getName), inputFileDir).!
+          Process(command(scriptFile.getName), outputDir).!
         }
       }
+    }
+  }
+
+  def main(args: Array[String]) {
+    for (inputFilePath <- args) {
+      val inputFile = new File(inputFilePath)
+      val diScope = JsonDiLoader.createDIScope(
+        inputFile.text,
+        injectors)
+      val mainComponent = ComplexComponent(new ClassInjector("Main", classOf[Main], List("simulation")), diScope)
+      ScopeDrivenDI.instantiate(mainComponent).run(inputFile.getParentFile, inputFile.getName + ".out")
     }
   }
 }

@@ -1,4 +1,5 @@
 {
+    simulation : {type : "SingleSimulation"},
     seed : 1,
     clusterModel :
     { 

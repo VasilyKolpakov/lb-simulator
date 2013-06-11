@@ -1,5 +1,5 @@
 {
-    type : "TestConfigPrinter",
+    simulation : {type : "TestConfigPrinter"},
     servers : 5,
     testName : "test_1",
     taskGenerator :

@@ -18,21 +18,18 @@ class JsonDiLoaderTest extends FlatSpec with ShouldMatchers {
         |  }
         |}
       """.stripMargin
-    val rootInjector: InjectorStub = InjectorStub(Seq(), "root")
     val compInjector: InjectorStub = InjectorStub(Seq(), "comp")
-    val injectors = Seq(rootInjector, compInjector)
-    val diComponent = JsonDiLoader.createSDComponent(json, injectors, "root")
-
+    val injectors = Seq(compInjector)
+    val diScope = JsonDiLoader.createDIScope(json, injectors)
 
     val compScope = DIScope(
       "number" -> Primitive(BigDecimal(2))
     )
-    val rootScope = DIScope(
+    val expectedScope = DIScope(
       "number" -> Primitive(BigDecimal(1)),
       "complexComponent" -> ComplexComponent(compInjector, compScope)
     )
-    val expectedDIComponent = ComplexComponent(rootInjector, rootScope)
-    diComponent should equal(expectedDIComponent)
+    diScope should equal(expectedScope)
   }
   it should "allow fields without quotes in json" in {
     val json =
@@ -41,13 +38,11 @@ class JsonDiLoaderTest extends FlatSpec with ShouldMatchers {
         |  number : 1
         |}
       """.stripMargin
-    val rootInjector: InjectorStub = InjectorStub(Seq(), "root")
-    val diComponent = JsonDiLoader.createSDComponent(json, Seq(rootInjector), "root")
-    val rootScope = DIScope(
+    val diScope = JsonDiLoader.createDIScope(json, Seq())
+    val expectedScope = DIScope(
       "number" -> Primitive(BigDecimal(1))
     )
-    val expectedDIComponent = ComplexComponent(rootInjector, rootScope)
-    diComponent should equal(expectedDIComponent)
+    diScope should equal(expectedScope)
   }
 
 }

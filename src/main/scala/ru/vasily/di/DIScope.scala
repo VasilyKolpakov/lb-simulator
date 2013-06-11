@@ -2,11 +2,11 @@ package ru.vasily.di
 
 // TODO remove?
 trait DIScope {
-  def getComponent(key: String): Option[SDComponent]
+  def getComponent(key: String): Option[SDComponent[Any]]
 }
 
-case class MapDIScope(scope: Map[String, SDComponent]) extends DIScope {
-  def getComponent(key: String): Option[SDComponent] = scope.get(key)
+case class MapDIScope(scope: Map[String, SDComponent[Any]]) extends DIScope {
+  def getComponent(key: String): Option[SDComponent[Any]] = scope.get(key)
 }
 
 object DIScope {
@@ -14,8 +14,8 @@ object DIScope {
     def getComponent(key: String) = None
   }
 
-  def apply(scope: Map[String, SDComponent]): DIScope = MapDIScope(scope)
+  def fromMap(scope: Map[String, SDComponent[Any]]): DIScope = MapDIScope(scope)
 
-  def apply(components: (String, SDComponent)*): DIScope = DIScope(Map(components: _*))
+  def apply(components: (String, SDComponent[Any])*): DIScope = DIScope.fromMap(Map(components: _*))
 
 }

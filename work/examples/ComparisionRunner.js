@@ -1,5 +1,5 @@
 {
-    type : "ComparingRunner",
+    simulation : {type : "ComparingSimulation"},
     seed : 1,
     metricPath : ["uniformityMetrics", "balancing efficiency"],
     clusterModels :

@@ -51,7 +51,7 @@ class ScopeDrivenDIImpl private[di](scope: DIScope, name: String, parent: ScopeD
   }
 
   // todo: add runtime type checking  (scala.reflect.Manifest?)
-  def instantiate(component: SDComponent, key: String): (Any, Any) = component match {
+  def instantiate(component: SDComponent[Any], key: String): (Any, Any) = component match {
     case Primitive(value) => (value, value)
     case MapComponent(map) => {
       val instancesWithConfigs = map.map {
@@ -83,7 +83,16 @@ class ScopeDrivenDIImpl private[di](scope: DIScope, name: String, parent: ScopeD
 }
 
 object ScopeDrivenDI {
-  private[di] def apply(initialScope: DIScope) = new ScopeDrivenDIImpl(initialScope, "", EmptyScopeDrivenDI)
+  private[di] def apply(defaultScope: DIScope) = new ScopeDrivenDIImpl(defaultScope, "", EmptyScopeDrivenDI)
+
+  def instantiateWithConfig[T](component: SDComponent[T], defaultScope: DIScope = DIScope.empty) =
+    ScopeDrivenDI(defaultScope).instantiate(component, component.name).asInstanceOf[(T,Any)]
+
+  def instantiate[T](component: SDComponent[T], defaultScope: DIScope = DIScope.empty) =
+    instantiateWithConfig(component, defaultScope)._1
+
+  def getConfig(component: SDComponent[_], defaultScope: DIScope = DIScope.empty) =
+    instantiateWithConfig(component, defaultScope)._2
 }
 
 class DIException(message: String, cause: Throwable = null)

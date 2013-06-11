@@ -1,5 +1,5 @@
 {
-    type : "MultiRunner",
+    simulation : {type: "MultiSimulation"},
     seed : 1,
     maxArrivalTime : 8000,
     numberOfServers : 20,
