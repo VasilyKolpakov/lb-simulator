@@ -4,13 +4,16 @@ import core.{Agent, AgentState, AgentId}
 import annotation.tailrec
 import ru.vasily.simulation.MonitoringService.{GetServersLoad, ServersLoad}
 
-case class DynamicRoundRobinSchedulerModel(maxWeight: Int, refreshTime: Int) extends SchedulerModel {
-  def agent(mainServerId: AgentId, nodes: IndexedSeq[AgentId], monitoringService: AgentId): Agent = {
-    val agentId = DynamicRoundRobinScheduler(mainServerId, nodes, monitoringService)
+case class DynamicRoundRobinSchedulerModel(maxWeight: Int, monitoringModel: MonitoringServiceModel) extends SchedulerModel {
+  def agent(mainServerId: AgentId, nodes: IndexedSeq[AgentId]): SchedulerAgents = {
+    val MonitoringAgents(monitoringServiceAgents, monitoringServiceId) = monitoringModel.agents(nodes)
+    val schedulerAgentId = DynamicRoundRobinScheduler(mainServerId, nodes, monitoringServiceId)
     val defaultWeights = Vector(nodes.collect {
       case s: SimpleServer => s.serverPerformance.toInt
     }: _*)
-    Agent(agentId, agentId.RoundRobinState(nodes.map(_ => 0).toVector, RoundRobinAlgorithmState(defaultWeights)))
+    val schedulerAgent =
+      Agent(schedulerAgentId, schedulerAgentId.RoundRobinState(nodes.map(_ => 0).toVector, RoundRobinAlgorithmState(defaultWeights)))
+    SchedulerAgents(schedulerAgent +: monitoringServiceAgents, schedulerAgentId)
   }
 
   private case class DynamicRoundRobinScheduler(mainServerId: AgentId,

@@ -4,14 +4,19 @@
     maxArrivalTime : 8000,
     numberOfServers : 20,
     refreshTime : 100,
-    clusterModels :
+    schedulers :
     [
         {
             type : "RoundRobinScheduler"
         },
         {
             type : "DynamicWRRScheduler",
-            maxWeight : 5
+            maxWeight : 5,
+            monitoring :
+            {
+                type : "PeriodicMonitoring",
+                refreshTime : 100
+            }
         },
         {
             type : "RandomScheduler"

@@ -5,55 +5,36 @@ import params.JsonDiLoader
 import RichFile.enrichFile
 import java.io.File
 import simulation._
-import simulation.core.AgentId
 import simulation.DynamicRoundRobinSchedulerModel
 import simulation.MonitoringServiceModel
 import utils.TestConfigPrinter
 
 object Main {
   // TODO: refactor to separate trait?
-  type ModelFactory = (Seq[Double], AgentId) => ClusterModel
-  val defaultMonitoringServiceModelInjector = Injector("DefaultMonitoring", MonitoringServiceModel(None))
-  val monitoringServiceModelInjector = Injector("MonitoringAgents") {
-    env => for {
-      refreshTime <- env("refreshTime", classOf[Int])
-    } yield MonitoringServiceModel(Some(refreshTime))
-  }
-  val simpleClusterModelInjector = Injector[ModelFactory]("SimpleCluster") {
-    env => for {
-      schedulerModel <- env("scheduler", classOf[SchedulerModel])
-      monitoringServiceModel <- env("monitoring", classOf[MonitoringServiceModel])
-    } yield (servers: Seq[Double], masterAgentId: AgentId) =>
-        new SimpleClusterModel(servers, schedulerModel, monitoringServiceModel, masterAgentId)
-  }
-
   val injectors = List[Injector[_]](
     // Runner
     ClassInjector("TestConfigPrinter", classOf[TestConfigPrinter],
       "testName", "servers", "taskGenerator"),
     Injector("MultiSimulation") {
       env => for {
-        modelFactories <- env.seqWithConfig("clusterModels", classOf[ModelFactory])
+        schedulers <- env.seqWithConfig("schedulers", classOf[SchedulerModel])
         serversPerformances <- env.seqWithConfig("servers", classOf[Seq[Double]])
         taskGenerators <- env.seqWithConfig("taskGenerators", classOf[TasksGenerator])
-      } yield new SimulationMultiRunner(modelFactories, serversPerformances, taskGenerators)
+      } yield new SimulationMultiRunner(schedulers, serversPerformances, taskGenerators)
     },
     Injector("SingleSimulation") {
       env => for {
-        model <- env("clusterModel", classOf[ModelFactory])
-        serversPerformance <- env("servers", classOf[Seq[Double]])
+        model <- env("clusterModel", classOf[ClusterModel])
         taskGenerator <- env("taskGenerator", classOf[TasksGenerator])
         outputFormat <- env("outputFormat", classOf[SimulationResultOutputFormat])
-      } yield new SimulationRunner(model(serversPerformance, _), taskGenerator, outputFormat)
+      } yield new SimulationRunner(model, taskGenerator, outputFormat)
     },
     Injector("ComparingSimulation") {
       env => for {
-        modelFactories <- env("clusterModels", classOf[Map[String, ModelFactory]])
-        serversPerformance <- env("servers", classOf[Seq[Double]])
+        models <- env("clusterModels", classOf[Map[String, ClusterModel]])
         taskGenerator <- env("taskGenerator", classOf[TasksGenerator])
         metricPath <- env("metricPath", classOf[Seq[String]])
       } yield {
-        val models = modelFactories.mapValues(factory => factory(serversPerformance, _: AgentId))
         new ComparingRunner(models, taskGenerator, metricPath)
       }
     },
@@ -63,31 +44,34 @@ object Main {
     ClassInjector("SVG", classOf[SvgOutputFormat], "imageWidth", "makespan"),
 
     // ClusterModel
+    Injector[ClusterModel]("SimpleCluster") {
+      env => for {
+        schedulerModel <- env("scheduler", classOf[SchedulerModel])
+        servers <- env("servers", classOf[Seq[Double]])
+      } yield new SimpleClusterModel(servers, schedulerModel)
+    },
+
     Injector("RandomScheduler") {
       env => for {
         seed <- env("seed", classOf[Int])
-      } yield (servers: Seq[Double], masterAgentId: AgentId) =>
-          new SimpleClusterModel(servers, new RandomSchedulerModel(seed), MonitoringServiceModel(None), masterAgentId)
+      } yield new RandomSchedulerModel(seed)
     },
 
-    Injector("RoundRobinScheduler", (servers: Seq[Double], masterAgentId: AgentId) =>
-      new SimpleClusterModel(servers, RoundRobinSchedulerModel, MonitoringServiceModel(None), masterAgentId)),
+    Injector("RoundRobinScheduler", RoundRobinSchedulerModel),
 
-    Injector("MasterSlaveScheduler",
-      (servers: Seq[Double], masterAgentId: AgentId) =>
-        new SimpleClusterModel(servers, MasterWorkerSchedulerModel, MonitoringServiceModel(None), masterAgentId)),
+    Injector("MasterSlaveScheduler", MasterWorkerSchedulerModel),
 
     Injector("DynamicWRRScheduler") {
       env => for {
         maxWeigh <- env("maxWeight", classOf[Int])
+        monitoringModel <- env("monitoring", classOf[MonitoringServiceModel])
+      } yield DynamicRoundRobinSchedulerModel(maxWeigh, monitoringModel)
+    },
+
+    Injector("PeriodicMonitoring") {
+      env => for {
         refreshTime <- env("refreshTime", classOf[Int])
-      } yield {
-        (servers: Seq[Double], masterAgentId: AgentId) =>
-          new SimpleClusterModel(servers,
-            DynamicRoundRobinSchedulerModel(maxWeigh, refreshTime),
-            MonitoringServiceModel(Some(refreshTime)),
-            masterAgentId)
-      }
+      } yield MonitoringServiceModel(refreshTime)
     },
 
     // TasksGenerator
@@ -126,11 +110,16 @@ object Main {
   def main(args: Array[String]) {
     for (inputFilePath <- args) {
       val inputFile = new File(inputFilePath)
-      val diScope = JsonDiLoader.createDIScope(
-        inputFile.text,
-        injectors)
-      val mainComponent = ComplexComponent(new ClassInjector("Main", classOf[Main], List("simulation")), diScope)
-      ScopeDrivenDI.instantiate(mainComponent).run(inputFile.getParentFile, inputFile.getName + ".out")
+      try {
+        val diScope = JsonDiLoader.createDIScope(
+          inputFile.text,
+          injectors)
+        val mainComponent = ComplexComponent(new ClassInjector("Main", classOf[Main], List("simulation")), diScope)
+        val main = ScopeDrivenDI.instantiate(mainComponent)
+        main.run(inputFile.getParentFile, inputFile.getName + ".out")
+      } catch {
+        case e: Exception => throw new RuntimeException(s"$inputFilePath simulation failed", e)
+      }
     }
   }
 }

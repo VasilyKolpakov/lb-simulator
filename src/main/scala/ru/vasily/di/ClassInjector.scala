@@ -9,9 +9,8 @@ class ClassInjector[T](val typeName: String, clazz: Class[T], dependenciesKeys: 
       .asInstanceOf[Constructor[T]]
     val typesList = constructor.getParameterTypes.toList
     if (dependenciesKeys.size != typesList.size) {
-      throw new ClassInjectorException(typeName,
-        "wrong nuber of dependencies: %d not %d".format(dependenciesKeys.size, typesList.size)
-      )
+      throw new RuntimeException(s"cannot instantiate $typeName: " +
+        s"wrong number of dependencies: ${dependenciesKeys.size} not ${typesList.size}")
     }
 
     def newInstance(keyClassList: List[(String, Class[_])], dependencies: List[Any] = Nil): (T, Map[String, Any]) = {
@@ -26,24 +25,14 @@ class ClassInjector[T](val typeName: String, clazz: Class[T], dependenciesKeys: 
         monad.flatMap(dep => newInstance(rest, dep :: dependencies))
       }
     }
-    try {
-      val keyClassList = dependenciesKeys.zip(typesList)
-      if (typesList.isEmpty) {
-        (constructor.newInstance(), Map())
-      } else {
-        newInstance(keyClassList)
-      }
-    } catch {
-      case e: ClassInjectorException => throw e
-      case x => throw new ClassInjectorException(typeName, "", x)
+    val keyClassList = dependenciesKeys.zip(typesList)
+    if (typesList.isEmpty) {
+      (constructor.newInstance(), Map())
+    } else {
+      newInstance(keyClassList)
     }
   }
-
 }
-
-class ClassInjectorException(typeName: String, message: String = "", cause: Throwable = null)
-  extends RuntimeException("error during instantiating " + typeName + ": " + message, cause)
-
 
 object ClassInjector {
   def apply[T](typeName: String, clazz: Class[T], dependenciesKeys: String*) =

@@ -17,17 +17,16 @@ object ClusterModelRunner {
 
   def isFinalModelState(state: ModelState) = state.agents(SinkAgent).asInstanceOf[State].isAllTasksAreFinished
 
-  def getHistory(clusterModelFactory: AgentId => ClusterModel, taskGenerator: TasksGenerator) = {
+  def getHistory(clusterModel: ClusterModel, taskGenerator: TasksGenerator) = {
 
-    val clusterModel = clusterModelFactory(SinkAgent)
-    val initialMessagesReceiver = clusterModel.initialMessagesReceiver
+    val ClusterAgents(clusterModelAgents, initialMessagesReceiver) = clusterModel.agents(SinkAgent)
     val tasks = taskGenerator.generateTasks
     val messageActions = for (task <- tasks) yield {
       val taskMessage = Message(task, initialMessagesReceiver)
       SendMessage(taskMessage, task.arrivalTime)
     }
     val sinkAgent = Agent(SinkAgent, State(tasks.map(_.id).toSet), messageActions.toList)
-    val initialModelState = ModelState(sinkAgent +: clusterModel.agents)
+    val initialModelState = ModelState(sinkAgent +: clusterModelAgents)
 
     //    for (state <- initialModelState.nextStates) {
     //      println(ModelState.prettyToString(state))
@@ -35,9 +34,15 @@ object ClusterModelRunner {
 
     initialModelState
       .logsUntil(isFinalModelState)
-      .collect {case Log(serverId: SimpleServer, time, record: TaskRecord) => (serverId, record)}
+      .collect {
+      case Log(serverId: SimpleServer, time, record: TaskRecord) => (serverId, record)
+    }
       .toList
-      .groupBy {case (serverId, record) => serverId}
-      .mapValues(_.map {case (serverId, record) => record})
+      .groupBy {
+      case (serverId, record) => serverId
+    }
+      .mapValues(_.map {
+      case (serverId, record) => record
+    })
   }
 }

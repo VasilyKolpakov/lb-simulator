@@ -17,14 +17,11 @@ object MonitoringService extends AgentId {
     }
   }
 
-  case class Report(serverId: AgentId, taskRecord: TaskRecord)
-
   case class PostServerLoad(serverId: AgentId, load: Int)
 
   case class GetServersLoad(requesterId: AgentId)
 
   case class ServersLoad(serversLoad: Map[AgentId, Int])
-
 
   override def toString = "MonitoringService"
 }

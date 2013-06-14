@@ -4,7 +4,7 @@ import core.{AgentState, Agent, AgentId}
 
 object RoundRobinSchedulerModel extends SchedulerModel {
 
-  def agent(mainServerId: AgentId, nodes: IndexedSeq[AgentId], monitoringService: AgentId): Agent = {
+  def agent(mainServerId: AgentId, nodes: IndexedSeq[AgentId]): SchedulerAgents = {
     case class State(currentServerIndex: Int = 0) extends AgentState {
       val numberOfServers = nodes.size
 
@@ -16,7 +16,8 @@ object RoundRobinSchedulerModel extends SchedulerModel {
         case _: TaskFinished => noChanges
       }
     }
-    Agent(RoundRobinScheduler(mainServerId), State())
+    val agent = Agent(RoundRobinScheduler(mainServerId), State())
+    SchedulerAgents(Seq(agent), agent.id)
   }
 
   private case class RoundRobinScheduler(mainServerId: AgentId) extends AgentId

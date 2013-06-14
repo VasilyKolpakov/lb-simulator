@@ -3,13 +3,16 @@ package ru.vasily.simulation
 import core._
 import ru.vasily.simulation.MonitoringService.PostServerLoad
 
-case class MonitoringServiceModel(refreshTime: Option[Int]) {
-  def agents(serverIds: Seq[AgentId]): Seq[Agent] = {
-    serverIds.map {
+case class MonitoringAgents(agents: Seq[Agent], monitoringServiceId: AgentId)
+
+case class MonitoringServiceModel(refreshTime: Int) {
+  def agents(serverIds: Seq[AgentId]): MonitoringAgents = {
+    val agents = MonitoringService.agent +: serverIds.map {
       serverId =>
         val agentId = MonitoringAgent(serverId)
         Agent(agentId, agentId.State, agentId ! Tic)
     }
+    MonitoringAgents(agents, MonitoringService.agent.id)
   }
 
   private case object Tic
@@ -17,18 +20,17 @@ case class MonitoringServiceModel(refreshTime: Option[Int]) {
   case class MonitoringAgent(serverId: AgentId) extends AgentId {
 
     case object State extends AgentState {
+      val ticMessageAction = SendMessage(
+        message = Message(Tic, thisAgent),
+        delay = refreshTime
+      )
+
       def changeState(currentTime: Long, message: AnyRef) = message match {
         case Tic =>
-          if (refreshTime.isDefined)
-            newActions(
-              SendMessage(
-                message = Message(Tic, thisAgent),
-                delay = refreshTime.get
-              ),
-              serverId ! LoadLevelRequest(thisAgent)
-            )
-          else
-            noChanges
+          newActions(
+            ticMessageAction,
+            serverId ! LoadLevelRequest(thisAgent)
+          )
 
         case LoadLevelResponse(loadLevel) => newActions(
           MonitoringService ! PostServerLoad(serverId, loadLevel)

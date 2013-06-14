@@ -1,9 +1,9 @@
 package ru.vasily.simulation
 
-import core.{AgentState, AgentId, Agent}
+import core.{AgentId, Agent}
 
 trait ClusterModel {
-  def agents: Seq[Agent]
-
-  def initialMessagesReceiver: AgentId
+  def agents(masterId: AgentId): ClusterAgents
 }
+
+case class ClusterAgents(agents: Seq[Agent], initialMessagesReceiver: AgentId)

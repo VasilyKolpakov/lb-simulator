@@ -1,9 +1,8 @@
 package ru.vasily.simulation
 
-import core.AgentId
 import ru.vasily.{ExecScript, Runner}
 
-class ComparingRunner(clusterModels: Map[String, AgentId => ClusterModel],
+class ComparingRunner(clusterModels: Map[String, ClusterModel],
                       taskGenerator: TasksGenerator,
                       metricPath: Seq[String]) extends Runner {
 

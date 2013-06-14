@@ -41,8 +41,9 @@ object MasterWorkerSchedulerModel extends SchedulerModel {
 
   }
 
-  def agent(mainServerId: AgentId, nodes: IndexedSeq[AgentId], monitoringService: AgentId): Agent = {
+  def agent(mainServerId: AgentId, nodes: IndexedSeq[AgentId]): SchedulerAgents = {
     val states = States(mainServerId, nodes)
-    Agent(MasterWorkerScheduler(mainServerId), states.EmptyQueueState(nodes))
+    val agent = Agent(MasterWorkerScheduler(mainServerId), states.EmptyQueueState(nodes))
+    SchedulerAgents(Seq(agent), agent.id)
   }
 }

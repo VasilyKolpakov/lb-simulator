@@ -1,10 +1,9 @@
 package ru.vasily.simulation
 
-import core.AgentId
 import ru.vasily.{FileContents, Serializer, Runner}
 import ru.vasily.graphics._
 
-class SimulationRunner(clusterModelFactory: AgentId => ClusterModel,
+class SimulationRunner(clusterModelFactory: ClusterModel,
                        taskGenerator: TasksGenerator,
                        outputFormat: SimulationResultOutputFormat)
   extends Runner {

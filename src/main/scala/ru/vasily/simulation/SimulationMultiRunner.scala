@@ -1,28 +1,28 @@
 package ru.vasily.simulation
 
-import core.AgentId
 import ru.vasily.{FileContents, Serializer, Runner}
 
-class SimulationMultiRunner(clusterModelFactoriesAndConfig: (Seq[(Seq[Double], AgentId) => ClusterModel], Seq[Any]),
+class SimulationMultiRunner(schedulerModelsAndConfig: (Seq[SchedulerModel], Seq[Any]),
                             serverPerformancesAndConfig: (Seq[Seq[Double]], Seq[Any]),
                             taskGeneratorsAndConfig: (Seq[TasksGenerator], Seq[Any])
                              ) extends Runner {
 
   def getResult = {
-    val modelsFactoriesWithConfigs = unwrapAndZip(clusterModelFactoriesAndConfig)
+    val schedulerModelsWithConfigs = unwrapAndZip(schedulerModelsAndConfig)
     val serverPerformancesWithConfigs = unwrapAndZip(serverPerformancesAndConfig)
     val taskGensWithConfigs = unwrapAndZip(taskGeneratorsAndConfig)
     val result = for {
-      (model, modelConfig) <- modelsFactoriesWithConfigs
+      (scheduler, schedulerConfig) <- schedulerModelsWithConfigs
       (servers, serversConfig) <- serverPerformancesWithConfigs
       (tasks, tasksConfig) <- taskGensWithConfigs
     } yield {
       val resultConfig = Map(
-        "clusterModel" -> modelConfig,
+        "scheduler" -> schedulerConfig,
         "servers" -> serversConfig,
         "taskGenerator" -> tasksConfig
       )
-      val  history = ClusterModelRunner.getHistory(model(servers, _), tasks)
+      val clusterModel = new SimpleClusterModel(servers, scheduler)
+      val history = ClusterModelRunner.getHistory(clusterModel, tasks)
       val metricsMap = new AlgorithmMetrics(history).metricsMap
       Map(
         "config" -> resultConfig,

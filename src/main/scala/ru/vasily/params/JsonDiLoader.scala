@@ -29,7 +29,7 @@ object JsonDiLoader {
 
     def toComplexComponent(map: Map[String, Any], typeKey: String) = {
       val injector = injectorsMap.get(typeKey)
-        .getOrElse(throw new RuntimeException("unsupported type " + typeKey))
+        .getOrElse(throw new RuntimeException( s""""unsupported type "${typeKey}" """))
       ComplexComponent(injector, toDIScope(map - TYPE_RESERVED_WORD))
     }
 

@@ -2,7 +2,6 @@ package ru.vasily.simulation
 
 import collection.immutable.Queue
 import core._
-import ru.vasily.simulation.MonitoringService.Report
 import util.Random
 
 case class SimpleServer(indexNumber: Int, serverPerformance: Double) extends AgentId {

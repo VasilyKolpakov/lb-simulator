@@ -5,9 +5,10 @@ import util.Random
 
 class RandomSchedulerModel(seed: Int) extends SchedulerModel {
 
-  def agent(mainServerId: AgentId, nodes: IndexedSeq[AgentId], monitoringService: AgentId): Agent = {
+  def agent(mainServerId: AgentId, nodes: IndexedSeq[AgentId]): SchedulerAgents = {
     val id = RandomSchedulerAgent(mainServerId, nodes)
-    Agent(id, id.State)
+    val agent = Agent(id, id.State)
+    SchedulerAgents(Seq(agent), agent.id)
   }
 
   case class RandomSchedulerAgent(mainServerId: AgentId, nodes: IndexedSeq[AgentId]) extends AgentId {

@@ -3,8 +3,10 @@ package ru.vasily.simulation
 import core.{AgentId, Agent}
 
 trait SchedulerModel {
-  def agent(mainServerId: AgentId, nodes: IndexedSeq[AgentId], monitoringService: AgentId): Agent
+  def agent(mainServerId: AgentId, nodes: IndexedSeq[AgentId]): SchedulerAgents
 }
+
+case class SchedulerAgents(agents: Seq[Agent], mainAgentId: AgentId)
 
 case class FindServerForTask(task: Task)
 
