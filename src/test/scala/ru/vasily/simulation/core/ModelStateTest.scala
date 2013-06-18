@@ -23,7 +23,7 @@ class ModelStateTest extends FunSuite with ShouldMatchers {
       }
     }
     val initialTic = SendMessage.withoutDelay(Tic, Clock)
-    val clockAgent = Agent(Clock, ClockState(0), initialTic)
+    val clockAgent = Agent(Clock, ClockState(0)).withInitialActions(initialTic)
     val initialState = ModelState(Seq(clockAgent))
     val clockState = initialState.nextStates(9)._1.agents(Clock)
     clockState.asInstanceOf[ClockState].currentClockTime should equal(10)

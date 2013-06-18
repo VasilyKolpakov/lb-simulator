@@ -22,12 +22,12 @@ trait SimulationResultOutputFormat {
 class JsonOutputFormat extends SimulationResultOutputFormat {
   def format(history: Map[SimpleServer, Seq[TaskRecord]]) = {
     val metrics = new AlgorithmMetrics(history)
-    val result = metrics.metricsMap + ("history" -> prettyHistory(history))
+    val result = metrics.metricsMap + ("history" -> prettyPrintHistory(history))
     val output = Serializer.marshal(result)
     FileContents(output, "js")
   }
 
-  private def prettyHistory(history: Map[SimpleServer, Seq[TaskRecord]]) = history.mapValues {
+  private def prettyPrintHistory(history: Map[SimpleServer, Seq[TaskRecord]]) = history.mapValues {
     taskRecords =>
       taskRecords.map {
         case TaskRecord(Task(_, executionTime, arrivalTime), completionTime) =>

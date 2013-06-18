@@ -34,15 +34,9 @@ object ClusterModelRunner {
 
     initialModelState
       .logsUntil(isFinalModelState)
-      .collect {
-      case Log(serverId: SimpleServer, time, record: TaskRecord) => (serverId, record)
-    }
+      .collect {case Log(serverId: SimpleServer, time, record: TaskRecord) => (serverId, record)}
       .toList
-      .groupBy {
-      case (serverId, record) => serverId
-    }
-      .mapValues(_.map {
-      case (serverId, record) => record
-    })
+      .groupBy {case (serverId, record) => serverId}
+      .mapValues(_.map {case (serverId, record) => record})
   }
 }

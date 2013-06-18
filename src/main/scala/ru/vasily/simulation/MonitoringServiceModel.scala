@@ -10,7 +10,7 @@ case class MonitoringServiceModel(refreshTime: Int) {
     val agents = MonitoringService.agent +: serverIds.map {
       serverId =>
         val agentId = MonitoringAgent(serverId)
-        Agent(agentId, agentId.State, agentId ! Tic)
+        Agent(agentId, agentId.State).withInitialActions(agentId ! Tic)
     }
     MonitoringAgents(agents, MonitoringService.agent.id)
   }
