@@ -4,6 +4,7 @@ import collection.immutable
 
 class ModelState(agentIdToAgentStateMap: immutable.Map[AgentId, AgentState],
                  messageQueue: MessageQueue[Message, MessageTagRecord, Long],
+                 val logs: Seq[Log],
                  val timeOfLastEvent: Long = 0) {
 
   def nextState = messageQueue.dequeueOption.map {
@@ -15,14 +16,9 @@ class ModelState(agentIdToAgentStateMap: immutable.Map[AgentId, AgentState],
       val agentId = message.receiverId
       val agentState = agentIdToAgentStateMap(agentId)
       val StateTransition(newAgentState, actions) = agentState.changeState(nextEventTime, message.contents)
-      val messageActions = actions.filter(!_.isInstanceOf[LogAction])
-      val logActions = actions.collect {
-        case action: LogAction => action
-      }
       val nextAgentStates = agentIdToAgentStateMap.updated(agentId, newAgentState)
-      val nextMessages = ModelState.enqueueActions(remainingMessages, messageActions, agentId, nextEventTime)
-      val logs = logActions.map(log => Log(agentId, nextEventTime, log.record))
-      (new ModelState(nextAgentStates, nextMessages, nextEventTime), logs)
+      val (nextMessages, newLogs) = ModelState.enqueueActions(remainingMessages, actions, agentId, nextEventTime)
+      new ModelState(nextAgentStates, nextMessages, newLogs, nextEventTime)
   }
 
 
@@ -32,20 +28,16 @@ class ModelState(agentIdToAgentStateMap: immutable.Map[AgentId, AgentState],
 
   def timeOfNextEvent = messageQueue.timeOfNextEventOption
 
-  def nextStates: Stream[(ModelState, Seq[Log])] = nextState match {
-    case Some(stateAndLog) => Stream.cons(stateAndLog, stateAndLog._1.nextStates)
+  def nextStates: Stream[ModelState] = nextState match {
+    case Some(state) => Stream.cons(state, state.nextStates)
     case None => Stream.empty
   }
 
   def logsUntil(stopCondition: ModelState => Boolean) =
-    if (stopCondition(this)) {
-      Stream.empty
-    } else {
-      nextStates
-        .takeWhile{case (state, logs) => !stopCondition(state)}
-        .map {case (state, logs) => logs}
-        .flatten
-    }
+    (this #:: nextStates)
+      .takeWhile(!stopCondition(_))
+      .map(_.logs)
+      .flatten
 
   override def toString = agentIdToAgentStateMap.toString() + "  " + messageQueue.toString
 }
@@ -55,16 +47,24 @@ object ModelState {
   type MQueue = MessageQueue[Message, MessageTagRecord, Long]
 
   def apply(agents: Seq[Agent]) = {
-    val messageQueue = agents.foldLeft(MessageQueue[Message, MessageTagRecord, Long](0)) {
-      case (queue, Agent(agentId, _, initialActions)) =>
-        enqueueActions(queue, initialActions, agentId, 0)
+    val (messageQueue, initializationLogs) = agents.foldLeft((MessageQueue[Message, MessageTagRecord, Long](0), Seq[Log]())) {
+      case ((queue, logs), Agent(agentId, _, initialActions)) =>
+        val (newQueue, newLogs) = enqueueActions(queue, initialActions, agentId, 0)
+        (newQueue, newLogs ++ logs)
     }
     val agentsMap = agents.map(agent => (agent.id, agent.initialState)).toMap
-    new ModelState(agentsMap, messageQueue)
+    new ModelState(agentsMap, messageQueue, initializationLogs)
   }
 
-  def enqueueActions(queue: MQueue, messageActions: Seq[AgentAction], agentId: AgentId, currentTime: Long): MQueue =
-    messageActions.foldLeft(queue)(addActionToQueue(agentId, currentTime))
+  def enqueueActions(queue: MQueue, actions: Seq[AgentAction], agentId: AgentId, currentTime: Long): (MQueue, Seq[Log]) = {
+    val messageActions = actions.filter(!_.isInstanceOf[LogAction])
+    val logActions = actions.collect {
+      case action: LogAction => action
+    }
+    val newQueue = messageActions.foldLeft(queue)(addActionToQueue(agentId, currentTime))
+    val logs = logActions.map(log => Log(agentId, currentTime, log.record))
+    (newQueue, logs)
+  }
 
   private def addActionToQueue(agentId: AgentId, currentTime: Long)
                               (queue: MQueue, action: AgentAction) = action match {

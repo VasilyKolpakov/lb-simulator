@@ -16,30 +16,30 @@ class SimulationRunner(clusterModelFactory: ClusterModel,
 }
 
 trait SimulationResultOutputFormat {
-  def format(history: Map[SimpleServer, Seq[TaskRecord]]): FileContents
+  def format(history: Seq[ServerHistory]): FileContents
 }
 
 class JsonOutputFormat extends SimulationResultOutputFormat {
-  def format(history: Map[SimpleServer, Seq[TaskRecord]]) = {
+  def format(history: Seq[ServerHistory]) = {
     val metrics = new AlgorithmMetrics(history)
-    val result = metrics.metricsMap + ("history" -> prettyPrintHistory(history))
+    val result = metrics.metricsMap + ("history" -> historyToSerializableMap(history))
     val output = Serializer.marshal(result)
     FileContents(output, "js")
   }
 
-  private def prettyPrintHistory(history: Map[SimpleServer, Seq[TaskRecord]]) = history.mapValues {
-    taskRecords =>
-      taskRecords.map {
+  private def historyToSerializableMap(history: Seq[ServerHistory]) = history.map {
+    case ServerHistory(serverId, performance, taskRecords) =>
+      val records = taskRecords.map {
         case TaskRecord(Task(_, executionTime, arrivalTime), completionTime) =>
           Map("executionTime" -> executionTime, "arrivalTime " -> arrivalTime, "completionTime" -> completionTime)
       }
-  }
+      (serverId.toString, records)
+  }.toMap
 }
 
 class SvgOutputFormat(imageWidth: Int, expectedMakespan: Int) extends SimulationResultOutputFormat {
-  def format(history: Map[SimpleServer, Seq[TaskRecord]]) = {
-    val sortedHistory = history.mapValues(_.sortBy(_.completionTime)).toList.
-      sortBy(_._1.indexNumber)
+  def format(history: Seq[ServerHistory]) = {
+    val sortedHistory = history.sortBy(_.serverId.toString)
 
     implicit def longToInt(l: Long) = l.toInt
 
@@ -62,25 +62,26 @@ class SvgOutputFormat(imageWidth: Int, expectedMakespan: Int) extends Simulation
           indexText
         ))
     }
-    def serverHistoryToShape(serverId: SimpleServer, records: Seq[TaskRecord], taskIndexes: Map[TaskRecord, Int]) = {
+    def serverHistoryToShape(serverHistory: ServerHistory, serverIndex: Int, taskIndexes: Map[TaskRecord, Int]) = {
+      val ServerHistory(_, serverPerformance, records) = serverHistory
       val taskShapes = records.zipWithIndex.map {
         case (record@TaskRecord(task, completionTime), taskIndex) => {
-          val startTime = (completionTime - task.executionTime / serverId.serverPerformance).toInt
+          val startTime = (completionTime - task.executionTime / serverPerformance).toInt
           taskShape(taskIndexes(record), taskIndex, startTime, completionTime)
         }
       }
       val textShift: Int = 55
-      val text = Text("server # " + serverId.indexNumber, -textShift, 20)
-      ComplexShape(text +: taskShapes, textShift + 55, serverId.indexNumber * 60 + 30)
+      val text = Text("server # " + serverIndex, -textShift, 20)
+      ComplexShape(text +: taskShapes, textShift + 55, serverIndex * 60 + 30)
     }
 
-    def allHistoryShape(history: List[(SimpleServer, Seq[TaskRecord])]) = {
-      val taskRecordIndexes = history.flatMap(_._2).sortBy {
+    def allHistoryShape(history: Seq[ServerHistory]) = {
+      val taskRecordIndexes = history.flatMap(_.taskRecords).sortBy {
         (record) => (record.task.arrivalTime, record.task.executionTime)
       }.zipWithIndex.toMap
-      val shapes = history.map {
-        case (serverId, taskRecords) =>
-          serverHistoryToShape(serverId, taskRecords, taskRecordIndexes)
+      val shapes = history.zipWithIndex.map {
+        case (serverHistory: ServerHistory, serverIndex) =>
+          serverHistoryToShape(serverHistory, serverIndex, taskRecordIndexes)
       }
       ComplexShape(shapes)
     }

@@ -1,6 +1,6 @@
 package ru.vasily.simulation
 
-class AlgorithmMetrics(history: Map[SimpleServer, Seq[TaskRecord]]) {
+class AlgorithmMetrics(history: Seq[ServerHistory]) {
 
   def performanceMetrics = Map(
     "average slowdown" -> averageSlowdownMetric,
@@ -22,16 +22,16 @@ class AlgorithmMetrics(history: Map[SimpleServer, Seq[TaskRecord]]) {
     "uniformityMetrics" -> uniformityMetrics
   )
 
-  val slowdowns = for ((server, taskRecords) <- history;
+  val slowdowns = for (ServerHistory(server, performance, taskRecords) <- history;
                        taskRecord <- taskRecords;
                        task = taskRecord.task)
   yield (taskRecord.completionTime - task.arrivalTime).toDouble /
-      (task.executionTime / server.serverPerformance)
+      (task.executionTime / performance)
 
-  val makespan = history.values.flatten.map(_.completionTime).max
+  val makespan = history.flatMap {case ServerHistory(_, _, records) => records.map(_.completionTime)}.max
 
-  val serversUtilization = for ((server, taskRecords) <- history) yield {
-    taskRecords.map(_.task.executionTime).sum.toDouble / (makespan * server.serverPerformance)
+  val serversUtilization = for (ServerHistory(server, performance, taskRecords) <- history) yield {
+    taskRecords.map(_.task.executionTime).sum.toDouble / (makespan * performance)
   }
 
   def averageUtilization = serversUtilization.sum / serversUtilization.size

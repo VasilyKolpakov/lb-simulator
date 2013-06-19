@@ -32,11 +32,17 @@ object ClusterModelRunner {
     //      println(ModelState.prettyToString(state))
     //    }
 
-    initialModelState
-      .logsUntil(isFinalModelState)
-      .collect {case Log(serverId: SimpleServer, time, record: TaskRecord) => (serverId, record)}
+    val logs: Stream[Log] = initialModelState.logsUntil(isFinalModelState)
+    val taskRecords = logs
+      .collect {case Log(serverId, time, record: TaskRecord) => (serverId, record)}
       .toList
       .groupBy {case (serverId, record) => serverId}
       .mapValues(_.map {case (serverId, record) => record})
+    logs.collect {
+      case Log(serverId, _, ServerInfo(serverPerformance)) =>
+        ServerHistory(serverId, serverPerformance, taskRecords.get(serverId).getOrElse(Seq()))
+    }
   }
 }
+
+case class ServerHistory(serverId: AgentId, performance: Double, taskRecords: Seq[TaskRecord])

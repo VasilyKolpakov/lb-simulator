@@ -66,7 +66,7 @@ object SimpleServer {
     serversPerformance.zipWithIndex.map {
       case (performance, index) => {
         val agentId = SimpleServer(index, performance)
-        Agent(agentId, agentId.IdleState())
+        Agent(agentId, agentId.IdleState()).withInitialActions(LogAction(ServerInfo(performance)))
       }
     }
 
