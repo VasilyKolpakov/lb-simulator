@@ -5,9 +5,7 @@ import collection.immutable.Queue
 
 object MasterWorkerSchedulerModel extends SchedulerModel {
 
-  case class MasterWorkerScheduler(mainServerId: AgentId) extends AgentId
-
-  private case class States(mainServerId: AgentId, nodes: IndexedSeq[AgentId]) {
+  private case class MasterWorkerSchedulerStates(mainServerId: AgentId, nodes: IndexedSeq[AgentId]) {
 
     case class EmptyQueueState(freeServers: Seq[AgentId]) extends AgentState {
       def changeState(currentTime: Long, message: AnyRef) = message match {
@@ -42,8 +40,9 @@ object MasterWorkerSchedulerModel extends SchedulerModel {
   }
 
   def agent(mainServerId: AgentId, nodes: IndexedSeq[AgentId]): SchedulerAgents = {
-    val states = States(mainServerId, nodes)
-    val agent = Agent(MasterWorkerScheduler(mainServerId), states.EmptyQueueState(nodes))
+    val states = MasterWorkerSchedulerStates(mainServerId, nodes)
+    val schedulerId = mainServerId.child("MasterWorkerScheduler")
+    val agent = Agent(schedulerId, states.EmptyQueueState(nodes))
     SchedulerAgents(Seq(agent), agent.id)
   }
 }

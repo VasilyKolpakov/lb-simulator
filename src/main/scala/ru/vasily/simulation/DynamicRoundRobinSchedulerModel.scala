@@ -2,28 +2,27 @@ package ru.vasily.simulation
 
 import core.{Agent, AgentState, AgentId}
 import annotation.tailrec
-import ru.vasily.simulation.MonitoringService.{GetServersLoad, ServersLoad}
 
 case class DynamicRoundRobinSchedulerModel(maxWeight: Int, monitoringModel: MonitoringServiceModel) extends SchedulerModel {
   def agent(mainServerId: AgentId, nodes: IndexedSeq[AgentId]): SchedulerAgents = {
-    val MonitoringAgents(monitoringServiceAgents, monitoringServiceId) = monitoringModel.agents(nodes)
-    val schedulerAgentId = DynamicRoundRobinScheduler(mainServerId, nodes, monitoringServiceId)
-    val defaultWeights = Vector(nodes.collect {
-      case s: SimpleServer => s.serverPerformance.toInt
-    }: _*)
-    val schedulerAgent =
-      Agent(schedulerAgentId, schedulerAgentId.RoundRobinState(nodes.map(_ => 0).toVector, RoundRobinAlgorithmState(defaultWeights)))
+    val MonitoringAgents(monitoringServiceAgents, monitoringServiceId) = monitoringModel.agents(mainServerId, nodes)
+    val defaultWeights = Vector.fill(nodes.size)(1)
+    val schedulerAgentId = mainServerId.child("DynamicRoundRobinScheduler")
+    val states = DynamicRoundRobinSchedulerStates(schedulerAgentId, mainServerId, nodes, monitoringServiceId)
+    val initialState = states.RoundRobinState(nodes.map(_ => 0).toVector, RoundRobinAlgorithmState(defaultWeights))
+    val schedulerAgent = Agent(schedulerAgentId, initialState)
     SchedulerAgents(schedulerAgent +: monitoringServiceAgents, schedulerAgentId)
   }
 
-  private case class DynamicRoundRobinScheduler(mainServerId: AgentId,
-                                                nodes: IndexedSeq[AgentId],
-                                                monitoringService: AgentId) extends AgentId {
+  private case class DynamicRoundRobinSchedulerStates(schedulerAgentId: AgentId,
+                                                      mainServerId: AgentId,
+                                                      nodes: IndexedSeq[AgentId],
+                                                      monitoringService: AgentId) {
 
     case class RoundRobinState(serversLoad: Vector[Int],
                                algorithmState: RoundRobinAlgorithmState)
       extends AgentState {
-      val monitoringServiceMessage = monitoringService ! GetServersLoad(thisAgent)
+      val monitoringServiceMessage = monitoringService ! GetServersLoad(schedulerAgentId)
 
       def changeState(currentTime: Long, message: AnyRef) = message match {
         case FindServerForTask(task) => {

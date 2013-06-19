@@ -1,27 +1,31 @@
 package ru.vasily.simulation
 
 import core._
-import ru.vasily.simulation.MonitoringService.PostServerLoad
 
 case class MonitoringAgents(agents: Seq[Agent], monitoringServiceId: AgentId)
 
 case class MonitoringServiceModel(refreshTime: Int) {
-  def agents(serverIds: Seq[AgentId]): MonitoringAgents = {
-    val agents = MonitoringService.agent +: serverIds.map {
+
+  def agents(mainServerId: AgentId, serverIds: Seq[AgentId]): MonitoringAgents = {
+    val monitoringServiceId = mainServerId.child("MonitoringService")
+    val monitoringAgents = serverIds.map {
       serverId =>
-        val agentId = MonitoringAgent(serverId)
-        Agent(agentId, agentId.State).withInitialActions(agentId ! Tic)
+        val agentId = serverId.child("MonitoringAgent")
+        val initialState = MonitoringAgentStates(agentId, monitoringServiceId, serverId).State
+        Agent(agentId, initialState).withInitialActions(agentId ! Tic)
     }
-    MonitoringAgents(agents, MonitoringService.agent.id)
+    val serviceAgent = Agent(monitoringServiceId, MonitoringServiceState(Map()))
+    val agents = serviceAgent +: monitoringAgents
+    MonitoringAgents(agents, monitoringServiceId)
   }
 
   private case object Tic
 
-  case class MonitoringAgent(serverId: AgentId) extends AgentId {
+  case class MonitoringAgentStates(thisAgentId: AgentId, monitoringServiceId: AgentId, serverId: AgentId) {
 
     case object State extends AgentState {
       val ticMessageAction = SendMessage(
-        message = Message(Tic, thisAgent),
+        message = Message(Tic, thisAgentId),
         delay = refreshTime
       )
 
@@ -29,11 +33,11 @@ case class MonitoringServiceModel(refreshTime: Int) {
         case Tic =>
           newActions(
             ticMessageAction,
-            serverId ! LoadLevelRequest(thisAgent)
+            serverId ! LoadLevelRequest(thisAgentId)
           )
 
         case LoadLevelResponse(loadLevel) => newActions(
-          MonitoringService ! PostServerLoad(serverId, loadLevel)
+          monitoringServiceId ! PostServerLoad(serverId, loadLevel)
         )
       }
     }
@@ -41,3 +45,25 @@ case class MonitoringServiceModel(refreshTime: Int) {
   }
 
 }
+
+case class MonitoringServiceState(serversLoad: Map[AgentId, Int]) extends AgentState {
+  def changeState(currentTime: Long, message: AnyRef) = message match {
+    case PostServerLoad(serverId, load) =>
+      val updatedServersLoad = serversLoad.updated(serverId, load)
+      newState(copy(updatedServersLoad))
+    case GetServersLoad(requester) =>
+      newActions(
+        requester ! ServersLoad(serversLoad)
+      )
+  }
+}
+
+case class PostServerLoad(serverId: AgentId, load: Int)
+
+case class GetServersLoad(requesterId: AgentId)
+
+case class ServersLoad(serversLoad: Map[AgentId, Int])
+
+
+case class TaskRecord(task: Task, completionTime: Long)
+

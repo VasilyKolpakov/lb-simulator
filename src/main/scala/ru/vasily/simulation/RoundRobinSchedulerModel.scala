@@ -16,10 +16,9 @@ object RoundRobinSchedulerModel extends SchedulerModel {
         case _: TaskFinished => noChanges
       }
     }
-    val agent = Agent(RoundRobinScheduler(mainServerId), State())
+    val schedulerId = mainServerId.child("RoundRobinScheduler")
+    val agent = Agent(schedulerId, State())
     SchedulerAgents(Seq(agent), agent.id)
   }
-
-  private case class RoundRobinScheduler(mainServerId: AgentId) extends AgentId
 
 }

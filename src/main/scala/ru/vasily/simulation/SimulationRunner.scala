@@ -2,6 +2,7 @@ package ru.vasily.simulation
 
 import ru.vasily.{FileContents, Serializer, Runner}
 import ru.vasily.graphics._
+import collection.immutable.ListMap
 
 class SimulationRunner(clusterModelFactory: ClusterModel,
                        taskGenerator: TasksGenerator,
@@ -27,14 +28,17 @@ class JsonOutputFormat extends SimulationResultOutputFormat {
     FileContents(output, "js")
   }
 
-  private def historyToSerializableMap(history: Seq[ServerHistory]) = history.map {
-    case ServerHistory(serverId, performance, taskRecords) =>
-      val records = taskRecords.map {
-        case TaskRecord(Task(_, executionTime, arrivalTime), completionTime) =>
-          Map("executionTime" -> executionTime, "arrivalTime " -> arrivalTime, "completionTime" -> completionTime)
-      }
-      (serverId.toString, records)
-  }.toMap
+  private def historyToSerializableMap(history: Seq[ServerHistory]) = {
+    val serverIdStringAndRecordsPairs = history.map {
+      case ServerHistory(serverId, performance, taskRecords) =>
+        val records = taskRecords.map {
+          case TaskRecord(Task(_, executionTime, arrivalTime), completionTime) =>
+            Map("executionTime" -> executionTime, "arrivalTime " -> arrivalTime, "completionTime" -> completionTime)
+        }
+        (serverId.toString, records)
+    }.sortBy(_._1)
+    ListMap(serverIdStringAndRecordsPairs: _*)
+  }
 }
 
 class SvgOutputFormat(imageWidth: Int, expectedMakespan: Int) extends SimulationResultOutputFormat {

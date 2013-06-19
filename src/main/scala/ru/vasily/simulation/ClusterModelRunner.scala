@@ -5,8 +5,6 @@ import core.Message
 
 object ClusterModelRunner {
 
-  case object SinkAgent extends AgentId
-
   case class State(taskIdsSet: Set[Any]) extends AgentState {
     def changeState(currentTime: Long, message: AnyRef) = message match {
       case msg: TaskFinished => newState(State(taskIdsSet - msg.task.id))
@@ -15,18 +13,20 @@ object ClusterModelRunner {
     def isAllTasksAreFinished = taskIdsSet.isEmpty
   }
 
-  def isFinalModelState(state: ModelState) = state.agents(SinkAgent).asInstanceOf[State].isAllTasksAreFinished
+  val rootAgentId = AgentId("root")
+
+  def isFinalModelState(state: ModelState) = state.agents(rootAgentId).asInstanceOf[State].isAllTasksAreFinished
 
   def getHistory(clusterModel: ClusterModel, taskGenerator: TasksGenerator) = {
 
-    val ClusterAgents(clusterModelAgents, initialMessagesReceiver) = clusterModel.agents(SinkAgent)
+    val ClusterAgents(clusterModelAgents, initialMessagesReceiver) = clusterModel.agents(rootAgentId)
     val tasks = taskGenerator.generateTasks
     val messageActions = for (task <- tasks) yield {
       val taskMessage = Message(task, initialMessagesReceiver)
       SendMessage(taskMessage, task.arrivalTime)
     }
-    val sinkAgent = Agent(SinkAgent, State(tasks.map(_.id).toSet), messageActions.toList)
-    val initialModelState = ModelState(sinkAgent +: clusterModelAgents)
+    val rootAgent = Agent(rootAgentId, State(tasks.map(_.id).toSet), messageActions.toList)
+    val initialModelState = ModelState(rootAgent +: clusterModelAgents)
 
     //    for (state <- initialModelState.nextStates) {
     //      println(ModelState.prettyToString(state))

@@ -13,7 +13,24 @@
     "balancing efficiency" : 0.7030435437847523
   },
   "history" : {
-    "SimpleServer(1,1.2405364156714858)" : [ {
+    "/root/SimpleCluster/SimpleServer#0" : [ {
+      "executionTime" : 14763,
+      "arrivalTime " : 2627,
+      "completionTime" : 11155
+    }, {
+      "executionTime" : 16298,
+      "arrivalTime " : 4637,
+      "completionTime" : 20570
+    }, {
+      "executionTime" : 10410,
+      "arrivalTime " : 5038,
+      "completionTime" : 26583
+    }, {
+      "executionTime" : 14402,
+      "arrivalTime " : 7416,
+      "completionTime" : 34903
+    } ],
+    "/root/SimpleCluster/SimpleServer#1" : [ {
       "executionTime" : 11300,
       "arrivalTime " : 2919,
       "completionTime" : 12027
@@ -37,23 +54,6 @@
       "executionTime" : 15130,
       "arrivalTime " : 9534,
       "completionTime" : 82401
-    } ],
-    "SimpleServer(0,1.730967787376657)" : [ {
-      "executionTime" : 14763,
-      "arrivalTime " : 2627,
-      "completionTime" : 11155
-    }, {
-      "executionTime" : 16298,
-      "arrivalTime " : 4637,
-      "completionTime" : 20570
-    }, {
-      "executionTime" : 10410,
-      "arrivalTime " : 5038,
-      "completionTime" : 26583
-    }, {
-      "executionTime" : 14402,
-      "arrivalTime " : 7416,
-      "completionTime" : 34903
     } ]
   }
 }

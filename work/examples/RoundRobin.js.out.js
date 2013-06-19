@@ -13,7 +13,7 @@
     "balancing efficiency" : 0.8677891990984832
   },
   "history" : {
-    "SimpleServer(0,1.7308781907032909)" : [ {
+    "/root/SimpleCluster/SimpleServer#0" : [ {
       "executionTime" : 1539,
       "arrivalTime " : 90,
       "completionTime" : 979
@@ -30,24 +30,7 @@
       "arrivalTime " : 3506,
       "completionTime" : 4672
     } ],
-    "SimpleServer(4,1.9677559094241208)" : [ {
-      "executionTime" : 1004,
-      "arrivalTime " : 1444,
-      "completionTime" : 1954
-    }, {
-      "executionTime" : 1845,
-      "arrivalTime " : 2739,
-      "completionTime" : 3676
-    }, {
-      "executionTime" : 1233,
-      "arrivalTime " : 3310,
-      "completionTime" : 4302
-    }, {
-      "executionTime" : 1649,
-      "arrivalTime " : 4739,
-      "completionTime" : 5577
-    } ],
-    "SimpleServer(1,1.4100808114922017)" : [ {
+    "/root/SimpleCluster/SimpleServer#1" : [ {
       "executionTime" : 1237,
       "arrivalTime " : 269,
       "completionTime" : 1146
@@ -64,7 +47,7 @@
       "arrivalTime " : 3682,
       "completionTime" : 4979
     } ],
-    "SimpleServer(2,1.2077148413097172)" : [ {
+    "/root/SimpleCluster/SimpleServer#2" : [ {
       "executionTime" : 1085,
       "arrivalTime " : 354,
       "completionTime" : 1252
@@ -81,7 +64,7 @@
       "arrivalTime " : 3944,
       "completionTime" : 5508
     } ],
-    "SimpleServer(3,1.3327170559595112)" : [ {
+    "/root/SimpleCluster/SimpleServer#3" : [ {
       "executionTime" : 1767,
       "arrivalTime " : 677,
       "completionTime" : 2002
@@ -97,6 +80,23 @@
       "executionTime" : 1636,
       "arrivalTime " : 4345,
       "completionTime" : 5572
+    } ],
+    "/root/SimpleCluster/SimpleServer#4" : [ {
+      "executionTime" : 1004,
+      "arrivalTime " : 1444,
+      "completionTime" : 1954
+    }, {
+      "executionTime" : 1845,
+      "arrivalTime " : 2739,
+      "completionTime" : 3676
+    }, {
+      "executionTime" : 1233,
+      "arrivalTime " : 3310,
+      "completionTime" : 4302
+    }, {
+      "executionTime" : 1649,
+      "arrivalTime " : 4739,
+      "completionTime" : 5577
     } ]
   }
 }

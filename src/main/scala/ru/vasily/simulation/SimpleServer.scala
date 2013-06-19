@@ -2,16 +2,15 @@ package ru.vasily.simulation
 
 import collection.immutable.Queue
 import core._
-import util.Random
 
-case class SimpleServer(indexNumber: Int, serverPerformance: Double) extends AgentId {
+case class SimpleServerStates(thisServerId: AgentId, serverPerformance: Double) {
 
   private case class TaskCompleted()
 
   def taskCompletedMessage(task: Task) = {
     val executionTime: Long = (task.executionTime / serverPerformance).toInt
     SendMessage(
-      message = Message(TaskCompleted(), this),
+      message = Message(TaskCompleted(), thisServerId),
       delay = executionTime
     )
   }
@@ -34,7 +33,7 @@ case class SimpleServer(indexNumber: Int, serverPerformance: Double) extends Age
     def completeCurrentTask(currentTime: Long) = {
       val (TaskMessage(messageSender, completedTask), queueTail) = taskQueue.dequeue
       val log = LogAction(TaskRecord(completedTask, currentTime))
-      val callbackMessage = SendMessage.withoutDelay(TaskFinished(thisAgent, completedTask), messageSender)
+      val callbackMessage = SendMessage.withoutDelay(TaskFinished(thisServerId, completedTask), messageSender)
       if (queueTail.isEmpty) {
         newState(IdleState(),
           callbackMessage,
@@ -62,22 +61,14 @@ case class SimpleServer(indexNumber: Int, serverPerformance: Double) extends Age
 
 object SimpleServer {
 
-  def generateServers(serversPerformance: Seq[Double]): Seq[Agent] =
+  def generateServers(serversPerformance: Seq[Double], serversRootId: AgentId): Seq[Agent] =
     serversPerformance.zipWithIndex.map {
       case (performance, index) => {
-        val agentId = SimpleServer(index, performance)
-        Agent(agentId, agentId.IdleState()).withInitialActions(LogAction(ServerInfo(performance)))
+        val agentId = serversRootId.child(s"SimpleServer#$index")
+        val states: SimpleServerStates = SimpleServerStates(agentId, performance)
+        Agent(agentId, states.IdleState()).withInitialActions(LogAction(ServerInfo(performance)))
       }
     }
-
-  def generateRandomServers(numberOfServers: Int, maxPerf: Double, minPerf: Double, seed: Int) = {
-    val random = new Random(seed)
-    val performance = List.fill(numberOfServers) {
-      random.nextDouble() * (maxPerf - minPerf) + minPerf
-    }
-    generateServers(performance)
-  }
-
 }
 
 case class LoadLevelRequest(requester: AgentId)
